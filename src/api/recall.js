@@ -1,4 +1,6 @@
 import championsMock from './mocks/champions'
+import matchMock from './mocks/match'
+import matchesMock from './mocks/matches'
 import summaryMock from './mocks/summary'
 
 const apiUrl = import.meta.env.VITE_API_URL
@@ -6,6 +8,14 @@ const useMocks = import.meta.env.VITE_USE_MOCKS === 'true'
 const validAccounts = ['la1', 'la2']
 const dataDragonVersionsUrl = 'https://ddragon.leagueoflegends.com/api/versions.json'
 let dataDragonVersionRequest = null
+
+class ApiError extends Error {
+  constructor(message, status) {
+    super(message)
+    this.name = 'ApiError'
+    this.status = status
+  }
+}
 
 function validateAccount(account) {
   if (account && !validAccounts.includes(account)) {
@@ -21,7 +31,7 @@ async function fetchJson(url, errorMessage) {
   })
 
   if (!response.ok) {
-    throw new Error(`${errorMessage} (${response.status})`)
+    throw new ApiError(`${errorMessage} (${response.status})`, response.status)
   }
 
   return response.json()
@@ -61,6 +71,47 @@ export async function getChampions({ account, minGames } = {}) {
   }
 
   return fetchJson(url, 'Could not load champions')
+}
+
+export async function getMatches({ account, queue, page } = {}) {
+  validateAccount(account)
+
+  if (useMocks) {
+    return matchesMock
+  }
+
+  const url = new URL('/api/v1/matches', apiUrl)
+
+  if (account) {
+    url.searchParams.set('account', account)
+  }
+
+  if (queue) {
+    url.searchParams.set('queue', queue)
+  }
+
+  if (page !== undefined) {
+    url.searchParams.set('page', page)
+  }
+
+  return fetchJson(url, 'Could not load matches')
+}
+
+export async function getMatch(id) {
+  if (useMocks) {
+    const matchExists = matchesMock.data.some((match) => match.id === id)
+
+    if (!matchExists) {
+      throw new ApiError('Match not found (404)', 404)
+    }
+
+    return matchMock
+  }
+
+  const encodedId = encodeURIComponent(id)
+  const url = new URL(`/api/v1/matches/${encodedId}`, apiUrl)
+
+  return fetchJson(url, 'Could not load the match')
 }
 
 export async function getDataDragonVersion() {

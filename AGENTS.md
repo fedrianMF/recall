@@ -20,6 +20,7 @@ Frontend en Vue 3 + Vite de Recall, un coach personal de League of Legends. Mues
 - Toda llamada HTTP pasa por `src/api/recall.js`, con una función por endpoint (`getSummary()`, `getMatches()`...). Los componentes nunca usan `fetch` directo.
 - Mientras un endpoint no exista en el backend, usa datos de ejemplo en `src/api/mocks/` con exactamente la forma del contrato, activados con `VITE_USE_MOCKS=true`.
 - Imágenes de campeones desde Data Dragon (`https://ddragon.leagueoflegends.com`), sin clave. Obtén la versión actual de `https://ddragon.leagueoflegends.com/api/versions.json`.
+- El contrato completo de la API está en docs/openapi.json. Úsalo como fuente de verdad para las formas de las respuestas; no inventes campos.
 
 ## Convenciones
 

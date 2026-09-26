@@ -1,9 +1,9 @@
 <script setup>
-import { computed, onMounted, ref } from 'vue'
+import { computed, ref } from 'vue'
 import ChampionAvatar from '../components/ChampionAvatar.vue'
-import { getDataDragonVersion } from '../api/recall'
 import { useAccount } from '../composables/useAccount'
 import { useChampions } from '../composables/useChampions'
+import { useDataDragonVersion } from '../composables/useDataDragonVersion'
 import { formatMetric } from '../utils/formatMetric'
 
 const columns = [
@@ -20,7 +20,7 @@ const { account } = useAccount()
 const minGames = ref(1)
 const sortKey = ref('games')
 const sortDirection = ref('desc')
-const dataDragonVersion = ref(null)
+const { version: dataDragonVersion } = useDataDragonVersion()
 const { champions, isLoading, error, loadChampions } = useChampions(account, minGames)
 
 const sortedChampions = computed(() => {
@@ -70,13 +70,6 @@ function ariaSort(column) {
   return sortDirection.value === 'asc' ? 'ascending' : 'descending'
 }
 
-onMounted(async () => {
-  try {
-    dataDragonVersion.value = await getDataDragonVersion()
-  } catch {
-    dataDragonVersion.value = null
-  }
-})
 </script>
 
 <template>

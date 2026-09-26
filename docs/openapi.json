@@ -1,0 +1,1090 @@
+{
+    "openapi": "3.1.0",
+    "info": {
+        "title": "Recall API",
+        "version": "1.0.0",
+        "description": "Recall is a personal League of Legends coach. This API syncs match history, stats and rank data from the Riot API and serves them to the Recall frontend."
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8000/api/v1"
+        }
+    ],
+    "paths": {
+        "/champions": {
+            "get": {
+                "operationId": "v1.champions",
+                "summary": "Handle the incoming request",
+                "tags": [
+                    "Champions"
+                ],
+                "parameters": [
+                    {
+                        "name": "account",
+                        "in": "query",
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "la1",
+                                "la2"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "min_games",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 0
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "champion": {
+                                                        "type": "string"
+                                                    },
+                                                    "games": {
+                                                        "type": "integer"
+                                                    },
+                                                    "wins": {
+                                                        "type": "integer"
+                                                    },
+                                                    "winrate": {
+                                                        "type": "number"
+                                                    },
+                                                    "kda": {
+                                                        "type": "number"
+                                                    },
+                                                    "cs_per_min": {
+                                                        "type": "number"
+                                                    },
+                                                    "damage_per_min": {
+                                                        "type": "number"
+                                                    },
+                                                    "kill_participation": {
+                                                        "type": [
+                                                            "number",
+                                                            "null"
+                                                        ]
+                                                    }
+                                                },
+                                                "required": [
+                                                    "champion",
+                                                    "games",
+                                                    "wins",
+                                                    "winrate",
+                                                    "kda",
+                                                    "cs_per_min",
+                                                    "damage_per_min",
+                                                    "kill_participation"
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/ValidationException"
+                    }
+                }
+            }
+        },
+        "/matches": {
+            "get": {
+                "operationId": "matches.index",
+                "tags": [
+                    "Matches"
+                ],
+                "parameters": [
+                    {
+                        "name": "account",
+                        "in": "query",
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "la1",
+                                "la2"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "queue",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 0
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Paginated set of `MatchResource`",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/MatchResource"
+                                            }
+                                        },
+                                        "links": {
+                                            "type": "object",
+                                            "properties": {
+                                                "first": {
+                                                    "type": [
+                                                        "string",
+                                                        "null"
+                                                    ]
+                                                },
+                                                "last": {
+                                                    "type": [
+                                                        "string",
+                                                        "null"
+                                                    ]
+                                                },
+                                                "prev": {
+                                                    "type": [
+                                                        "string",
+                                                        "null"
+                                                    ]
+                                                },
+                                                "next": {
+                                                    "type": [
+                                                        "string",
+                                                        "null"
+                                                    ]
+                                                }
+                                            },
+                                            "required": [
+                                                "first",
+                                                "last",
+                                                "prev",
+                                                "next"
+                                            ]
+                                        },
+                                        "meta": {
+                                            "type": "object",
+                                            "properties": {
+                                                "current_page": {
+                                                    "type": "integer",
+                                                    "minimum": 1
+                                                },
+                                                "from": {
+                                                    "type": [
+                                                        "integer",
+                                                        "null"
+                                                    ],
+                                                    "minimum": 1
+                                                },
+                                                "last_page": {
+                                                    "type": "integer",
+                                                    "minimum": 1
+                                                },
+                                                "links": {
+                                                    "type": "array",
+                                                    "description": "Generated paginator links.",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "url": {
+                                                                "type": [
+                                                                    "string",
+                                                                    "null"
+                                                                ]
+                                                            },
+                                                            "label": {
+                                                                "type": "string"
+                                                            },
+                                                            "active": {
+                                                                "type": "boolean"
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "url",
+                                                            "label",
+                                                            "active"
+                                                        ]
+                                                    }
+                                                },
+                                                "path": {
+                                                    "type": [
+                                                        "string",
+                                                        "null"
+                                                    ],
+                                                    "description": "Base path for paginator generated URLs."
+                                                },
+                                                "per_page": {
+                                                    "type": "integer",
+                                                    "description": "Number of items shown per page.",
+                                                    "minimum": 0
+                                                },
+                                                "to": {
+                                                    "type": [
+                                                        "integer",
+                                                        "null"
+                                                    ],
+                                                    "description": "Number of the last item in the slice.",
+                                                    "minimum": 1
+                                                },
+                                                "total": {
+                                                    "type": "integer",
+                                                    "description": "Total number of items being paginated.",
+                                                    "minimum": 0
+                                                }
+                                            },
+                                            "required": [
+                                                "current_page",
+                                                "from",
+                                                "last_page",
+                                                "links",
+                                                "path",
+                                                "per_page",
+                                                "to",
+                                                "total"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data",
+                                        "links",
+                                        "meta"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/ValidationException"
+                    }
+                }
+            }
+        },
+        "/matches/{gameMatch}": {
+            "get": {
+                "operationId": "matches.show",
+                "tags": [
+                    "Matches"
+                ],
+                "parameters": [
+                    {
+                        "name": "gameMatch",
+                        "in": "path",
+                        "required": true,
+                        "description": "The game match riot match id",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "`MatchDetailResource`",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/MatchDetailResource"
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/ModelNotFoundException"
+                    }
+                }
+            }
+        },
+        "/positions": {
+            "get": {
+                "operationId": "v1.positions",
+                "summary": "Handle the incoming request",
+                "tags": [
+                    "Positions"
+                ],
+                "parameters": [
+                    {
+                        "name": "account",
+                        "in": "query",
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "la1",
+                                "la2"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "min_games",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 0
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "position": {
+                                                        "type": "string"
+                                                    },
+                                                    "games": {
+                                                        "type": "integer"
+                                                    },
+                                                    "wins": {
+                                                        "type": "integer"
+                                                    },
+                                                    "winrate": {
+                                                        "type": "number"
+                                                    },
+                                                    "kda": {
+                                                        "type": "number"
+                                                    },
+                                                    "cs_per_min": {
+                                                        "type": "number"
+                                                    },
+                                                    "damage_per_min": {
+                                                        "type": "number"
+                                                    },
+                                                    "kill_participation": {
+                                                        "type": [
+                                                            "number",
+                                                            "null"
+                                                        ]
+                                                    }
+                                                },
+                                                "required": [
+                                                    "position",
+                                                    "games",
+                                                    "wins",
+                                                    "winrate",
+                                                    "kda",
+                                                    "cs_per_min",
+                                                    "damage_per_min",
+                                                    "kill_participation"
+                                                ]
+                                            }
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/ValidationException"
+                    }
+                }
+            }
+        },
+        "/ranks/history": {
+            "get": {
+                "operationId": "v1.rankHistory",
+                "summary": "Handle the incoming request",
+                "tags": [
+                    "RankHistory"
+                ],
+                "parameters": [
+                    {
+                        "name": "account",
+                        "in": "query",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "la1",
+                                "la2"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "queue_type",
+                        "in": "query",
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "RANKED_SOLO_5x5",
+                                "RANKED_FLEX_SR"
+                            ]
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Array of `RankSnapshotResource`",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/RankSnapshotResource"
+                                            }
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/ValidationException"
+                    }
+                }
+            }
+        },
+        "/summary": {
+            "get": {
+                "operationId": "v1.summary",
+                "summary": "Handle the incoming request",
+                "tags": [
+                    "Summary"
+                ],
+                "parameters": [
+                    {
+                        "name": "account",
+                        "in": "query",
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "la1",
+                                "la2"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "min_games",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer",
+                            "minimum": 0
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "games": {
+                                                    "type": "integer"
+                                                },
+                                                "wins": {
+                                                    "type": "integer"
+                                                },
+                                                "losses": {
+                                                    "type": "integer"
+                                                },
+                                                "winrate": {
+                                                    "type": [
+                                                        "number",
+                                                        "null"
+                                                    ]
+                                                },
+                                                "kda": {
+                                                    "type": [
+                                                        "number",
+                                                        "null"
+                                                    ]
+                                                },
+                                                "avg_kills": {
+                                                    "type": [
+                                                        "number",
+                                                        "null"
+                                                    ]
+                                                },
+                                                "avg_deaths": {
+                                                    "type": [
+                                                        "number",
+                                                        "null"
+                                                    ]
+                                                },
+                                                "avg_assists": {
+                                                    "type": [
+                                                        "number",
+                                                        "null"
+                                                    ]
+                                                },
+                                                "cs_per_min": {
+                                                    "type": [
+                                                        "number",
+                                                        "null"
+                                                    ]
+                                                },
+                                                "damage_per_min": {
+                                                    "type": [
+                                                        "number",
+                                                        "null"
+                                                    ]
+                                                },
+                                                "vision_per_min": {
+                                                    "type": [
+                                                        "number",
+                                                        "null"
+                                                    ]
+                                                },
+                                                "kill_participation": {
+                                                    "type": [
+                                                        "number",
+                                                        "null"
+                                                    ]
+                                                },
+                                                "ranks": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "platform": {
+                                                                "type": "string"
+                                                            },
+                                                            "queue_type": {
+                                                                "type": "string"
+                                                            },
+                                                            "tier": {
+                                                                "type": "string"
+                                                            },
+                                                            "rank": {
+                                                                "type": "string"
+                                                            },
+                                                            "league_points": {
+                                                                "type": "integer"
+                                                            },
+                                                            "wins": {
+                                                                "type": "integer"
+                                                            },
+                                                            "losses": {
+                                                                "type": "integer"
+                                                            }
+                                                        },
+                                                        "required": [
+                                                            "platform",
+                                                            "queue_type",
+                                                            "tier",
+                                                            "rank",
+                                                            "league_points",
+                                                            "wins",
+                                                            "losses"
+                                                        ]
+                                                    }
+                                                }
+                                            },
+                                            "required": [
+                                                "games",
+                                                "wins",
+                                                "losses",
+                                                "winrate",
+                                                "kda",
+                                                "avg_kills",
+                                                "avg_deaths",
+                                                "avg_assists",
+                                                "cs_per_min",
+                                                "damage_per_min",
+                                                "vision_per_min",
+                                                "kill_participation",
+                                                "ranks"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "data"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/ValidationException"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "MatchDetailResource": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "platform": {
+                        "type": "string"
+                    },
+                    "queue": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "anyOf": [
+                                    {
+                                        "type": "integer"
+                                    },
+                                    {
+                                        "$ref": "#/components/schemas/Queue"
+                                    },
+                                    {
+                                        "type": "null"
+                                    }
+                                ]
+                            },
+                            "name": {
+                                "type": "string",
+                                "enum": [
+                                    "Normal (a la carta)",
+                                    "Ranked Solo/D\u00fao",
+                                    "Normal (ciegas)",
+                                    "Ranked Flexible",
+                                    "Swiftplay",
+                                    "Partida r\u00e1pida",
+                                    "ARAM",
+                                    "Clash ARAM",
+                                    "URF",
+                                    "Arena",
+                                    "Otro modo"
+                                ]
+                            }
+                        },
+                        "required": [
+                            "id",
+                            "name"
+                        ]
+                    },
+                    "started_at": {
+                        "type": "string"
+                    },
+                    "duration_seconds": {
+                        "type": "integer"
+                    },
+                    "champion": {
+                        "type": "string"
+                    },
+                    "position": {
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    },
+                    "win": {
+                        "type": "boolean"
+                    },
+                    "kills": {
+                        "type": "integer"
+                    },
+                    "deaths": {
+                        "type": "integer"
+                    },
+                    "assists": {
+                        "type": "integer"
+                    },
+                    "kda": {
+                        "type": "number"
+                    },
+                    "cs": {
+                        "type": "integer"
+                    },
+                    "cs_per_min": {
+                        "type": "number"
+                    },
+                    "damage_to_champions": {
+                        "type": "integer"
+                    },
+                    "vision_score": {
+                        "type": "integer"
+                    },
+                    "remake": {
+                        "type": "boolean"
+                    },
+                    "kill_participation": {
+                        "type": [
+                            "number",
+                            "null"
+                        ]
+                    },
+                    "cs_at_10": {
+                        "type": [
+                            "integer",
+                            "null"
+                        ]
+                    },
+                    "team_damage_percentage": {
+                        "type": [
+                            "number",
+                            "null"
+                        ]
+                    },
+                    "early_gold_xp_advantage": {
+                        "type": [
+                            "integer",
+                            "null"
+                        ]
+                    },
+                    "solo_kills": {
+                        "type": [
+                            "integer",
+                            "null"
+                        ]
+                    },
+                    "teams": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "team_id": {
+                                    "type": "integer"
+                                },
+                                "win": {
+                                    "type": "boolean"
+                                },
+                                "kills": {
+                                    "type": "integer"
+                                },
+                                "players": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "riot_id": {
+                                                "type": "string"
+                                            },
+                                            "champion": {
+                                                "type": "string"
+                                            },
+                                            "position": {
+                                                "type": [
+                                                    "string",
+                                                    "null"
+                                                ]
+                                            },
+                                            "kills": {
+                                                "type": "integer"
+                                            },
+                                            "deaths": {
+                                                "type": "integer"
+                                            },
+                                            "assists": {
+                                                "type": "integer"
+                                            },
+                                            "damage": {
+                                                "type": "integer"
+                                            },
+                                            "cs": {
+                                                "type": "integer"
+                                            },
+                                            "is_me": {
+                                                "type": "boolean"
+                                            }
+                                        },
+                                        "required": [
+                                            "riot_id",
+                                            "champion",
+                                            "position",
+                                            "kills",
+                                            "deaths",
+                                            "assists",
+                                            "damage",
+                                            "cs",
+                                            "is_me"
+                                        ]
+                                    }
+                                }
+                            },
+                            "required": [
+                                "team_id",
+                                "win",
+                                "kills",
+                                "players"
+                            ]
+                        }
+                    }
+                },
+                "required": [
+                    "id",
+                    "platform",
+                    "queue",
+                    "started_at",
+                    "duration_seconds",
+                    "champion",
+                    "position",
+                    "win",
+                    "kills",
+                    "deaths",
+                    "assists",
+                    "kda",
+                    "cs",
+                    "cs_per_min",
+                    "damage_to_champions",
+                    "vision_score",
+                    "remake",
+                    "kill_participation",
+                    "cs_at_10",
+                    "team_damage_percentage",
+                    "early_gold_xp_advantage",
+                    "solo_kills",
+                    "teams"
+                ],
+                "title": "MatchDetailResource"
+            },
+            "MatchResource": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "platform": {
+                        "type": "string"
+                    },
+                    "queue": {
+                        "type": "object",
+                        "properties": {
+                            "id": {
+                                "anyOf": [
+                                    {
+                                        "type": "integer"
+                                    },
+                                    {
+                                        "$ref": "#/components/schemas/Queue"
+                                    },
+                                    {
+                                        "type": "null"
+                                    }
+                                ]
+                            },
+                            "name": {
+                                "type": "string",
+                                "enum": [
+                                    "Normal (a la carta)",
+                                    "Ranked Solo/D\u00fao",
+                                    "Normal (ciegas)",
+                                    "Ranked Flexible",
+                                    "Swiftplay",
+                                    "Partida r\u00e1pida",
+                                    "ARAM",
+                                    "Clash ARAM",
+                                    "URF",
+                                    "Arena",
+                                    "Otro modo"
+                                ]
+                            }
+                        },
+                        "required": [
+                            "id",
+                            "name"
+                        ]
+                    },
+                    "started_at": {
+                        "type": "string"
+                    },
+                    "duration_seconds": {
+                        "type": "integer"
+                    },
+                    "champion": {
+                        "type": "string"
+                    },
+                    "position": {
+                        "type": [
+                            "string",
+                            "null"
+                        ]
+                    },
+                    "win": {
+                        "type": "boolean"
+                    },
+                    "kills": {
+                        "type": "integer"
+                    },
+                    "deaths": {
+                        "type": "integer"
+                    },
+                    "assists": {
+                        "type": "integer"
+                    },
+                    "kda": {
+                        "type": "number"
+                    },
+                    "cs": {
+                        "type": "integer"
+                    },
+                    "cs_per_min": {
+                        "type": "number"
+                    },
+                    "damage_to_champions": {
+                        "type": "integer"
+                    },
+                    "vision_score": {
+                        "type": "integer"
+                    },
+                    "remake": {
+                        "type": "boolean"
+                    }
+                },
+                "required": [
+                    "id",
+                    "platform",
+                    "queue",
+                    "started_at",
+                    "duration_seconds",
+                    "champion",
+                    "position",
+                    "win",
+                    "kills",
+                    "deaths",
+                    "assists",
+                    "kda",
+                    "cs",
+                    "cs_per_min",
+                    "damage_to_champions",
+                    "vision_score",
+                    "remake"
+                ],
+                "title": "MatchResource"
+            },
+            "Queue": {
+                "type": "integer",
+                "enum": [
+                    400,
+                    420,
+                    430,
+                    440,
+                    480,
+                    490,
+                    450,
+                    720,
+                    900,
+                    1700
+                ],
+                "title": "Queue"
+            },
+            "RankSnapshotResource": {
+                "type": "object",
+                "properties": {
+                    "taken_at": {
+                        "type": "string"
+                    },
+                    "tier": {
+                        "type": "string"
+                    },
+                    "rank": {
+                        "type": "string"
+                    },
+                    "league_points": {
+                        "type": "integer"
+                    },
+                    "wins": {
+                        "type": "integer"
+                    },
+                    "losses": {
+                        "type": "integer"
+                    }
+                },
+                "required": [
+                    "taken_at",
+                    "tier",
+                    "rank",
+                    "league_points",
+                    "wins",
+                    "losses"
+                ],
+                "title": "RankSnapshotResource"
+            }
+        },
+        "responses": {
+            "ValidationException": {
+                "description": "Validation error",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "description": "Errors overview."
+                                },
+                                "errors": {
+                                    "type": "object",
+                                    "description": "A detailed description of each field that failed validation.",
+                                    "additionalProperties": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            },
+                            "required": [
+                                "message",
+                                "errors"
+                            ]
+                        }
+                    }
+                }
+            },
+            "ModelNotFoundException": {
+                "description": "Not found",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "description": "Error overview."
+                                }
+                            },
+                            "required": [
+                                "message"
+                            ]
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

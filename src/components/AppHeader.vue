@@ -28,6 +28,13 @@ const { account } = useAccount()
         >
           Campeones
         </RouterLink>
+        <RouterLink
+          to="/matches"
+          class="rounded-lg px-3 py-2 text-sm font-medium text-slate-400 transition hover:bg-slate-900 hover:text-slate-100"
+          active-class="bg-slate-800 text-cyan-400"
+        >
+          Historial
+        </RouterLink>
       </nav>
 
       <div class="ml-auto">
