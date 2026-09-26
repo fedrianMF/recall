@@ -1,18 +1,11 @@
 <script setup>
-import { toRef } from 'vue'
 import MatchRecord from '../components/MatchRecord.vue'
 import MetricCard from '../components/MetricCard.vue'
 import RankCard from '../components/RankCard.vue'
+import { useAccount } from '../composables/useAccount'
 import { useSummary } from '../composables/useSummary'
 
-const props = defineProps({
-  account: {
-    type: String,
-    default: '',
-  },
-})
-
-const account = toRef(props, 'account')
+const { account } = useAccount()
 const { summary, isLoading, error, loadSummary } = useSummary(account)
 </script>
 

@@ -1,27 +1,38 @@
 <script setup>
+import { RouterLink } from 'vue-router'
 import AccountSelector from './AccountSelector.vue'
+import { useAccount } from '../composables/useAccount'
 
-defineProps({
-  modelValue: {
-    type: String,
-    default: '',
-  },
-})
-
-defineEmits(['update:modelValue'])
+const { account } = useAccount()
 </script>
 
 <template>
   <header class="border-b border-slate-800 bg-slate-950/90">
     <div
-      class="mx-auto flex w-full max-w-7xl items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8"
+      class="mx-auto flex w-full max-w-7xl flex-wrap items-center gap-4 px-4 py-4 sm:px-6 lg:px-8"
     >
       <h1 class="text-2xl font-bold tracking-tight text-cyan-400">Recall</h1>
 
-      <AccountSelector
-        :model-value="modelValue"
-        @update:model-value="$emit('update:modelValue', $event)"
-      />
+      <nav aria-label="Navegación principal" class="order-3 flex w-full gap-1 sm:order-none sm:w-auto">
+        <RouterLink
+          to="/"
+          class="rounded-lg px-3 py-2 text-sm font-medium text-slate-400 transition hover:bg-slate-900 hover:text-slate-100"
+          exact-active-class="bg-slate-800 text-cyan-400"
+        >
+          Resumen
+        </RouterLink>
+        <RouterLink
+          to="/champions"
+          class="rounded-lg px-3 py-2 text-sm font-medium text-slate-400 transition hover:bg-slate-900 hover:text-slate-100"
+          active-class="bg-slate-800 text-cyan-400"
+        >
+          Campeones
+        </RouterLink>
+      </nav>
+
+      <div class="ml-auto">
+        <AccountSelector v-model="account" />
+      </div>
     </div>
   </header>
 </template>
