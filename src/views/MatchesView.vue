@@ -28,7 +28,12 @@ function nextPage() {
   <section aria-labelledby="matches-title">
     <div class="flex flex-wrap items-end justify-between gap-4">
       <div>
-        <h2 id="matches-title" class="text-2xl font-semibold tracking-tight">Historial</h2>
+        <h2
+          id="matches-title"
+          class="text-2xl font-semibold tracking-tight"
+        >
+          Historial
+        </h2>
         <p class="mt-1 text-sm text-slate-400">{{ meta.total }} partidas encontradas.</p>
       </div>
 
@@ -47,7 +52,12 @@ function nextPage() {
       </label>
     </div>
 
-    <div v-if="isLoading" class="mt-6" role="status" aria-live="polite">
+    <div
+      v-if="isLoading"
+      class="mt-6"
+      role="status"
+      aria-live="polite"
+    >
       <p class="text-slate-400">Cargando historial…</p>
       <div class="mt-4 space-y-3">
         <div
@@ -92,7 +102,10 @@ function nextPage() {
         />
       </ul>
 
-      <nav aria-label="Paginación del historial" class="mt-6 flex items-center justify-between gap-4">
+      <nav
+        aria-label="Paginación del historial"
+        class="mt-6 flex items-center justify-between gap-4"
+      >
         <button
           type="button"
           :disabled="page <= 1"

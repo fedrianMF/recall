@@ -38,11 +38,36 @@ const teamName = computed(() => (props.team.team_id === 100 ? 'Equipo azul' : 'E
       <table class="w-full min-w-3xl border-collapse bg-slate-900 text-left text-sm">
         <thead class="text-xs uppercase tracking-wide text-slate-400">
           <tr class="border-b border-slate-800">
-            <th scope="col" class="px-4 py-3 font-medium">Jugador</th>
-            <th scope="col" class="px-4 py-3 font-medium">Posición</th>
-            <th scope="col" class="px-4 py-3 font-medium">K / D / A</th>
-            <th scope="col" class="px-4 py-3 font-medium">CS</th>
-            <th scope="col" class="px-4 py-3 font-medium">Daño</th>
+            <th
+              scope="col"
+              class="px-4 py-3 font-medium"
+            >
+              Jugador
+            </th>
+            <th
+              scope="col"
+              class="px-4 py-3 font-medium"
+            >
+              Posición
+            </th>
+            <th
+              scope="col"
+              class="px-4 py-3 font-medium"
+            >
+              K / D / A
+            </th>
+            <th
+              scope="col"
+              class="px-4 py-3 font-medium"
+            >
+              CS
+            </th>
+            <th
+              scope="col"
+              class="px-4 py-3 font-medium"
+            >
+              Daño
+            </th>
           </tr>
         </thead>
         <tbody class="divide-y divide-slate-800">
@@ -53,7 +78,10 @@ const teamName = computed(() => (props.team.team_id === 100 ? 'Equipo azul' : 'E
           >
             <td class="px-4 py-3">
               <div class="flex items-center gap-3">
-                <ChampionAvatar :champion="player.champion" :version="dataDragonVersion" />
+                <ChampionAvatar
+                  :champion="player.champion"
+                  :version="dataDragonVersion"
+                />
                 <div>
                   <p class="font-medium text-slate-100">{{ player.riot_id }}</p>
                   <p class="text-xs text-slate-400">{{ player.champion }}</p>

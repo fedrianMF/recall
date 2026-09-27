@@ -69,14 +69,18 @@ function ariaSort(column) {
 
   return sortDirection.value === 'asc' ? 'ascending' : 'descending'
 }
-
 </script>
 
 <template>
   <section aria-labelledby="champions-title">
     <div class="flex flex-wrap items-end justify-between gap-4">
       <div>
-        <h2 id="champions-title" class="text-2xl font-semibold tracking-tight">Campeones</h2>
+        <h2
+          id="champions-title"
+          class="text-2xl font-semibold tracking-tight"
+        >
+          Campeones
+        </h2>
         <p class="mt-1 text-sm text-slate-400">Rendimiento agrupado por campeón.</p>
       </div>
 
@@ -94,7 +98,12 @@ function ariaSort(column) {
       </label>
     </div>
 
-    <div v-if="isLoading" class="mt-6" role="status" aria-live="polite">
+    <div
+      v-if="isLoading"
+      class="mt-6"
+      role="status"
+      aria-live="polite"
+    >
       <p class="text-slate-400">Cargando campeones…</p>
       <div class="mt-4 h-72 animate-pulse rounded-xl border border-slate-800 bg-slate-900"></div>
     </div>
@@ -125,7 +134,10 @@ function ariaSort(column) {
       </p>
     </div>
 
-    <div v-else class="mt-6 overflow-x-auto rounded-xl border border-slate-800">
+    <div
+      v-else
+      class="mt-6 overflow-x-auto rounded-xl border border-slate-800"
+    >
       <table class="w-full min-w-5xl border-collapse bg-slate-900 text-left text-sm">
         <thead class="bg-slate-900/95 text-xs uppercase tracking-wide text-slate-400">
           <tr>
@@ -142,7 +154,10 @@ function ariaSort(column) {
                 @click="sortBy(column.key)"
               >
                 {{ column.label }}
-                <span v-if="sortKey === column.key" aria-hidden="true">
+                <span
+                  v-if="sortKey === column.key"
+                  aria-hidden="true"
+                >
                   {{ sortDirection === 'asc' ? '↑' : '↓' }}
                 </span>
               </button>
@@ -150,10 +165,17 @@ function ariaSort(column) {
           </tr>
         </thead>
         <tbody class="divide-y divide-slate-800">
-          <tr v-for="champion in sortedChampions" :key="champion.champion" class="hover:bg-slate-800/40">
+          <tr
+            v-for="champion in sortedChampions"
+            :key="champion.champion"
+            class="hover:bg-slate-800/40"
+          >
             <td class="px-4 py-3">
               <div class="flex items-center gap-3 font-medium text-slate-100">
-                <ChampionAvatar :champion="champion.champion" :version="dataDragonVersion" />
+                <ChampionAvatar
+                  :champion="champion.champion"
+                  :version="dataDragonVersion"
+                />
                 <span class="whitespace-nowrap">{{ champion.champion }}</span>
               </div>
             </td>

@@ -35,9 +35,7 @@ export function useMatches(account, queue, page) {
       }
 
       error.value =
-        requestError instanceof Error
-          ? requestError
-          : new Error('No se pudo cargar el historial.')
+        requestError instanceof Error ? requestError : new Error('No se pudo cargar el historial.')
     } finally {
       if (requestId === latestRequestId) {
         isLoading.value = false

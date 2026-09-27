@@ -13,7 +13,10 @@ const { account } = useAccount()
     >
       <h1 class="text-2xl font-bold tracking-tight text-cyan-400">Recall</h1>
 
-      <nav aria-label="Navegación principal" class="order-3 flex w-full gap-1 sm:order-none sm:w-auto">
+      <nav
+        aria-label="Navegación principal"
+        class="order-3 flex w-full gap-1 sm:order-none sm:w-auto"
+      >
         <RouterLink
           to="/"
           class="rounded-lg px-3 py-2 text-sm font-medium text-slate-400 transition hover:bg-slate-900 hover:text-slate-100"

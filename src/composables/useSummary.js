@@ -27,9 +27,7 @@ export function useSummary(account) {
       }
 
       error.value =
-        requestError instanceof Error
-          ? requestError
-          : new Error('No se pudo cargar el resumen.')
+        requestError instanceof Error ? requestError : new Error('No se pudo cargar el resumen.')
     } finally {
       if (requestId === latestRequestId) {
         isLoading.value = false

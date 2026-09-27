@@ -49,19 +49,28 @@ const result = computed(() => {
       :class="result.classes"
     >
       <div class="flex items-center gap-3">
-        <ChampionAvatar :champion="match.champion" :version="dataDragonVersion" />
+        <ChampionAvatar
+          :champion="match.champion"
+          :version="dataDragonVersion"
+        />
         <div class="min-w-0">
           <p class="font-semibold text-slate-100">{{ match.champion }}</p>
           <p class="truncate text-sm text-slate-400">{{ match.queue.name }}</p>
           <p class="mt-1 text-xs text-slate-500">
-            {{ formatRelativeTime(match.started_at) }} · {{ formatDuration(match.duration_seconds) }}
+            {{ formatRelativeTime(match.started_at) }} ·
+            {{ formatDuration(match.duration_seconds) }}
           </p>
         </div>
       </div>
 
       <div>
         <p class="text-xs text-slate-500">Resultado</p>
-        <p class="mt-1 font-semibold" :class="result.textClass">{{ result.label }}</p>
+        <p
+          class="mt-1 font-semibold"
+          :class="result.textClass"
+        >
+          {{ result.label }}
+        </p>
       </div>
       <div>
         <p class="text-xs text-slate-500">K / D / A</p>

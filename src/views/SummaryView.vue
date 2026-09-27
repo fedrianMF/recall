@@ -11,9 +11,19 @@ const { summary, isLoading, error, loadSummary } = useSummary(account)
 
 <template>
   <section aria-labelledby="summary-title">
-    <h2 id="summary-title" class="text-2xl font-semibold tracking-tight">Resumen</h2>
+    <h2
+      id="summary-title"
+      class="text-2xl font-semibold tracking-tight"
+    >
+      Resumen
+    </h2>
 
-    <div v-if="isLoading" class="mt-6" role="status" aria-live="polite">
+    <div
+      v-if="isLoading"
+      class="mt-6"
+      role="status"
+      aria-live="polite"
+    >
       <p class="text-slate-400">Cargando resumen…</p>
       <div class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <div
@@ -50,13 +60,32 @@ const { summary, isLoading, error, loadSummary } = useSummary(account)
       </p>
     </div>
 
-    <div v-else-if="summary" class="mt-6 space-y-8">
+    <div
+      v-else-if="summary"
+      class="mt-6 space-y-8"
+    >
       <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        <MetricCard label="Winrate" :value="summary.winrate" suffix="%" />
-        <MetricCard label="KDA" :value="summary.kda" />
-        <MetricCard label="CS/min" :value="summary.cs_per_min" />
-        <MetricCard label="Daño/min" :value="summary.damage_per_min" />
-        <MetricCard label="Visión/min" :value="summary.vision_per_min" />
+        <MetricCard
+          label="Winrate"
+          :value="summary.winrate"
+          suffix="%"
+        />
+        <MetricCard
+          label="KDA"
+          :value="summary.kda"
+        />
+        <MetricCard
+          label="CS/min"
+          :value="summary.cs_per_min"
+        />
+        <MetricCard
+          label="Daño/min"
+          :value="summary.damage_per_min"
+        />
+        <MetricCard
+          label="Visión/min"
+          :value="summary.vision_per_min"
+        />
         <MetricCard
           label="Participación en asesinatos"
           :value="summary.kill_participation"
@@ -64,16 +93,35 @@ const { summary, isLoading, error, loadSummary } = useSummary(account)
         />
       </div>
 
-      <MatchRecord :games="summary.games" :wins="summary.wins" :losses="summary.losses" />
+      <MatchRecord
+        :games="summary.games"
+        :wins="summary.wins"
+        :losses="summary.losses"
+      />
 
       <section aria-labelledby="ranks-title">
-        <h3 id="ranks-title" class="text-lg font-semibold text-slate-100">Rangos</h3>
+        <h3
+          id="ranks-title"
+          class="text-lg font-semibold text-slate-100"
+        >
+          Rangos
+        </h3>
 
-        <div v-if="summary.ranks?.length" class="mt-4 space-y-4">
-          <RankCard v-for="rank in summary.ranks" :key="`${rank.platform}-${rank.queue_type}`" :rank="rank" />
+        <div
+          v-if="summary.ranks?.length"
+          class="mt-4 space-y-4"
+        >
+          <RankCard
+            v-for="rank in summary.ranks"
+            :key="`${rank.platform}-${rank.queue_type}`"
+            :rank="rank"
+          />
         </div>
 
-        <p v-else class="mt-4 rounded-xl border border-slate-800 bg-slate-900 p-5 text-slate-400">
+        <p
+          v-else
+          class="mt-4 rounded-xl border border-slate-800 bg-slate-900 p-5 text-slate-400"
+        >
           Sin clasificar
         </p>
       </section>
