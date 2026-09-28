@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&amp;family=Geist:wght@400..700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;font-family:'Geist',system-ui,sans-serif;background:#DCE5D9;color:#151915;-webkit-font-smoothing:antialiased}
+button{font-family:inherit}
+</style>
+<title>Recall · Estados de navegación</title>
+</head>
+<body>
+<div style="width: 1440px; height: 560px; box-sizing: border-box; padding: 40px; background: #DCE5D9; display: flex; flex-direction: column; gap: 24px">
+<div style="display: flex; align-items: baseline; justify-content: space-between">
+<h1 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 30px; font-weight: 700; letter-spacing: -0.02em">Estados de navegación</h1>
+<span style="font-size: 14px; color: #56604F">El seleccionado se marca por forma (píldora blanca) y contraste, no solo por color.</span>
+</div>
+<div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px">
+
+<section style="background: #FFFFFF; border-radius: 14px; padding: 20px; display: flex; flex-direction: column; gap: 14px; box-shadow: 0 1px 2px rgba(20,30,20,0.06), 0 6px 18px rgba(20,30,20,0.08)">
+<div><h2 style="margin: 0; font-size: 16px; font-weight: 600">Barra principal</h2><div style="font-size: 13px; color: #56604F; margin-top: 4px">Icono de 48 px en riel de 72 px</div></div>
+<div style="background: #0B0C0B; border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; align-items: center; gap: 14px; height: 56px">
+<span style="width: 48px; height: 48px; border-radius: 999px; background: #1F2220; color: #A3AAA1; display: flex; align-items: center; justify-content: center; flex-shrink: 0"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 2.8v5.4c0 4.3-2.9 7.8-7 9.8-4.1-2-7-5.5-7-9.8V5.8z"></path><path d="M9 10.5l3 2.5 3-2.5"></path></svg></span>
+<div><div style="font-size: 13px; font-weight: 600; color: #FFFFFF">Por defecto</div><div style="font-size: 12px; color: #9AA198">#1F2220 · icono #A3AAA1</div></div>
+</div>
+<div style="display: flex; align-items: center; gap: 14px; height: 56px">
+<span style="width: 48px; height: 48px; border-radius: 999px; background: #2C302D; color: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 2.8v5.4c0 4.3-2.9 7.8-7 9.8-4.1-2-7-5.5-7-9.8V5.8z"></path><path d="M9 10.5l3 2.5 3-2.5"></path></svg></span>
+<div><div style="font-size: 13px; font-weight: 600; color: #FFFFFF">Hover</div><div style="font-size: 12px; color: #9AA198">#2C302D · icono blanco · tooltip</div></div>
+<span style="margin-left: auto; height: 28px; display: inline-flex; align-items: center; padding: 0 10px; border-radius: 6px; background: #FFFFFF; color: #0B0C0B; font-size: 12px; font-weight: 600">Campeones</span>
+</div>
+<div style="display: flex; align-items: center; gap: 14px; height: 56px">
+<span style="width: 48px; height: 48px; border-radius: 999px; background: #1F2220; color: #FFFFFF; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 0 0 3px #0B0C0B, 0 0 0 5px #8ACFF2"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 2.8v5.4c0 4.3-2.9 7.8-7 9.8-4.1-2-7-5.5-7-9.8V5.8z"></path><path d="M9 10.5l3 2.5 3-2.5"></path></svg></span>
+<div><div style="font-size: 13px; font-weight: 600; color: #FFFFFF">Focus (teclado)</div><div style="font-size: 12px; color: #9AA198">Anillo 2 px #8ACFF2 · desfase 3 px</div></div>
+</div>
+<div style="display: flex; align-items: center; gap: 14px; height: 56px">
+<span style="width: 48px; height: 48px; border-radius: 999px; background: #FFFFFF; color: #0B0C0B; display: flex; align-items: center; justify-content: center; flex-shrink: 0"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 2.8v5.4c0 4.3-2.9 7.8-7 9.8-4.1-2-7-5.5-7-9.8V5.8z"></path><path d="M9 10.5l3 2.5 3-2.5"></path></svg></span>
+<div><div style="font-size: 13px; font-weight: 600; color: #FFFFFF">Seleccionado</div><div style="font-size: 12px; color: #9AA198">Círculo blanco · aria-current</div></div>
+</div>
+</div>
+</section>
+
+<section style="background: #FFFFFF; border-radius: 14px; padding: 20px; display: flex; flex-direction: column; gap: 14px; box-shadow: 0 1px 2px rgba(20,30,20,0.06), 0 6px 18px rgba(20,30,20,0.08)">
+<div><h2 style="margin: 0; font-size: 16px; font-weight: 600">Navegación contextual</h2><div style="font-size: 13px; color: #56604F; margin-top: 4px">Filas de 48 px en el panel carbón</div></div>
+<div style="background: #1C1E1D; border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; flex-direction: column; gap: 4px; height: 56px; justify-content: center">
+<span style="height: 40px; border-radius: 10px; display: flex; align-items: center; gap: 10px; padding: 0 14px; color: #C9CEC7; font-size: 14px"><span style="width: 8px; height: 8px; border-radius: 999px; border: 1.5px solid #6B7269; box-sizing: border-box"></span>Partidas<span style="margin-left: auto; font-size: 12px; color: #9AA198">Por defecto</span></span>
+</div>
+<div style="display: flex; flex-direction: column; height: 56px; justify-content: center">
+<span style="height: 40px; border-radius: 10px; background: #2A2D2B; display: flex; align-items: center; gap: 10px; padding: 0 14px; color: #FFFFFF; font-size: 14px"><span style="width: 8px; height: 8px; border-radius: 999px; border: 1.5px solid #9AA198; box-sizing: border-box"></span>Partidas<span style="margin-left: auto; font-size: 12px; color: #9AA198">Hover</span></span>
+</div>
+<div style="display: flex; flex-direction: column; height: 56px; justify-content: center">
+<span style="height: 40px; border-radius: 10px; display: flex; align-items: center; gap: 10px; padding: 0 14px; color: #FFFFFF; font-size: 14px; box-shadow: 0 0 0 2px #8ACFF2"><span style="width: 8px; height: 8px; border-radius: 999px; border: 1.5px solid #9AA198; box-sizing: border-box"></span>Partidas<span style="margin-left: auto; font-size: 12px; color: #9AA198">Focus</span></span>
+</div>
+<div style="display: flex; flex-direction: column; height: 56px; justify-content: center">
+<span style="height: 40px; border-radius: 10px; background: #FFFFFF; display: flex; align-items: center; gap: 10px; padding: 0 14px; color: #0B0C0B; font-size: 14px; font-weight: 600"><span style="width: 8px; height: 8px; border-radius: 999px; background: #2B874C"></span>Partidas<span style="margin-left: auto; font-size: 12px; color: #56604F; font-weight: 400">Seleccionado</span></span>
+</div>
+</div>
+</section>
+
+<section style="background: #FFFFFF; border-radius: 14px; padding: 20px; display: flex; flex-direction: column; gap: 14px; box-shadow: 0 1px 2px rgba(20,30,20,0.06), 0 6px 18px rgba(20,30,20,0.08)">
+<div><h2 style="margin: 0; font-size: 16px; font-weight: 600">Selector de cuenta</h2><div style="font-size: 13px; color: #56604F; margin-top: 4px">Segmento LAN / LAS · estado de LAS</div></div>
+<div style="background: #1C1E1D; border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 12px">
+<div style="height: 56px; display: flex; align-items: center; gap: 12px">
+<span style="width: 150px; display: flex; gap: 4px; padding: 4px; background: #111312; border-radius: 999px"><span style="flex-grow: 1; height: 32px; border-radius: 999px; background: #FFFFFF; color: #0B0C0B; font-size: 13px; font-weight: 600; display: flex; align-items: center; justify-content: center">LAN</span><span style="flex-grow: 1; height: 32px; border-radius: 999px; color: #9AA198; font-size: 13px; display: flex; align-items: center; justify-content: center">LAS</span></span>
+<span style="font-size: 12px; color: #9AA198">Por defecto</span>
+</div>
+<div style="height: 56px; display: flex; align-items: center; gap: 12px">
+<span style="width: 150px; display: flex; gap: 4px; padding: 4px; background: #111312; border-radius: 999px"><span style="flex-grow: 1; height: 32px; border-radius: 999px; background: #FFFFFF; color: #0B0C0B; font-size: 13px; font-weight: 600; display: flex; align-items: center; justify-content: center">LAN</span><span style="flex-grow: 1; height: 32px; border-radius: 999px; background: #262927; color: #FFFFFF; font-size: 13px; display: flex; align-items: center; justify-content: center">LAS</span></span>
+<span style="font-size: 12px; color: #9AA198">Hover · texto blanco</span>
+</div>
+<div style="height: 56px; display: flex; align-items: center; gap: 12px">
+<span style="width: 150px; display: flex; gap: 4px; padding: 4px; background: #111312; border-radius: 999px"><span style="flex-grow: 1; height: 32px; border-radius: 999px; background: #FFFFFF; color: #0B0C0B; font-size: 13px; font-weight: 600; display: flex; align-items: center; justify-content: center">LAN</span><span style="flex-grow: 1; height: 32px; border-radius: 999px; color: #FFFFFF; font-size: 13px; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 0 2px #8ACFF2">LAS</span></span>
+<span style="font-size: 12px; color: #9AA198">Focus · anillo celeste</span>
+</div>
+<div style="height: 56px; display: flex; align-items: center; gap: 12px">
+<span style="width: 150px; display: flex; gap: 4px; padding: 4px; background: #111312; border-radius: 999px"><span style="flex-grow: 1; height: 32px; border-radius: 999px; color: #9AA198; font-size: 13px; display: flex; align-items: center; justify-content: center">LAN</span><span style="flex-grow: 1; height: 32px; border-radius: 999px; background: #FFFFFF; color: #0B0C0B; font-size: 13px; font-weight: 600; display: flex; align-items: center; justify-content: center">LAS</span></span>
+<span style="font-size: 12px; color: #9AA198">Seleccionado · aria-pressed</span>
+</div>
+</div>
+</section>
+
+<section style="background: #FFFFFF; border-radius: 14px; padding: 20px; display: flex; flex-direction: column; gap: 14px; box-shadow: 0 1px 2px rgba(20,30,20,0.06), 0 6px 18px rgba(20,30,20,0.08)">
+<div><h2 style="margin: 0; font-size: 16px; font-weight: 600">Navegación móvil</h2><div style="font-size: 13px; color: #56604F; margin-top: 4px">Pestañas de 56 px de alto · icono + texto</div></div>
+<div style="background: #0B0C0B; border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 12px">
+<div style="height: 56px; display: flex; align-items: center; gap: 14px">
+<span style="width: 84px; height: 56px; border-radius: 12px; color: #A3AAA1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; font-size: 11px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h11M9 12h11M9 18h11"></path><circle cx="4.5" cy="6" r="1"></circle><circle cx="4.5" cy="12" r="1"></circle><circle cx="4.5" cy="18" r="1"></circle></svg>Historial</span>
+<span style="font-size: 12px; color: #9AA198">Por defecto</span>
+</div>
+<div style="height: 56px; display: flex; align-items: center; gap: 14px">
+<span style="width: 84px; height: 56px; border-radius: 12px; background: #1F2220; color: #FFFFFF; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; font-size: 11px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h11M9 12h11M9 18h11"></path><circle cx="4.5" cy="6" r="1"></circle><circle cx="4.5" cy="12" r="1"></circle><circle cx="4.5" cy="18" r="1"></circle></svg>Historial</span>
+<span style="font-size: 12px; color: #9AA198">Hover / presionado</span>
+</div>
+<div style="height: 56px; display: flex; align-items: center; gap: 14px">
+<span style="width: 84px; height: 56px; border-radius: 12px; color: #FFFFFF; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; font-size: 11px; box-shadow: 0 0 0 2px #8ACFF2"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h11M9 12h11M9 18h11"></path><circle cx="4.5" cy="6" r="1"></circle><circle cx="4.5" cy="12" r="1"></circle><circle cx="4.5" cy="18" r="1"></circle></svg>Historial</span>
+<span style="font-size: 12px; color: #9AA198">Focus</span>
+</div>
+<div style="height: 56px; display: flex; align-items: center; gap: 14px">
+<span style="width: 84px; height: 56px; border-radius: 12px; background: #FFFFFF; color: #0B0C0B; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; font-size: 11px; font-weight: 600"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h11M9 12h11M9 18h11"></path><circle cx="4.5" cy="6" r="1"></circle><circle cx="4.5" cy="12" r="1"></circle><circle cx="4.5" cy="18" r="1"></circle></svg>Historial</span>
+<span style="font-size: 12px; color: #9AA198">Seleccionado</span>
+</div>
+</div>
+</section>
+
+</div>
+</div>
+</body>
+</html>
