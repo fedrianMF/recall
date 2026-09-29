@@ -1,284 +1,533 @@
 <!doctype html>
 <html lang="es">
+
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&amp;family=Geist:wght@400..700&amp;display=swap" rel="stylesheet">
-<style>
-body{margin:0;font-family:'Geist',system-ui,sans-serif;background:#0B0C0B;color:#151915;-webkit-font-smoothing:antialiased}
-button{font-family:inherit;cursor:pointer}
-.num{font-variant-numeric:tabular-nums}
-.rail:hover{background:#2C302D !important;color:#FFFFFF !important}
-.rail:focus-visible,.ctx:focus-visible,.seg:focus-visible{outline:2px solid #8ACFF2;outline-offset:3px}
-.ctx:hover{background:#2A2D2B !important;color:#FFFFFF !important}
-.seg:hover{color:#FFFFFF !important}
-.ghost:hover{background:#F4F7F3 !important}
-.ghost:focus-visible,.solid:focus-visible{outline:2px solid #1F6F9C;outline-offset:3px}
-.solid:hover{background:#2A2D2B !important}
-a{color:#1F6F9C}a:hover{color:#16557A}
-</style>
-<title>Recall · Resumen de rendimiento (desktop)</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&amp;family=Geist:wght@400..700&amp;display=swap"
+    rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Geist', system-ui, sans-serif;
+      background: #0B0C0B;
+      color: #151915;
+      -webkit-font-smoothing: antialiased
+    }
+
+    button {
+      font-family: inherit;
+      cursor: pointer
+    }
+
+    .num {
+      font-variant-numeric: tabular-nums
+    }
+
+    .rail:hover {
+      background: #2C302D !important;
+      color: #FFFFFF !important
+    }
+
+    .rail:focus-visible,
+    .ctx:focus-visible,
+    .seg:focus-visible {
+      outline: 2px solid #8ACFF2;
+      outline-offset: 3px
+    }
+
+    .ctx:hover {
+      background: #2A2D2B !important;
+      color: #FFFFFF !important
+    }
+
+    .seg:hover {
+      color: #FFFFFF !important
+    }
+
+    .ghost:hover {
+      background: #F4F7F3 !important
+    }
+
+    .ghost:focus-visible,
+    .solid:focus-visible {
+      outline: 2px solid #1F6F9C;
+      outline-offset: 3px
+    }
+
+    .solid:hover {
+      background: #2A2D2B !important
+    }
+
+    a {
+      color: #1F6F9C
+    }
+
+    a:hover {
+      color: #16557A
+    }
+  </style>
+  <title>Recall · Resumen de rendimiento (desktop)</title>
 </head>
+
 <body>
-<div style="width: 1440px; height: 1000px; display: flex; background: #0B0C0B; overflow: hidden">
+  <div style="width: 1440px; height: 1000px; display: flex; background: #0B0C0B; overflow: hidden">
 
-<nav aria-label="Navegación principal" style="width: 72px; flex-shrink: 0; display: flex; flex-direction: column; align-items: center; padding: 24px 0; gap: 12px; box-sizing: border-box">
-<div aria-label="Recall" style="width: 44px; height: 44px; border-radius: 999px; background: #FFFFFF; color: #0B0C0B; display: flex; align-items: center; justify-content: center; margin-bottom: 36px">
-<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18.8 12a6.8 6.8 0 1 1-3.1-5.7"></path><path d="M16.2 3.3l-.3 3.3-3.2-.4"></path><circle cx="12" cy="12" r="2.2" fill="currentColor" stroke="none"></circle></svg>
-</div>
-<button type="button" aria-label="Resumen" aria-current="page" style="width: 48px; height: 48px; border: 0; border-radius: 999px; background: #FFFFFF; color: #0B0C0B; display: flex; align-items: center; justify-content: center">
-<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="3.5" width="7" height="9" rx="2"></rect><rect x="13.5" y="3.5" width="7" height="5" rx="2"></rect><rect x="13.5" y="11.5" width="7" height="9" rx="2"></rect><rect x="3.5" y="15.5" width="7" height="5" rx="2"></rect></svg>
-</button>
-<button type="button" class="rail" aria-label="Campeones" style="width: 48px; height: 48px; border: 0; border-radius: 999px; background: #1F2220; color: #A3AAA1; display: flex; align-items: center; justify-content: center">
-<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 2.8v5.4c0 4.3-2.9 7.8-7 9.8-4.1-2-7-5.5-7-9.8V5.8z"></path><path d="M9 10.5l3 2.5 3-2.5"></path></svg>
-</button>
-<button type="button" class="rail" aria-label="Historial" style="width: 48px; height: 48px; border: 0; border-radius: 999px; background: #1F2220; color: #A3AAA1; display: flex; align-items: center; justify-content: center">
-<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h11M9 12h11M9 18h11"></path><circle cx="4.5" cy="6" r="1"></circle><circle cx="4.5" cy="12" r="1"></circle><circle cx="4.5" cy="18" r="1"></circle></svg>
-</button>
-<div style="flex-grow: 1"></div>
-<button type="button" class="rail" aria-label="Configuración" style="width: 48px; height: 48px; border: 0; border-radius: 999px; background: #1F2220; color: #A3AAA1; display: flex; align-items: center; justify-content: center">
-<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"></path><circle cx="15" cy="7" r="2"></circle><circle cx="9" cy="17" r="2"></circle></svg>
-</button>
-</nav>
+    <nav aria-label="Navegación principal"
+      style="width: 72px; flex-shrink: 0; display: flex; flex-direction: column; align-items: center; padding: 24px 0; gap: 12px; box-sizing: border-box">
+      <div aria-label="Recall"
+        style="width: 44px; height: 44px; border-radius: 999px; background: #FFFFFF; color: #0B0C0B; display: flex; align-items: center; justify-content: center; margin-bottom: 36px">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18.8 12a6.8 6.8 0 1 1-3.1-5.7"></path>
+          <path d="M16.2 3.3l-.3 3.3-3.2-.4"></path>
+          <circle cx="12" cy="12" r="2.2" fill="currentColor" stroke="none"></circle>
+        </svg>
+      </div>
+      <button type="button" aria-label="Resumen" aria-current="page"
+        style="width: 48px; height: 48px; border: 0; border-radius: 999px; background: #FFFFFF; color: #0B0C0B; display: flex; align-items: center; justify-content: center">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3.5" y="3.5" width="7" height="9" rx="2"></rect>
+          <rect x="13.5" y="3.5" width="7" height="5" rx="2"></rect>
+          <rect x="13.5" y="11.5" width="7" height="9" rx="2"></rect>
+          <rect x="3.5" y="15.5" width="7" height="5" rx="2"></rect>
+        </svg>
+      </button>
+      <button type="button" class="rail" aria-label="Campeones"
+        style="width: 48px; height: 48px; border: 0; border-radius: 999px; background: #1F2220; color: #A3AAA1; display: flex; align-items: center; justify-content: center">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 3l7 2.8v5.4c0 4.3-2.9 7.8-7 9.8-4.1-2-7-5.5-7-9.8V5.8z"></path>
+          <path d="M9 10.5l3 2.5 3-2.5"></path>
+        </svg>
+      </button>
+      <button type="button" class="rail" aria-label="Historial"
+        style="width: 48px; height: 48px; border: 0; border-radius: 999px; background: #1F2220; color: #A3AAA1; display: flex; align-items: center; justify-content: center">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 6h11M9 12h11M9 18h11"></path>
+          <circle cx="4.5" cy="6" r="1"></circle>
+          <circle cx="4.5" cy="12" r="1"></circle>
+          <circle cx="4.5" cy="18" r="1"></circle>
+        </svg>
+      </button>
+      <div style="flex-grow: 1"></div>
+      <button type="button" class="rail" aria-label="Configuración"
+        style="width: 48px; height: 48px; border: 0; border-radius: 999px; background: #1F2220; color: #A3AAA1; display: flex; align-items: center; justify-content: center">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 7h9M17 7h3M4 17h3M11 17h9"></path>
+          <circle cx="15" cy="7" r="2"></circle>
+          <circle cx="9" cy="17" r="2"></circle>
+        </svg>
+      </button>
+    </nav>
 
-<div style="flex-grow: 1; display: flex; background: #1C1E1D; border-radius: 20px 0 0 20px">
+    <div style="flex-grow: 1; display: flex; background: #1C1E1D; border-radius: 20px 0 0 20px">
 
-<aside aria-label="Tus cuentas" style="width: 280px; flex-shrink: 0; padding: 32px 24px 24px; box-sizing: border-box; display: flex; flex-direction: column; gap: 16px; color: #FFFFFF">
-<div style="font-size: 13px; color: #9AA198">Tus cuentas</div>
-<div role="group" aria-label="Seleccionar cuenta" style="display: flex; gap: 4px; padding: 4px; background: #111312; border-radius: 999px">
-<button type="button" aria-pressed="true" style="flex-grow: 1; height: 40px; border: 0; border-radius: 999px; background: #FFFFFF; color: #0B0C0B; font-size: 14px; font-weight: 600">LAN</button>
-<button type="button" class="seg" aria-pressed="false" style="flex-grow: 1; height: 40px; border: 0; border-radius: 999px; background: transparent; color: #9AA198; font-size: 14px; font-weight: 500">LAS</button>
-</div>
-<div style="background: #262927; border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 14px">
-<div style="display: flex; align-items: center; gap: 12px">
-<svg width="40" height="40" viewBox="0 0 48 48" aria-hidden="true"><path d="M24 3l18 10.5v21L24 45 6 34.5v-21z" fill="#F4E7C4" stroke="#C99A3A" stroke-width="2"></path><path d="M15 21l9-6 9 6M15 30l9-6 9 6" fill="none" stroke="#8A6414" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-<div style="display: flex; flex-direction: column; gap: 2px; min-width: 0">
-<div style="font-size: 16px; font-weight: 600">[Tu Riot ID]</div>
-<div style="font-size: 13px; color: #9AA198">#LAN</div>
-</div>
-</div>
-<div style="height: 1px; background: #343835"></div>
-<div style="display: flex; justify-content: space-between; font-size: 13px">
-<span style="color: #9AA198">Región</span><span>Latinoamérica Norte</span>
-</div>
-<div style="display: flex; justify-content: space-between; font-size: 13px">
-<span style="color: #9AA198">Rango actual</span><span class="num" style="color: #E6C77E; font-weight: 600">Gold II · 45 LP</span>
-</div>
-</div>
+      <aside aria-label="Tus cuentas"
+        style="width: 280px; flex-shrink: 0; padding: 32px 24px 24px; box-sizing: border-box; display: flex; flex-direction: column; gap: 16px; color: #FFFFFF">
+        <div style="font-size: 13px; color: #9AA198">Tus cuentas</div>
+        <div role="group" aria-label="Seleccionar cuenta"
+          style="display: flex; gap: 4px; padding: 4px; background: #111312; border-radius: 999px">
+          <button type="button" aria-pressed="true"
+            style="flex-grow: 1; height: 40px; border: 0; border-radius: 999px; background: #FFFFFF; color: #0B0C0B; font-size: 14px; font-weight: 600">LAN</button>
+          <button type="button" class="seg" aria-pressed="false"
+            style="flex-grow: 1; height: 40px; border: 0; border-radius: 999px; background: transparent; color: #9AA198; font-size: 14px; font-weight: 500">LAS</button>
+        </div>
+        <div
+          style="background: #262927; border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 14px">
+          <div style="display: flex; align-items: center; gap: 12px">
+            <svg width="40" height="40" viewBox="0 0 48 48" aria-hidden="true">
+              <path d="M24 3l18 10.5v21L24 45 6 34.5v-21z" fill="#F4E7C4" stroke="#C99A3A" stroke-width="2"></path>
+              <path d="M15 21l9-6 9 6M15 30l9-6 9 6" fill="none" stroke="#8A6414" stroke-width="2.6"
+                stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+            <div style="display: flex; flex-direction: column; gap: 2px; min-width: 0">
+              <div style="font-size: 16px; font-weight: 600">[Tu Riot ID]</div>
+              <div style="font-size: 13px; color: #9AA198">#LAN</div>
+            </div>
+          </div>
+          <div style="height: 1px; background: #343835"></div>
+          <div style="display: flex; justify-content: space-between; font-size: 13px">
+            <span style="color: #9AA198">Región</span><span>Latinoamérica Norte</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; font-size: 13px">
+            <span style="color: #9AA198">Rango actual</span><span class="num"
+              style="color: #E6C77E; font-weight: 600">Gold II · 45 LP</span>
+          </div>
+        </div>
 
-<div style="font-size: 13px; color: #9AA198; margin-top: 16px">En esta vista</div>
-<nav aria-label="Secciones del resumen" style="display: flex; flex-direction: column; gap: 4px; margin: 0 -8px">
-<button type="button" aria-current="true" style="height: 48px; border: 0; border-radius: 10px; background: #FFFFFF; color: #0B0C0B; display: flex; align-items: center; gap: 12px; padding: 0 16px; font-size: 15px; font-weight: 600; text-align: left">
-<span style="width: 8px; height: 8px; border-radius: 999px; background: #2B874C"></span>Visión general</button>
-<button type="button" class="ctx" style="height: 48px; border: 0; border-radius: 10px; background: transparent; color: #C9CEC7; display: flex; align-items: center; gap: 12px; padding: 0 16px; font-size: 15px; text-align: left">
-<span style="width: 8px; height: 8px; border-radius: 999px; border: 1.5px solid #6B7269; box-sizing: border-box"></span>Winrate</button>
-<button type="button" class="ctx" style="height: 48px; border: 0; border-radius: 10px; background: transparent; color: #C9CEC7; display: flex; align-items: center; gap: 12px; padding: 0 16px; font-size: 15px; text-align: left">
-<span style="width: 8px; height: 8px; border-radius: 999px; border: 1.5px solid #6B7269; box-sizing: border-box"></span>Partidas</button>
-<button type="button" class="ctx" style="height: 48px; border: 0; border-radius: 10px; background: transparent; color: #C9CEC7; display: flex; align-items: center; gap: 12px; padding: 0 16px; font-size: 15px; text-align: left">
-<span style="width: 8px; height: 8px; border-radius: 999px; border: 1.5px solid #6B7269; box-sizing: border-box"></span>Rendimiento en partida</button>
-<button type="button" class="ctx" style="height: 48px; border: 0; border-radius: 10px; background: transparent; color: #C9CEC7; display: flex; align-items: center; gap: 12px; padding: 0 16px; font-size: 15px; text-align: left">
-<span style="width: 8px; height: 8px; border-radius: 999px; border: 1.5px solid #6B7269; box-sizing: border-box"></span>Rango</button>
-</nav>
-<div style="flex-grow: 1"></div>
-<button type="button" class="ctx" style="align-self: flex-start; height: 44px; border: 1px solid #343835; border-radius: 10px; background: #111312; color: #FFFFFF; display: flex; align-items: center; gap: 10px; padding: 0 16px; font-size: 14px">
-<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg>Vincular cuenta</button>
-</aside>
+        <div style="font-size: 13px; color: #9AA198; margin-top: 16px">En esta vista</div>
+        <nav aria-label="Secciones del resumen" style="display: flex; flex-direction: column; gap: 4px; margin: 0 -8px">
+          <button type="button" aria-current="true"
+            style="height: 48px; border: 0; border-radius: 10px; background: #FFFFFF; color: #0B0C0B; display: flex; align-items: center; gap: 12px; padding: 0 16px; font-size: 15px; font-weight: 600; text-align: left">
+            <span style="width: 8px; height: 8px; border-radius: 999px; background: #2B874C"></span>Visión
+            general</button>
+          <button type="button" class="ctx"
+            style="height: 48px; border: 0; border-radius: 10px; background: transparent; color: #C9CEC7; display: flex; align-items: center; gap: 12px; padding: 0 16px; font-size: 15px; text-align: left">
+            <span
+              style="width: 8px; height: 8px; border-radius: 999px; border: 1.5px solid #6B7269; box-sizing: border-box"></span>Winrate</button>
+          <button type="button" class="ctx"
+            style="height: 48px; border: 0; border-radius: 10px; background: transparent; color: #C9CEC7; display: flex; align-items: center; gap: 12px; padding: 0 16px; font-size: 15px; text-align: left">
+            <span
+              style="width: 8px; height: 8px; border-radius: 999px; border: 1.5px solid #6B7269; box-sizing: border-box"></span>Partidas</button>
+          <button type="button" class="ctx"
+            style="height: 48px; border: 0; border-radius: 10px; background: transparent; color: #C9CEC7; display: flex; align-items: center; gap: 12px; padding: 0 16px; font-size: 15px; text-align: left">
+            <span
+              style="width: 8px; height: 8px; border-radius: 999px; border: 1.5px solid #6B7269; box-sizing: border-box"></span>Rendimiento
+            en partida</button>
+          <button type="button" class="ctx"
+            style="height: 48px; border: 0; border-radius: 10px; background: transparent; color: #C9CEC7; display: flex; align-items: center; gap: 12px; padding: 0 16px; font-size: 15px; text-align: left">
+            <span
+              style="width: 8px; height: 8px; border-radius: 999px; border: 1.5px solid #6B7269; box-sizing: border-box"></span>Rango</button>
+        </nav>
+        <div style="flex-grow: 1"></div>
+        <button type="button" class="ctx"
+          style="align-self: flex-start; height: 44px; border: 1px solid #343835; border-radius: 10px; background: #111312; color: #FFFFFF; display: flex; align-items: center; gap: 10px; padding: 0 16px; font-size: 14px">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+            stroke-linecap="round">
+            <path d="M12 5v14M5 12h14"></path>
+          </svg>Vincular cuenta</button>
+      </aside>
 
-<main style="flex-grow: 1; background: #DCE5D9; border-radius: 20px 0 0 20px; padding: 36px 40px 40px; box-sizing: border-box; display: flex; flex-direction: column; gap: 28px">
+      <main
+        style="flex-grow: 1; background: #DCE5D9; border-radius: 20px 0 0 20px; padding: 36px 40px 40px; box-sizing: border-box; display: flex; flex-direction: column; gap: 28px">
 
-<header style="display: flex; flex-direction: column; gap: 24px">
-<div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 24px">
-<h1 style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 40px; line-height: 1.05; font-weight: 700; letter-spacing: -0.02em">Resumen de rendimiento</h1>
-<div style="display: flex; gap: 12px; align-items: center">
-<button type="button" class="ghost" aria-haspopup="listbox" style="height: 52px; border: 0; border-radius: 10px; background: #FFFFFF; color: #151915; display: flex; align-items: center; gap: 12px; padding: 0 16px; box-shadow: 0 1px 2px rgba(20,30,20,0.05)">
-<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#56604F" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="15" rx="3"></rect><path d="M3.5 10h17M8 3v4M16 3v4"></path></svg>
-<span style="display: flex; flex-direction: column; align-items: flex-start; gap: 1px">
-<span style="font-size: 11px; color: #56604F">Periodo</span>
-<span style="font-size: 14px; font-weight: 600">Últimas 105 partidas</span>
-</span>
-<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#56604F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"></path></svg>
-</button>
-<button type="button" class="solid" style="height: 52px; border: 0; border-radius: 10px; background: #0B0C0B; color: #FFFFFF; display: flex; align-items: center; gap: 10px; padding: 0 20px; font-size: 14px; font-weight: 600">
-<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11a8 8 0 0 0-14.3-4.3L4 8.5"></path><path d="M4 4v4.5h4.5"></path><path d="M4 13a8 8 0 0 0 14.3 4.3L20 15.5"></path><path d="M20 20v-4.5h-4.5"></path></svg>
-Actualizar datos</button>
-</div>
-</div>
+        <header style="display: flex; flex-direction: column; gap: 24px">
+          <div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 24px">
+            <h1
+              style="margin: 0; font-family: 'Bricolage Grotesque', sans-serif; font-size: 40px; line-height: 1.05; font-weight: 700; letter-spacing: -0.02em">
+              Resumen de rendimiento</h1>
+            <div style="display: flex; gap: 12px; align-items: center">
+              <button type="button" class="ghost" aria-haspopup="listbox"
+                style="height: 52px; border: 0; border-radius: 10px; background: #FFFFFF; color: #151915; display: flex; align-items: center; gap: 12px; padding: 0 16px; box-shadow: 0 1px 2px rgba(20,30,20,0.05)">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#56604F" stroke-width="1.8"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3.5" y="5" width="17" height="15" rx="3"></rect>
+                  <path d="M3.5 10h17M8 3v4M16 3v4"></path>
+                </svg>
+                <span style="display: flex; flex-direction: column; align-items: flex-start; gap: 1px">
+                  <span style="font-size: 11px; color: #56604F">Periodo</span>
+                  <span style="font-size: 14px; font-weight: 600">Últimas 105 partidas</span>
+                </span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#56604F" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M6 9l6 6 6-6"></path>
+                </svg>
+              </button>
+              <button type="button" class="solid"
+                style="height: 52px; border: 0; border-radius: 10px; background: #0B0C0B; color: #FFFFFF; display: flex; align-items: center; gap: 10px; padding: 0 20px; font-size: 14px; font-weight: 600">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20 11a8 8 0 0 0-14.3-4.3L4 8.5"></path>
+                  <path d="M4 4v4.5h4.5"></path>
+                  <path d="M4 13a8 8 0 0 0 14.3 4.3L20 15.5"></path>
+                  <path d="M20 20v-4.5h-4.5"></path>
+                </svg>
+                Actualizar datos</button>
+            </div>
+          </div>
 
-<div style="display: flex; align-items: center; gap: 20px">
-<div style="width: 84px; height: 84px; border-radius: 999px; background: #FFFFFF; display: flex; align-items: center; justify-content: center; box-shadow: 0 1px 2px rgba(20,30,20,0.05), 0 8px 24px rgba(20,30,20,0.06)">
-<svg width="52" height="52" viewBox="0 0 48 48" aria-hidden="true"><path d="M24 3l18 10.5v21L24 45 6 34.5v-21z" fill="#F4E7C4" stroke="#C99A3A" stroke-width="2"></path><path d="M15 21l9-6 9 6M15 30l9-6 9 6" fill="none" stroke="#8A6414" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-</div>
-<div style="display: flex; flex-direction: column; gap: 6px">
-<div style="font-size: 13px; color: #56604F">Cuenta LAN · Latinoamérica Norte</div>
-<div style="display: flex; align-items: baseline; gap: 8px">
-<span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 30px; font-weight: 700; letter-spacing: -0.01em">[Tu Riot ID]</span>
-<span style="font-size: 18px; color: #56604F">#LAN</span>
-</div>
-<div style="display: flex; gap: 8px">
-<span class="num" style="height: 28px; display: inline-flex; align-items: center; gap: 6px; padding: 0 12px; border-radius: 999px; background: #F4E7C4; color: #6E4F0E; font-size: 13px; font-weight: 600"><span style="width: 6px; height: 6px; border-radius: 999px; background: #A77B1E"></span>Gold II · 45 LP</span>
-<span style="height: 28px; display: inline-flex; align-items: center; padding: 0 12px; border-radius: 999px; background: #FFFFFF; color: #151915; font-size: 13px; font-weight: 500">Solo/Dúo</span>
-</div>
-</div>
-</div>
-</header>
+          <div style="display: flex; align-items: center; gap: 20px">
+            <div
+              style="width: 84px; height: 84px; border-radius: 999px; background: #FFFFFF; display: flex; align-items: center; justify-content: center; box-shadow: 0 1px 2px rgba(20,30,20,0.05), 0 8px 24px rgba(20,30,20,0.06)">
+              <svg width="52" height="52" viewBox="0 0 48 48" aria-hidden="true">
+                <path d="M24 3l18 10.5v21L24 45 6 34.5v-21z" fill="#F4E7C4" stroke="#C99A3A" stroke-width="2"></path>
+                <path d="M15 21l9-6 9 6M15 30l9-6 9 6" fill="none" stroke="#8A6414" stroke-width="2.6"
+                  stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 6px">
+              <div style="font-size: 13px; color: #56604F">Cuenta LAN · Latinoamérica Norte</div>
+              <div style="display: flex; align-items: baseline; gap: 8px">
+                <span
+                  style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 30px; font-weight: 700; letter-spacing: -0.01em">[Tu
+                  Riot ID]</span>
+                <span style="font-size: 18px; color: #56604F">#LAN</span>
+              </div>
+              <div style="display: flex; gap: 8px">
+                <span class="num"
+                  style="height: 28px; display: inline-flex; align-items: center; gap: 6px; padding: 0 12px; border-radius: 999px; background: #F4E7C4; color: #6E4F0E; font-size: 13px; font-weight: 600"><span
+                    style="width: 6px; height: 6px; border-radius: 999px; background: #A77B1E"></span>Gold II · 45
+                  LP</span>
+                <span
+                  style="height: 28px; display: inline-flex; align-items: center; padding: 0 12px; border-radius: 999px; background: #FFFFFF; color: #151915; font-size: 13px; font-weight: 500">Solo/Dúo</span>
+              </div>
+            </div>
+          </div>
+        </header>
 
-<div style="display: grid; grid-template-columns: 560px 432px; gap: 16px">
+        <div style="display: grid; grid-template-columns: 560px 432px; gap: 16px">
 
-<section aria-labelledby="wr-t" style="background: #FFFFFF; border-radius: 16px; padding: 28px 32px; box-sizing: border-box; height: 472px; display: flex; flex-direction: column; box-shadow: 0 1px 2px rgba(20,30,20,0.06), 0 6px 18px rgba(20,30,20,0.08)">
-<div style="display: flex; justify-content: space-between; align-items: center">
-<h2 id="wr-t" style="margin: 0; font-size: 16px; font-weight: 600">Winrate</h2>
-<span style="font-size: 13px; color: #56604F">Solo/Dúo · 105 partidas</span>
-</div>
-<div style="flex-grow: 1; display: flex; align-items: center; justify-content: space-between; gap: 16px">
-<div style="display: flex; flex-direction: column; gap: 16px">
-<div class="num" style="display: flex; align-items: flex-start; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; letter-spacing: -0.04em; color: #151915">
-<span style="font-size: 116px; line-height: 0.9">52.4</span><span style="font-size: 44px; line-height: 1; margin-top: 8px; margin-left: 4px; color: #2B874C">%</span>
-</div>
-<div style="font-size: 15px; color: #56604F; max-width: 220px; line-height: 1.45">de las partidas clasificatorias ganadas en este periodo.</div>
-<span style="align-self: flex-start; height: 32px; display: inline-flex; align-items: center; gap: 6px; padding: 0 12px; border-radius: 999px; background: #DCEFE2; color: #1B5C33; font-size: 13px; font-weight: 600">
-<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"></path></svg>
-Por encima del 50%</span>
-</div>
-<div style="position: relative; width: 232px; height: 232px; flex-shrink: 0">
-<svg width="232" height="232" viewBox="0 0 232 232" role="img" aria-label="Winrate 52.4%: 55 victorias y 50 derrotas">
-<g transform="rotate(-90 116 116)">
-<circle cx="116" cy="116" r="96" fill="none" stroke="#2B874C" stroke-width="20" stroke-dasharray="310.07 603.19" stroke-dashoffset="-3"></circle>
-<circle cx="116" cy="116" r="96" fill="none" stroke="#E0401F" stroke-width="20" stroke-dasharray="281.12 603.19" stroke-dashoffset="-319.07"></circle>
-</g>
-<line x1="116" y1="200" x2="116" y2="230" stroke="#151915" stroke-width="2" stroke-linecap="round"></line>
-</svg>
-<div style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px">
-<div class="num" style="display: flex; align-items: center; gap: 6px; color: #1B5C33">
-<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>
-<span style="font-size: 26px; font-weight: 700; font-family: 'Bricolage Grotesque', sans-serif">55</span><span style="font-size: 13px; color: #56604F">V</span>
-</div>
-<div style="width: 56px; height: 1px; background: #E1E6DF"></div>
-<div class="num" style="display: flex; align-items: center; gap: 6px; color: #A02A12">
-<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"></path></svg>
-<span style="font-size: 26px; font-weight: 700; font-family: 'Bricolage Grotesque', sans-serif">50</span><span style="font-size: 13px; color: #56604F">D</span>
-</div>
-</div>
-</div>
-</div>
-<div style="display: flex; gap: 20px; align-items: center; padding-top: 18px; border-top: 1px solid #EDF1EB; font-size: 13px; color: #56604F">
-<span style="display: inline-flex; align-items: center; gap: 8px"><span style="width: 12px; height: 12px; border-radius: 4px; background: #2B874C"></span>Victorias</span>
-<span style="display: inline-flex; align-items: center; gap: 8px"><span style="width: 12px; height: 12px; border-radius: 4px; background: #E0401F"></span>Derrotas</span>
-<span style="display: inline-flex; align-items: center; gap: 8px; margin-left: auto"><span style="width: 2px; height: 14px; border-radius: 2px; background: #151915"></span>Referencia 50%</span>
-</div>
-</section>
+          <section aria-labelledby="wr-t"
+            style="background: #FFFFFF; border-radius: 16px; padding: 28px 32px; box-sizing: border-box; height: 472px; display: flex; flex-direction: column; box-shadow: 0 1px 2px rgba(20,30,20,0.06), 0 6px 18px rgba(20,30,20,0.08)">
+            <div style="display: flex; justify-content: space-between; align-items: center">
+              <h2 id="wr-t" style="margin: 0; font-size: 16px; font-weight: 600">Winrate</h2>
+              <span style="font-size: 13px; color: #56604F">Solo/Dúo · 105 partidas</span>
+            </div>
+            <div style="flex-grow: 1; display: flex; align-items: center; justify-content: space-between; gap: 16px">
+              <div style="display: flex; flex-direction: column; gap: 16px">
+                <div class="num"
+                  style="display: flex; align-items: flex-start; font-family: 'Bricolage Grotesque', sans-serif; font-weight: 700; letter-spacing: -0.04em; color: #151915">
+                  <span style="font-size: 116px; line-height: 0.9">52.4</span><span
+                    style="font-size: 44px; line-height: 1; margin-top: 8px; margin-left: 4px; color: #2B874C">%</span>
+                </div>
+                <div style="font-size: 15px; color: #56604F; max-width: 220px; line-height: 1.45">de las partidas
+                  clasificatorias ganadas en este periodo.</div>
+                <span
+                  style="align-self: flex-start; height: 32px; display: inline-flex; align-items: center; gap: 6px; padding: 0 12px; border-radius: 999px; background: #DCEFE2; color: #1B5C33; font-size: 13px; font-weight: 600">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M7 17L17 7M9 7h8v8"></path>
+                  </svg>
+                  Por encima del 50%</span>
+              </div>
+              <div style="position: relative; width: 232px; height: 232px; flex-shrink: 0">
+                <svg width="232" height="232" viewBox="0 0 232 232" role="img"
+                  aria-label="Winrate 52.4%: 55 victorias y 50 derrotas">
+                  <g transform="rotate(-90 116 116)">
+                    <circle cx="116" cy="116" r="96" fill="none" stroke="#2B874C" stroke-width="20"
+                      stroke-dasharray="310.07 603.19" stroke-dashoffset="-3"></circle>
+                    <circle cx="116" cy="116" r="96" fill="none" stroke="#E0401F" stroke-width="20"
+                      stroke-dasharray="281.12 603.19" stroke-dashoffset="-319.07"></circle>
+                  </g>
+                  <line x1="116" y1="200" x2="116" y2="230" stroke="#151915" stroke-width="2" stroke-linecap="round">
+                  </line>
+                </svg>
+                <div
+                  style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px">
+                  <div class="num" style="display: flex; align-items: center; gap: 6px; color: #1B5C33">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+                      stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M5 12.5l4.5 4.5L19 7.5"></path>
+                    </svg>
+                    <span
+                      style="font-size: 26px; font-weight: 700; font-family: 'Bricolage Grotesque', sans-serif">55</span><span
+                      style="font-size: 13px; color: #56604F">V</span>
+                  </div>
+                  <div style="width: 56px; height: 1px; background: #E1E6DF"></div>
+                  <div class="num" style="display: flex; align-items: center; gap: 6px; color: #A02A12">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+                      stroke-linecap="round">
+                      <path d="M6.5 6.5l11 11M17.5 6.5l-11 11"></path>
+                    </svg>
+                    <span
+                      style="font-size: 26px; font-weight: 700; font-family: 'Bricolage Grotesque', sans-serif">50</span><span
+                      style="font-size: 13px; color: #56604F">D</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              style="display: flex; gap: 20px; align-items: center; padding-top: 18px; border-top: 1px solid #EDF1EB; font-size: 13px; color: #56604F">
+              <span style="display: inline-flex; align-items: center; gap: 8px"><span
+                  style="width: 12px; height: 12px; border-radius: 4px; background: #2B874C"></span>Victorias</span>
+              <span style="display: inline-flex; align-items: center; gap: 8px"><span
+                  style="width: 12px; height: 12px; border-radius: 4px; background: #E0401F"></span>Derrotas</span>
+              <span style="display: inline-flex; align-items: center; gap: 8px; margin-left: auto"><span
+                  style="width: 2px; height: 14px; border-radius: 2px; background: #151915"></span>Referencia 50%</span>
+            </div>
+          </section>
 
-<div style="display: flex; flex-direction: column; gap: 16px">
-<section aria-labelledby="pj-t" style="background: #FFFFFF; border-radius: 16px; padding: 24px 28px; box-sizing: border-box; height: 196px; display: flex; flex-direction: column; gap: 14px; box-shadow: 0 1px 2px rgba(20,30,20,0.06), 0 6px 18px rgba(20,30,20,0.08)">
-<h2 id="pj-t" style="margin: 0; font-size: 16px; font-weight: 600">Partidas jugadas</h2>
-<div style="display: flex; align-items: flex-end; justify-content: space-between">
-<span class="num" style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 60px; line-height: 0.9; font-weight: 700; letter-spacing: -0.03em">105</span>
-<div style="display: flex; gap: 24px">
-<div style="display: flex; flex-direction: column; gap: 4px">
-<span style="display: inline-flex; align-items: center; gap: 4px; font-size: 13px; color: #1B5C33; font-weight: 600"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>Victorias</span>
-<span class="num" style="font-size: 28px; font-weight: 700; font-family: 'Bricolage Grotesque', sans-serif">55</span>
-</div>
-<div style="display: flex; flex-direction: column; gap: 4px">
-<span style="display: inline-flex; align-items: center; gap: 4px; font-size: 13px; color: #A02A12; font-weight: 600"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"></path></svg>Derrotas</span>
-<span class="num" style="font-size: 28px; font-weight: 700; font-family: 'Bricolage Grotesque', sans-serif">50</span>
-</div>
-</div>
-</div>
-<div role="img" aria-label="55 victorias y 50 derrotas de 105" style="display: flex; gap: 3px; height: 12px">
-<div style="width: 52.38%; background: #2B874C; border-radius: 999px 3px 3px 999px"></div>
-<div style="flex-grow: 1; background: #E0401F; border-radius: 3px 999px 999px 3px"></div>
-</div>
-</section>
+          <div style="display: flex; flex-direction: column; gap: 16px">
+            <section aria-labelledby="pj-t"
+              style="background: #FFFFFF; border-radius: 16px; padding: 24px 28px; box-sizing: border-box; height: 196px; display: flex; flex-direction: column; gap: 14px; box-shadow: 0 1px 2px rgba(20,30,20,0.06), 0 6px 18px rgba(20,30,20,0.08)">
+              <h2 id="pj-t" style="margin: 0; font-size: 16px; font-weight: 600">Partidas jugadas</h2>
+              <div style="display: flex; align-items: flex-end; justify-content: space-between">
+                <span class="num"
+                  style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 60px; line-height: 0.9; font-weight: 700; letter-spacing: -0.03em">105</span>
+                <div style="display: flex; gap: 24px">
+                  <div style="display: flex; flex-direction: column; gap: 4px">
+                    <span
+                      style="display: inline-flex; align-items: center; gap: 4px; font-size: 13px; color: #1B5C33; font-weight: 600"><svg
+                        width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M5 12.5l4.5 4.5L19 7.5"></path>
+                      </svg>Victorias</span>
+                    <span class="num"
+                      style="font-size: 28px; font-weight: 700; font-family: 'Bricolage Grotesque', sans-serif">55</span>
+                  </div>
+                  <div style="display: flex; flex-direction: column; gap: 4px">
+                    <span
+                      style="display: inline-flex; align-items: center; gap: 4px; font-size: 13px; color: #A02A12; font-weight: 600"><svg
+                        width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"
+                        stroke-linecap="round">
+                        <path d="M6.5 6.5l11 11M17.5 6.5l-11 11"></path>
+                      </svg>Derrotas</span>
+                    <span class="num"
+                      style="font-size: 28px; font-weight: 700; font-family: 'Bricolage Grotesque', sans-serif">50</span>
+                  </div>
+                </div>
+              </div>
+              <div role="img" aria-label="55 victorias y 50 derrotas de 105"
+                style="display: flex; gap: 3px; height: 12px">
+                <div style="width: 52.38%; background: #2B874C; border-radius: 999px 3px 3px 999px"></div>
+                <div style="flex-grow: 1; background: #E0401F; border-radius: 3px 999px 999px 3px"></div>
+              </div>
+            </section>
 
-<section aria-labelledby="rk-t" style="background: #FFFFFF; border-radius: 16px; padding: 24px 28px; box-sizing: border-box; height: 260px; display: flex; flex-direction: column; gap: 16px; box-shadow: 0 1px 2px rgba(20,30,20,0.06), 0 6px 18px rgba(20,30,20,0.08)">
-<h2 id="rk-t" style="margin: 0; font-size: 16px; font-weight: 600">Rango</h2>
-<div style="display: flex; align-items: center; gap: 16px">
-<svg width="56" height="56" viewBox="0 0 48 48" aria-hidden="true"><path d="M24 3l18 10.5v21L24 45 6 34.5v-21z" fill="#F4E7C4" stroke="#C99A3A" stroke-width="2"></path><path d="M15 21l9-6 9 6M15 30l9-6 9 6" fill="none" stroke="#8A6414" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"></path></svg>
-<div style="flex-grow: 1; display: flex; flex-direction: column; gap: 8px">
-<div style="display: flex; align-items: baseline; justify-content: space-between">
-<span style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 28px; font-weight: 700; letter-spacing: -0.01em">Gold II</span>
-<span class="num" style="font-size: 15px; font-weight: 600">45 <span style="color: #56604F; font-weight: 400">/ 100 LP</span></span>
-</div>
-<div role="img" aria-label="45 de 100 LP" style="height: 8px; border-radius: 999px; background: #E3EEF4">
-<div style="width: 45%; height: 8px; border-radius: 999px; background: #3A9BD1"></div>
-</div>
-</div>
-</div>
-<dl style="margin: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; padding-top: 16px; border-top: 1px solid #EDF1EB">
-<div style="display: flex; flex-direction: column; gap: 4px"><dt style="font-size: 12px; color: #56604F">Plataforma</dt><dd style="margin: 0; font-size: 15px; font-weight: 600">LAN</dd></div>
-<div style="display: flex; flex-direction: column; gap: 4px"><dt style="font-size: 12px; color: #56604F">Cola</dt><dd style="margin: 0; font-size: 15px; font-weight: 600">Solo/Dúo</dd></div>
-<div style="display: flex; flex-direction: column; gap: 4px"><dt style="font-size: 12px; color: #56604F">Liga</dt><dd style="margin: 0; font-size: 15px; font-weight: 600">Gold</dd></div>
-<div style="display: flex; flex-direction: column; gap: 4px"><dt style="font-size: 12px; color: #56604F">División</dt><dd style="margin: 0; font-size: 15px; font-weight: 600">II</dd></div>
-</dl>
-</section>
-</div>
-</div>
+            <section aria-labelledby="rk-t"
+              style="background: #FFFFFF; border-radius: 16px; padding: 24px 28px; box-sizing: border-box; height: 260px; display: flex; flex-direction: column; gap: 16px; box-shadow: 0 1px 2px rgba(20,30,20,0.06), 0 6px 18px rgba(20,30,20,0.08)">
+              <h2 id="rk-t" style="margin: 0; font-size: 16px; font-weight: 600">Rango</h2>
+              <div style="display: flex; align-items: center; gap: 16px">
+                <svg width="56" height="56" viewBox="0 0 48 48" aria-hidden="true">
+                  <path d="M24 3l18 10.5v21L24 45 6 34.5v-21z" fill="#F4E7C4" stroke="#C99A3A" stroke-width="2"></path>
+                  <path d="M15 21l9-6 9 6M15 30l9-6 9 6" fill="none" stroke="#8A6414" stroke-width="2.6"
+                    stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+                <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 8px">
+                  <div style="display: flex; align-items: baseline; justify-content: space-between">
+                    <span
+                      style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 28px; font-weight: 700; letter-spacing: -0.01em">Gold
+                      II</span>
+                    <span class="num" style="font-size: 15px; font-weight: 600">45 <span
+                        style="color: #56604F; font-weight: 400">/ 100 LP</span></span>
+                  </div>
+                  <div role="img" aria-label="45 de 100 LP"
+                    style="height: 8px; border-radius: 999px; background: #E3EEF4">
+                    <div style="width: 45%; height: 8px; border-radius: 999px; background: #3A9BD1"></div>
+                  </div>
+                </div>
+              </div>
+              <dl
+                style="margin: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; padding-top: 16px; border-top: 1px solid #EDF1EB">
+                <div style="display: flex; flex-direction: column; gap: 4px">
+                  <dt style="font-size: 12px; color: #56604F">Plataforma</dt>
+                  <dd style="margin: 0; font-size: 15px; font-weight: 600">LAN</dd>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 4px">
+                  <dt style="font-size: 12px; color: #56604F">Cola</dt>
+                  <dd style="margin: 0; font-size: 15px; font-weight: 600">Solo/Dúo</dd>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 4px">
+                  <dt style="font-size: 12px; color: #56604F">Liga</dt>
+                  <dd style="margin: 0; font-size: 15px; font-weight: 600">Gold</dd>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 4px">
+                  <dt style="font-size: 12px; color: #56604F">División</dt>
+                  <dd style="margin: 0; font-size: 15px; font-weight: 600">II</dd>
+                </div>
+              </dl>
+            </section>
+          </div>
+        </div>
 
-<section aria-labelledby="rd-t" style="display: flex; flex-direction: column; gap: 14px">
-<h2 id="rd-t" style="margin: 0; font-size: 16px; font-weight: 600">Rendimiento en partida</h2>
-<div style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px">
+        <section aria-labelledby="rd-t" style="display: flex; flex-direction: column; gap: 14px">
+          <h2 id="rd-t" style="margin: 0; font-size: 16px; font-weight: 600">Rendimiento en partida</h2>
+          <div style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px">
 
-<div style="background: #FFFFFF; border-radius: 14px; padding: 20px; height: 156px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 1px 2px rgba(20,30,20,0.06), 0 6px 18px rgba(20,30,20,0.08)">
-<div style="display: flex; align-items: center; gap: 10px">
-<span style="width: 36px; height: 36px; border-radius: 8px; background: #EEF3ED; color: #151915; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 17.5L3 6V3h3l11.5 11.5"></path><path d="M13 19l6-6M16 16l4 4M19 21l2-2"></path></svg></span>
-<span style="font-size: 14px; font-weight: 600">KDA</span>
-</div>
-<div>
-<div class="num" style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 40px; line-height: 1; font-weight: 700; letter-spacing: -0.02em">2.8</div>
-<div style="font-size: 13px; color: #56604F; margin-top: 6px">(K + A) / muertes</div>
-</div>
-</div>
+            <div
+              style="background: #FFFFFF; border-radius: 14px; padding: 20px; height: 156px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 1px 2px rgba(20,30,20,0.06), 0 6px 18px rgba(20,30,20,0.08)">
+              <div style="display: flex; align-items: center; gap: 10px">
+                <span
+                  style="width: 36px; height: 36px; border-radius: 8px; background: #EEF3ED; color: #151915; display: flex; align-items: center; justify-content: center"><svg
+                    width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14.5 17.5L3 6V3h3l11.5 11.5"></path>
+                    <path d="M13 19l6-6M16 16l4 4M19 21l2-2"></path>
+                  </svg></span>
+                <span style="font-size: 14px; font-weight: 600">KDA</span>
+              </div>
+              <div>
+                <div class="num"
+                  style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 40px; line-height: 1; font-weight: 700; letter-spacing: -0.02em">
+                  2.8</div>
+                <div style="font-size: 13px; color: #56604F; margin-top: 6px">(K + A) / muertes</div>
+              </div>
+            </div>
 
-<div style="background: #FFFFFF; border-radius: 14px; padding: 20px; height: 156px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 1px 2px rgba(20,30,20,0.06), 0 6px 18px rgba(20,30,20,0.08)">
-<div style="display: flex; align-items: center; gap: 10px">
-<span style="width: 36px; height: 36px; border-radius: 8px; background: #EEF3ED; color: #151915; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="9" r="5.5"></circle><path d="M14.2 7.1A5.5 5.5 0 1 1 7.1 14.2"></path></svg></span>
-<span style="font-size: 14px; font-weight: 600">CS/min</span>
-</div>
-<div>
-<div class="num" style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 40px; line-height: 1; font-weight: 700; letter-spacing: -0.02em">6.2</div>
-<div style="font-size: 13px; color: #56604F; margin-top: 6px">súbditos por minuto</div>
-</div>
-</div>
+            <div
+              style="background: #FFFFFF; border-radius: 14px; padding: 20px; height: 156px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 1px 2px rgba(20,30,20,0.06), 0 6px 18px rgba(20,30,20,0.08)">
+              <div style="display: flex; align-items: center; gap: 10px">
+                <span
+                  style="width: 36px; height: 36px; border-radius: 8px; background: #EEF3ED; color: #151915; display: flex; align-items: center; justify-content: center"><svg
+                    width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="9" cy="9" r="5.5"></circle>
+                    <path d="M14.2 7.1A5.5 5.5 0 1 1 7.1 14.2"></path>
+                  </svg></span>
+                <span style="font-size: 14px; font-weight: 600">CS/min</span>
+              </div>
+              <div>
+                <div class="num"
+                  style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 40px; line-height: 1; font-weight: 700; letter-spacing: -0.02em">
+                  6.2</div>
+                <div style="font-size: 13px; color: #56604F; margin-top: 6px">súbditos por minuto</div>
+              </div>
+            </div>
 
-<div style="background: #FFFFFF; border-radius: 14px; padding: 20px; height: 156px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 1px 2px rgba(20,30,20,0.06), 0 6px 18px rgba(20,30,20,0.08)">
-<div style="display: flex; align-items: center; gap: 10px">
-<span style="width: 36px; height: 36px; border-radius: 8px; background: #EEF3ED; color: #151915; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2.5L4.5 13.5H12l-1 8 8.5-11H12z"></path></svg></span>
-<span style="font-size: 14px; font-weight: 600">Daño/min</span>
-</div>
-<div>
-<div class="num" style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 40px; line-height: 1; font-weight: 700; letter-spacing: -0.02em">520.4</div>
-<div style="font-size: 13px; color: #56604F; margin-top: 6px">a campeones por minuto</div>
-</div>
-</div>
+            <div
+              style="background: #FFFFFF; border-radius: 14px; padding: 20px; height: 156px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 1px 2px rgba(20,30,20,0.06), 0 6px 18px rgba(20,30,20,0.08)">
+              <div style="display: flex; align-items: center; gap: 10px">
+                <span
+                  style="width: 36px; height: 36px; border-radius: 8px; background: #EEF3ED; color: #151915; display: flex; align-items: center; justify-content: center"><svg
+                    width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M13 2.5L4.5 13.5H12l-1 8 8.5-11H12z"></path>
+                  </svg></span>
+                <span style="font-size: 14px; font-weight: 600">Daño/min</span>
+              </div>
+              <div>
+                <div class="num"
+                  style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 40px; line-height: 1; font-weight: 700; letter-spacing: -0.02em">
+                  520.4</div>
+                <div style="font-size: 13px; color: #56604F; margin-top: 6px">a campeones por minuto</div>
+              </div>
+            </div>
 
-<div style="background: #FFFFFF; border-radius: 14px; padding: 20px; height: 156px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 1px 2px rgba(20,30,20,0.06), 0 6px 18px rgba(20,30,20,0.08)">
-<div style="display: flex; align-items: center; gap: 10px">
-<span style="width: 36px; height: 36px; border-radius: 8px; background: #E3EEF4; color: #1F6F9C; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"></path><circle cx="12" cy="12" r="3"></circle></svg></span>
-<span style="font-size: 14px; font-weight: 600">Visión/min</span>
-</div>
-<div>
-<div class="num" style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 40px; line-height: 1; font-weight: 700; letter-spacing: -0.02em">0.9</div>
-<div style="font-size: 13px; color: #56604F; margin-top: 6px">puntuación de visión</div>
-</div>
-</div>
+            <div
+              style="background: #FFFFFF; border-radius: 14px; padding: 20px; height: 156px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 1px 2px rgba(20,30,20,0.06), 0 6px 18px rgba(20,30,20,0.08)">
+              <div style="display: flex; align-items: center; gap: 10px">
+                <span
+                  style="width: 36px; height: 36px; border-radius: 8px; background: #E3EEF4; color: #1F6F9C; display: flex; align-items: center; justify-content: center"><svg
+                    width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                  </svg></span>
+                <span style="font-size: 14px; font-weight: 600">Visión/min</span>
+              </div>
+              <div>
+                <div class="num"
+                  style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 40px; line-height: 1; font-weight: 700; letter-spacing: -0.02em">
+                  0.9</div>
+                <div style="font-size: 13px; color: #56604F; margin-top: 6px">puntuación de visión</div>
+              </div>
+            </div>
 
-<div style="background: #FFFFFF; border-radius: 14px; padding: 20px; height: 156px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 1px 2px rgba(20,30,20,0.06), 0 6px 18px rgba(20,30,20,0.08)">
-<div style="display: flex; align-items: center; gap: 10px">
-<span style="width: 36px; height: 36px; border-radius: 8px; background: #E3EEF4; color: #1F6F9C; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"></circle><path d="M2.5 20c.6-3.6 3.3-5.5 6.5-5.5s5.9 1.9 6.5 5.5"></path><path d="M15.5 4.8a3.5 3.5 0 0 1 0 6.4M18 14.8c2 .7 3.2 2.5 3.5 5.2"></path></svg></span>
-<span style="font-size: 14px; font-weight: 600">Participación</span>
-</div>
-<div>
-<div class="num" style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 40px; line-height: 1; font-weight: 700; letter-spacing: -0.02em">48.5<span style="font-size: 22px">%</span></div>
-<div role="img" aria-label="48.5% de participación en asesinatos" style="height: 6px; border-radius: 999px; background: #E3EEF4; margin-top: 12px">
-<div style="width: 48.5%; height: 6px; border-radius: 999px; background: #3A9BD1"></div>
-</div>
-</div>
-</div>
+            <div
+              style="background: #FFFFFF; border-radius: 14px; padding: 20px; height: 156px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 1px 2px rgba(20,30,20,0.06), 0 6px 18px rgba(20,30,20,0.08)">
+              <div style="display: flex; align-items: center; gap: 10px">
+                <span
+                  style="width: 36px; height: 36px; border-radius: 8px; background: #E3EEF4; color: #1F6F9C; display: flex; align-items: center; justify-content: center"><svg
+                    width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="9" cy="8" r="3.5"></circle>
+                    <path d="M2.5 20c.6-3.6 3.3-5.5 6.5-5.5s5.9 1.9 6.5 5.5"></path>
+                    <path d="M15.5 4.8a3.5 3.5 0 0 1 0 6.4M18 14.8c2 .7 3.2 2.5 3.5 5.2"></path>
+                  </svg></span>
+                <span style="font-size: 14px; font-weight: 600">Participación</span>
+              </div>
+              <div>
+                <div class="num"
+                  style="font-family: 'Bricolage Grotesque', sans-serif; font-size: 40px; line-height: 1; font-weight: 700; letter-spacing: -0.02em">
+                  48.5<span style="font-size: 22px">%</span></div>
+                <div role="img" aria-label="48.5% de participación en asesinatos"
+                  style="height: 6px; border-radius: 999px; background: #E3EEF4; margin-top: 12px">
+                  <div style="width: 48.5%; height: 6px; border-radius: 999px; background: #3A9BD1"></div>
+                </div>
+              </div>
+            </div>
 
-</div>
-</section>
-</main>
-</div>
-</div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
 </body>
+
 </html>
