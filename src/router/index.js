@@ -12,29 +12,38 @@ const router = createRouter({
       path: '/new-home',
       name: 'new-home',
       component: NewHomeView,
-      meta: { layout: 'redesign' },
+      meta: { layout: 'redesign', title: 'Nuevo inicio' },
     },
     {
       path: '/',
       name: 'summary',
       component: SummaryView,
+      meta: { title: 'Resumen' },
     },
     {
       path: '/champions',
       name: 'champions',
       component: ChampionsView,
+      meta: { title: 'Campeones' },
     },
     {
       path: '/matches',
       name: 'matches',
       component: MatchesView,
+      meta: { title: 'Historial' },
     },
     {
       path: '/matches/:id',
       name: 'match-detail',
       component: MatchDetailView,
+      meta: { title: 'Partida' },
     },
   ],
+})
+
+// Runs after every navigation: sets the tab title from the route's meta.title
+router.afterEach((to) => {
+  document.title = to.meta.title ? `${to.meta.title} · Recall` : 'Recall'
 })
 
 export default router
