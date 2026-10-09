@@ -1,6 +1,7 @@
 <script setup>
 import { RouterLink } from 'vue-router'
 import AccountSelector from './AccountSelector.vue'
+import AppLogo from './AppLogo.vue'
 import { useAccount } from '../composables/useAccount'
 
 const { account } = useAccount()
@@ -11,7 +12,10 @@ const { account } = useAccount()
     <div
       class="mx-auto flex w-full max-w-7xl flex-wrap items-center gap-4 px-4 py-4 sm:px-6 lg:px-8"
     >
-      <h1 class="text-2xl font-bold tracking-tight text-cyan-400">Recall</h1>
+      <h1 class="flex items-center gap-2 text-2xl font-bold tracking-tight text-white">
+        <AppLogo class="size-8" />
+        Recall
+      </h1>
 
       <nav
         aria-label="Navegación principal"
