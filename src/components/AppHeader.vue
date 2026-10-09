@@ -2,17 +2,18 @@
 import { RouterLink } from 'vue-router'
 import AccountSelector from './AccountSelector.vue'
 import AppLogo from './AppLogo.vue'
+import ThemeSelector from './ThemeSelector.vue'
 import { useAccount } from '../composables/useAccount'
 
 const { account } = useAccount()
 </script>
 
 <template>
-  <header class="border-b border-slate-800 bg-slate-950/90">
+  <header class="border-b border-line bg-page/90">
     <div
       class="mx-auto flex w-full max-w-7xl flex-wrap items-center gap-4 px-4 py-4 sm:px-6 lg:px-8"
     >
-      <h1 class="flex items-center gap-2 text-2xl font-bold tracking-tight text-white">
+      <h1 class="flex items-center gap-2 text-2xl font-bold tracking-tight text-fg">
         <AppLogo class="size-8" />
         Recall
       </h1>
@@ -23,29 +24,30 @@ const { account } = useAccount()
       >
         <RouterLink
           to="/"
-          class="rounded-lg px-3 py-2 text-sm font-medium text-slate-400 transition hover:bg-slate-900 hover:text-slate-100"
-          exact-active-class="bg-slate-800 text-cyan-400"
+          class="rounded-lg px-3 py-2 text-sm font-medium text-fg-muted transition hover:bg-card hover:text-fg"
+          exact-active-class="bg-card-raised text-accent"
         >
           Resumen
         </RouterLink>
         <RouterLink
           to="/champions"
-          class="rounded-lg px-3 py-2 text-sm font-medium text-slate-400 transition hover:bg-slate-900 hover:text-slate-100"
-          active-class="bg-slate-800 text-cyan-400"
+          class="rounded-lg px-3 py-2 text-sm font-medium text-fg-muted transition hover:bg-card hover:text-fg"
+          active-class="bg-card-raised text-accent"
         >
           Campeones
         </RouterLink>
         <RouterLink
           to="/matches"
-          class="rounded-lg px-3 py-2 text-sm font-medium text-slate-400 transition hover:bg-slate-900 hover:text-slate-100"
-          active-class="bg-slate-800 text-cyan-400"
+          class="rounded-lg px-3 py-2 text-sm font-medium text-fg-muted transition hover:bg-card hover:text-fg"
+          active-class="bg-card-raised text-accent"
         >
           Historial
         </RouterLink>
       </nav>
 
-      <div class="ml-auto">
+      <div class="ml-auto flex flex-wrap items-center gap-4">
         <AccountSelector v-model="account" />
+        <ThemeSelector />
       </div>
     </div>
   </header>

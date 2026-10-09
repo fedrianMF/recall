@@ -10,7 +10,7 @@ const route = useRoute()
 
   <div
     v-else
-    class="min-h-screen bg-slate-950 text-slate-100"
+    class="min-h-screen bg-page text-fg"
   >
     <AppHeader />
 

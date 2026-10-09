@@ -24,26 +24,26 @@ const { summary, isLoading, error, loadSummary } = useSummary(account)
       role="status"
       aria-live="polite"
     >
-      <p class="text-slate-400">Cargando resumen…</p>
+      <p class="text-fg-muted">Cargando resumen…</p>
       <div class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         <div
           v-for="index in 6"
           :key="index"
-          class="h-28 animate-pulse rounded-xl border border-slate-800 bg-slate-900"
+          class="h-28 animate-pulse rounded-xl border border-line bg-card"
         ></div>
       </div>
     </div>
 
     <div
       v-else-if="error"
-      class="mt-6 rounded-xl border border-rose-900/70 bg-rose-950/40 p-6"
+      class="mt-6 rounded-xl border border-danger-border/70 bg-danger-soft/40 p-6"
       role="alert"
     >
-      <h3 class="font-semibold text-rose-200">No se pudo cargar el resumen</h3>
-      <p class="mt-2 text-sm text-rose-300">{{ error.message }}</p>
+      <h3 class="font-semibold text-danger-fg-strong">No se pudo cargar el resumen</h3>
+      <p class="mt-2 text-sm text-danger-fg">{{ error.message }}</p>
       <button
         type="button"
-        class="mt-4 rounded-lg bg-rose-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-rose-400 focus:outline-none focus:ring-2 focus:ring-rose-300"
+        class="mt-4 rounded-lg bg-danger-solid px-4 py-2 text-sm font-semibold text-white transition hover:bg-danger-solid-hover focus:outline-none focus:ring-2 focus:ring-danger-fg"
         @click="loadSummary"
       >
         Reintentar
@@ -52,10 +52,10 @@ const { summary, isLoading, error, loadSummary } = useSummary(account)
 
     <div
       v-else-if="summary?.games === 0"
-      class="mt-6 rounded-xl border border-slate-800 bg-slate-900 p-8 text-center"
+      class="mt-6 rounded-xl border border-line bg-card p-8 text-center"
     >
-      <h3 class="font-semibold text-slate-200">Todavía no hay partidas</h3>
-      <p class="mt-2 text-sm text-slate-400">
+      <h3 class="font-semibold text-fg">Todavía no hay partidas</h3>
+      <p class="mt-2 text-sm text-fg-muted">
         No encontramos partidas para la cuenta seleccionada.
       </p>
     </div>
@@ -102,7 +102,7 @@ const { summary, isLoading, error, loadSummary } = useSummary(account)
       <section aria-labelledby="ranks-title">
         <h3
           id="ranks-title"
-          class="text-lg font-semibold text-slate-100"
+          class="text-lg font-semibold text-fg"
         >
           Rangos
         </h3>
@@ -120,7 +120,7 @@ const { summary, isLoading, error, loadSummary } = useSummary(account)
 
         <p
           v-else
-          class="mt-4 rounded-xl border border-slate-800 bg-slate-900 p-5 text-slate-400"
+          class="mt-4 rounded-xl border border-line bg-card p-5 text-fg-muted"
         >
           Sin clasificar
         </p>

@@ -9,6 +9,20 @@
     <meta name="description" content="Recall: tu coach personal de League of Legends con las estadísticas de tus partidas.">
     <meta name="theme-color" content="#020618">
     <title>Recall</title>
+    <script>
+      // Applies the saved theme before the first paint so the page never flashes
+      // the wrong colors. Keep in sync with src/composables/useTheme.js.
+      ;(function () {
+        var mode = 'system'
+        try {
+          mode = localStorage.getItem('recall-theme') || 'system'
+        } catch (error) {}
+        var dark =
+          mode === 'dark' ||
+          (mode !== 'light' && window.matchMedia('(prefers-color-scheme: dark)').matches)
+        document.documentElement.dataset.theme = dark ? 'dark' : 'light'
+      })()
+    </script>
   </head>
   <body>
     <div id="app"></div>
