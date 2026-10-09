@@ -34,14 +34,14 @@ function nextPage() {
         >
           Historial
         </h2>
-        <p class="mt-1 text-sm text-slate-400">{{ meta.total }} partidas encontradas.</p>
+        <p class="mt-1 text-sm text-fg-muted">{{ meta.total }} partidas encontradas.</p>
       </div>
 
-      <label class="flex items-center gap-3 text-sm font-medium text-slate-300">
+      <label class="flex items-center gap-3 text-sm font-medium text-fg-soft">
         <span>Cola</span>
         <select
           v-model="queue"
-          class="rounded-lg border border-slate-700 bg-slate-900 px-3 py-2 text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20"
+          class="rounded-lg border border-line-strong bg-card px-3 py-2 text-fg outline-none transition focus:border-accent focus:ring-2 focus:ring-accent/20"
         >
           <option value="">Todas</option>
           <option value="420">Solo/Dúo</option>
@@ -58,26 +58,26 @@ function nextPage() {
       role="status"
       aria-live="polite"
     >
-      <p class="text-slate-400">Cargando historial…</p>
+      <p class="text-fg-muted">Cargando historial…</p>
       <div class="mt-4 space-y-3">
         <div
           v-for="index in 5"
           :key="index"
-          class="h-32 animate-pulse rounded-xl border border-slate-800 bg-slate-900"
+          class="h-32 animate-pulse rounded-xl border border-line bg-card"
         ></div>
       </div>
     </div>
 
     <div
       v-else-if="error"
-      class="mt-6 rounded-xl border border-rose-900/70 bg-rose-950/40 p-6"
+      class="mt-6 rounded-xl border border-danger-border/70 bg-danger-soft/40 p-6"
       role="alert"
     >
-      <h3 class="font-semibold text-rose-200">No se pudo cargar el historial</h3>
-      <p class="mt-2 text-sm text-rose-300">{{ error.message }}</p>
+      <h3 class="font-semibold text-danger-fg-strong">No se pudo cargar el historial</h3>
+      <p class="mt-2 text-sm text-danger-fg">{{ error.message }}</p>
       <button
         type="button"
-        class="mt-4 rounded-lg bg-rose-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-rose-400 focus:outline-none focus:ring-2 focus:ring-rose-300"
+        class="mt-4 rounded-lg bg-danger-solid px-4 py-2 text-sm font-semibold text-white transition hover:bg-danger-solid-hover focus:outline-none focus:ring-2 focus:ring-danger-fg"
         @click="loadMatches"
       >
         Reintentar
@@ -86,14 +86,14 @@ function nextPage() {
 
     <div
       v-else-if="matches.length === 0"
-      class="mt-6 rounded-xl border border-slate-800 bg-slate-900 p-8 text-center"
+      class="mt-6 rounded-xl border border-line bg-card p-8 text-center"
     >
-      <h3 class="font-semibold text-slate-200">No hay partidas para mostrar</h3>
-      <p class="mt-2 text-sm text-slate-400">Prueba con otra cuenta o cola.</p>
+      <h3 class="font-semibold text-fg">No hay partidas para mostrar</h3>
+      <p class="mt-2 text-sm text-fg-muted">Prueba con otra cuenta o cola.</p>
     </div>
 
     <template v-else>
-      <ul class="mt-6 overflow-hidden rounded-xl border border-slate-800">
+      <ul class="mt-6 overflow-hidden rounded-xl border border-line">
         <MatchRow
           v-for="match in matches"
           :key="match.id"
@@ -109,21 +109,21 @@ function nextPage() {
         <button
           type="button"
           :disabled="page <= 1"
-          class="rounded-lg border border-slate-700 px-4 py-2 text-sm font-semibold text-slate-200 transition hover:border-cyan-500 hover:text-cyan-300 disabled:cursor-not-allowed disabled:opacity-40"
+          class="rounded-lg border border-line-strong px-4 py-2 text-sm font-semibold text-fg transition hover:border-accent hover:text-accent-hover disabled:cursor-not-allowed disabled:opacity-40"
           @click="previousPage"
         >
           Anterior
         </button>
 
-        <p class="text-sm text-slate-400">
-          Página <span class="font-semibold text-slate-200">{{ meta.current_page }}</span> de
-          <span class="font-semibold text-slate-200">{{ meta.last_page }}</span>
+        <p class="text-sm text-fg-muted">
+          Página <span class="font-semibold text-fg">{{ meta.current_page }}</span> de
+          <span class="font-semibold text-fg">{{ meta.last_page }}</span>
         </p>
 
         <button
           type="button"
           :disabled="page >= meta.last_page"
-          class="rounded-lg border border-slate-700 px-4 py-2 text-sm font-semibold text-slate-200 transition hover:border-cyan-500 hover:text-cyan-300 disabled:cursor-not-allowed disabled:opacity-40"
+          class="rounded-lg border border-line-strong px-4 py-2 text-sm font-semibold text-fg transition hover:border-accent hover:text-accent-hover disabled:cursor-not-allowed disabled:opacity-40"
           @click="nextPage"
         >
           Siguiente

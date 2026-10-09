@@ -26,7 +26,7 @@ const result = computed(() => {
   <section aria-labelledby="match-title">
     <RouterLink
       to="/matches"
-      class="text-sm font-medium text-cyan-400 hover:text-cyan-300"
+      class="text-sm font-medium text-accent hover:text-accent-hover"
     >
       ← Volver al historial
     </RouterLink>
@@ -37,26 +37,26 @@ const result = computed(() => {
       role="status"
       aria-live="polite"
     >
-      <p class="text-slate-400">Cargando partida…</p>
-      <div class="mt-4 h-80 animate-pulse rounded-xl border border-slate-800 bg-slate-900"></div>
+      <p class="text-fg-muted">Cargando partida…</p>
+      <div class="mt-4 h-80 animate-pulse rounded-xl border border-line bg-card"></div>
     </div>
 
     <div
       v-else-if="error?.status === 404"
-      class="mt-6 rounded-xl border border-slate-800 bg-slate-900 p-8 text-center"
+      class="mt-6 rounded-xl border border-line bg-card p-8 text-center"
     >
       <h2
         id="match-title"
-        class="text-xl font-semibold text-slate-100"
+        class="text-xl font-semibold text-fg"
       >
         Partida no encontrada
       </h2>
-      <p class="mt-2 text-sm text-slate-400">
+      <p class="mt-2 text-sm text-fg-muted">
         La partida solicitada no existe o ya no está disponible.
       </p>
       <RouterLink
         to="/matches"
-        class="mt-5 inline-block rounded-lg bg-cyan-500 px-4 py-2 text-sm font-semibold text-slate-950 hover:bg-cyan-400"
+        class="mt-5 inline-block rounded-lg bg-accent-solid px-4 py-2 text-sm font-semibold text-on-accent hover:bg-accent-hover"
       >
         Volver al historial
       </RouterLink>
@@ -64,19 +64,19 @@ const result = computed(() => {
 
     <div
       v-else-if="error"
-      class="mt-6 rounded-xl border border-rose-900/70 bg-rose-950/40 p-6"
+      class="mt-6 rounded-xl border border-danger-border/70 bg-danger-soft/40 p-6"
       role="alert"
     >
       <h2
         id="match-title"
-        class="font-semibold text-rose-200"
+        class="font-semibold text-danger-fg-strong"
       >
         No se pudo cargar la partida
       </h2>
-      <p class="mt-2 text-sm text-rose-300">{{ error.message }}</p>
+      <p class="mt-2 text-sm text-danger-fg">{{ error.message }}</p>
       <button
         type="button"
-        class="mt-4 rounded-lg bg-rose-500 px-4 py-2 text-sm font-semibold text-white transition hover:bg-rose-400 focus:outline-none focus:ring-2 focus:ring-rose-300"
+        class="mt-4 rounded-lg bg-danger-solid px-4 py-2 text-sm font-semibold text-white transition hover:bg-danger-solid-hover focus:outline-none focus:ring-2 focus:ring-danger-fg"
         @click="loadMatch"
       >
         Reintentar
@@ -88,7 +88,7 @@ const result = computed(() => {
       class="mt-6 space-y-8"
     >
       <header
-        class="flex flex-wrap items-center gap-4 rounded-xl border border-slate-800 bg-slate-900 p-5"
+        class="flex flex-wrap items-center gap-4 rounded-xl border border-line bg-card p-5"
       >
         <ChampionAvatar
           :champion="match.champion"
@@ -97,12 +97,12 @@ const result = computed(() => {
         <div>
           <h2
             id="match-title"
-            class="text-2xl font-semibold text-slate-100"
+            class="text-2xl font-semibold text-fg"
           >
             {{ match.champion }}
           </h2>
-          <p class="text-sm text-slate-400">{{ match.queue.name }} · {{ match.position }}</p>
-          <p class="mt-1 text-xs text-slate-500">
+          <p class="text-sm text-fg-muted">{{ match.queue.name }} · {{ match.position }}</p>
+          <p class="mt-1 text-xs text-fg-subtle">
             {{ formatRelativeTime(match.started_at) }} ·
             {{ formatDuration(match.duration_seconds) }}
           </p>
@@ -111,10 +111,10 @@ const result = computed(() => {
           class="ml-auto rounded-full px-3 py-1 text-sm font-semibold"
           :class="
             match.remake
-              ? 'bg-slate-800 text-slate-300'
+              ? 'bg-card-raised text-fg-soft'
               : match.win
-                ? 'bg-emerald-950 text-emerald-300'
-                : 'bg-rose-950 text-rose-300'
+                ? 'bg-success-soft text-success-fg'
+                : 'bg-danger-soft text-danger-fg'
           "
         >
           {{ result }}
@@ -124,7 +124,7 @@ const result = computed(() => {
       <section aria-labelledby="personal-metrics-title">
         <h3
           id="personal-metrics-title"
-          class="text-lg font-semibold text-slate-100"
+          class="text-lg font-semibold text-fg"
         >
           Tus métricas
         </h3>
