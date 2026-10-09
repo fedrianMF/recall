@@ -1,7 +1,13 @@
+<script setup>
+import AppLogo from '../components/AppLogo.vue'
+</script>
+
 <template>
   <div class="grid min-h-screen grid-cols-[72px_280px_minmax(0,1fr)] bg-rail">
     <nav aria-label="Navegación principal" class="flex flex-col items-center gap-3 py-6 bg-rail text-white">
-      <div class="flex size-11 items-center justify-center rounded-full bg-surface font-bold text-rail">R</div>
+      <span role="img" aria-label="Recall" class="flex size-11 items-center justify-center text-white">
+        <AppLogo class="size-10" />
+      </span>
       <button type="button" aria-label="Resumen" aria-current="page"
         class="flex size-12 items-center justify-center rounded-full bg-surface text-rail">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"

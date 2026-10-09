@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="14" fill="#0B0C0B"/>
+  <!-- Angular R with a diagonal cut on the leg -->
+  <path fill="#2B874C" fill-rule="evenodd" d="M17 12h21l9 9v10l-6 6 9 15H39l-7-13h-4v13H17zM28 21v9h7l2-2v-5l-2-2z"/>
+  <!-- Speed accent -->
+  <path fill="#3A9BD1" d="M47 41l6-9v20H48z"/>
+</svg>
