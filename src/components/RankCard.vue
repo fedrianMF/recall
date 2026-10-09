@@ -29,27 +29,27 @@ const queueName = computed(() => {
 </script>
 
 <template>
-  <article class="rounded-xl border border-slate-800 bg-slate-900 p-5">
+  <article class="rounded-xl border border-line bg-card p-5">
     <dl class="grid grid-cols-2 gap-x-6 gap-y-4 text-sm sm:grid-cols-5">
       <div>
-        <dt class="text-slate-400">Plataforma</dt>
-        <dd class="mt-1 font-semibold text-slate-100">{{ platformName }}</dd>
+        <dt class="text-fg-muted">Plataforma</dt>
+        <dd class="mt-1 font-semibold text-fg">{{ platformName }}</dd>
       </div>
       <div>
-        <dt class="text-slate-400">Cola</dt>
-        <dd class="mt-1 font-semibold text-slate-100">{{ queueName }}</dd>
+        <dt class="text-fg-muted">Cola</dt>
+        <dd class="mt-1 font-semibold text-fg">{{ queueName }}</dd>
       </div>
       <div>
-        <dt class="text-slate-400">Liga</dt>
-        <dd class="mt-1 font-semibold text-slate-100">{{ rank.tier }}</dd>
+        <dt class="text-fg-muted">Liga</dt>
+        <dd class="mt-1 font-semibold text-fg">{{ rank.tier }}</dd>
       </div>
       <div>
-        <dt class="text-slate-400">División</dt>
-        <dd class="mt-1 font-semibold text-slate-100">{{ rank.rank }}</dd>
+        <dt class="text-fg-muted">División</dt>
+        <dd class="mt-1 font-semibold text-fg">{{ rank.rank }}</dd>
       </div>
       <div>
-        <dt class="text-slate-400">LP</dt>
-        <dd class="mt-1 font-semibold text-cyan-400">
+        <dt class="text-fg-muted">LP</dt>
+        <dd class="mt-1 font-semibold text-accent">
           {{ formatMetric(rank.league_points) }}
         </dd>
       </div>

@@ -10,11 +10,11 @@ defineEmits(['update:modelValue'])
 </script>
 
 <template>
-  <label class="flex items-center gap-3 text-sm font-medium text-slate-300">
+  <label class="flex items-center gap-3 text-sm font-medium text-fg-soft">
     <span>Cuenta</span>
     <select
       :value="modelValue"
-      class="rounded-lg border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-slate-100 outline-none transition focus:border-cyan-400 focus:ring-2 focus:ring-cyan-400/20"
+      class="rounded-lg border border-line-strong bg-card px-3 py-2 text-sm text-fg outline-none transition focus:border-accent focus:ring-2 focus:ring-accent/20"
       @change="$emit('update:modelValue', $event.target.value)"
     >
       <option value="">Ambas</option>

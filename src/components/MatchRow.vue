@@ -20,23 +20,23 @@ const result = computed(() => {
   if (props.match.remake) {
     return {
       label: 'Remake',
-      classes: 'border-slate-600 bg-slate-900 hover:bg-slate-800/80',
-      textClass: 'text-slate-300',
+      classes: 'border-line-strong bg-card hover:bg-card-raised/80',
+      textClass: 'text-fg-soft',
     }
   }
 
   if (props.match.win) {
     return {
       label: 'Victoria',
-      classes: 'border-emerald-500 bg-emerald-950/20 hover:bg-emerald-950/35',
-      textClass: 'text-emerald-400',
+      classes: 'border-success-solid bg-success-soft/20 hover:bg-success-soft/35',
+      textClass: 'text-success',
     }
   }
 
   return {
     label: 'Derrota',
-    classes: 'border-rose-500 bg-rose-950/20 hover:bg-rose-950/35',
-    textClass: 'text-rose-400',
+    classes: 'border-danger-solid bg-danger-soft/20 hover:bg-danger-soft/35',
+    textClass: 'text-danger',
   }
 })
 </script>
@@ -54,9 +54,9 @@ const result = computed(() => {
           :version="dataDragonVersion"
         />
         <div class="min-w-0">
-          <p class="font-semibold text-slate-100">{{ match.champion }}</p>
-          <p class="truncate text-sm text-slate-400">{{ match.queue.name }}</p>
-          <p class="mt-1 text-xs text-slate-500">
+          <p class="font-semibold text-fg">{{ match.champion }}</p>
+          <p class="truncate text-sm text-fg-muted">{{ match.queue.name }}</p>
+          <p class="mt-1 text-xs text-fg-subtle">
             {{ formatRelativeTime(match.started_at) }} ·
             {{ formatDuration(match.duration_seconds) }}
           </p>
@@ -64,7 +64,7 @@ const result = computed(() => {
       </div>
 
       <div>
-        <p class="text-xs text-slate-500">Resultado</p>
+        <p class="text-xs text-fg-subtle">Resultado</p>
         <p
           class="mt-1 font-semibold"
           :class="result.textClass"
@@ -73,24 +73,24 @@ const result = computed(() => {
         </p>
       </div>
       <div>
-        <p class="text-xs text-slate-500">K / D / A</p>
-        <p class="mt-1 font-medium text-slate-200">
+        <p class="text-xs text-fg-subtle">K / D / A</p>
+        <p class="mt-1 font-medium text-fg">
           {{ match.kills }} / {{ match.deaths }} / {{ match.assists }}
         </p>
       </div>
       <div>
-        <p class="text-xs text-slate-500">KDA</p>
-        <p class="mt-1 font-medium text-slate-200">{{ formatMetric(match.kda) }}</p>
+        <p class="text-xs text-fg-subtle">KDA</p>
+        <p class="mt-1 font-medium text-fg">{{ formatMetric(match.kda) }}</p>
       </div>
       <div>
-        <p class="text-xs text-slate-500">CS</p>
-        <p class="mt-1 font-medium text-slate-200">
+        <p class="text-xs text-fg-subtle">CS</p>
+        <p class="mt-1 font-medium text-fg">
           {{ formatMetric(match.cs) }} · {{ formatMetric(match.cs_per_min) }}/min
         </p>
       </div>
       <div>
-        <p class="text-xs text-slate-500">Daño</p>
-        <p class="mt-1 font-medium text-slate-200">
+        <p class="text-xs text-fg-subtle">Daño</p>
+        <p class="mt-1 font-medium text-fg">
           {{ formatMetric(match.damage_to_champions) }}
         </p>
       </div>
