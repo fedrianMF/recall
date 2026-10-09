@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="14" fill="#0B0C0B"/>
+  <!-- Two rewind chevrons: "go back and review" -->
+  <path fill="#3A9BD1" d="M50 14 30 32l20 18h9L39 32l20-18z" transform="translate(-3 0)"/>
+  <path fill="#2B874C" d="M32 14 12 32l20 18h10L22 32l20-18z"/>
+</svg>
