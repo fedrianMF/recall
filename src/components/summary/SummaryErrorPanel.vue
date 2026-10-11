@@ -1,5 +1,9 @@
 <script setup>
 defineProps({
+  title: {
+    type: String,
+    default: 'No se pudo cargar el resumen',
+  },
   message: {
     type: String,
     required: true,
@@ -15,7 +19,7 @@ defineEmits(['retry'])
     class="flex flex-col gap-4 rounded-2xl border border-danger-border bg-danger-soft p-6 sm:flex-row sm:items-center sm:justify-between"
   >
     <div class="space-y-1">
-      <h2 class="text-base font-semibold text-danger-fg-strong">No se pudo cargar el resumen</h2>
+      <h2 class="text-base font-semibold text-danger-fg-strong">{{ title }}</h2>
       <p class="text-sm text-danger-fg">{{ message }}</p>
     </div>
 

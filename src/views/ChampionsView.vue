@@ -1,6 +1,8 @@
 <script setup>
 import { computed, ref } from 'vue'
 import ChampionAvatar from '../components/ChampionAvatar.vue'
+import SummaryEmptyPanel from '../components/summary/SummaryEmptyPanel.vue'
+import SummaryErrorPanel from '../components/summary/SummaryErrorPanel.vue'
 import { useAccount } from '../composables/useAccount'
 import { useChampions } from '../composables/useChampions'
 import { useDataDragonVersion } from '../composables/useDataDragonVersion'
@@ -73,22 +75,22 @@ function ariaSort(column) {
 
 <template>
   <section aria-labelledby="champions-title">
-    <div class="flex flex-wrap items-end justify-between gap-4">
-      <div>
+    <div class="flex flex-col items-stretch gap-4 sm:flex-row sm:items-end sm:justify-between">
+      <div class="min-w-0">
         <h1
           id="champions-title"
-          class="text-2xl font-semibold tracking-tight"
+          class="font-display text-3xl font-bold tracking-tight text-ink md:text-4xl"
         >
           Campeones
         </h1>
-        <p class="mt-1 text-sm text-fg-muted">Rendimiento agrupado por campeón.</p>
+        <p class="mt-1 text-sm text-ink-muted">Rendimiento agrupado por campeón.</p>
       </div>
 
-      <label class="flex items-center gap-3 text-sm font-medium text-fg-soft">
+      <label class="flex items-center gap-3 text-sm font-medium text-ink-muted">
         <span>Mínimo de partidas</span>
         <select
           v-model.number="minGames"
-          class="rounded-lg border border-line-strong bg-card px-3 py-2 text-fg outline-none transition focus:border-accent focus:ring-2 focus:ring-accent/20"
+          class="min-h-11 rounded-control border border-divider bg-surface px-3 text-ink"
         >
           <option :value="1">1</option>
           <option :value="3">3</option>
@@ -104,53 +106,45 @@ function ariaSort(column) {
       role="status"
       aria-live="polite"
     >
-      <p class="text-fg-muted">Cargando campeones…</p>
-      <div class="mt-4 h-72 animate-pulse rounded-xl border border-line bg-card"></div>
+      <p class="sr-only">Cargando campeones…</p>
+      <div
+        aria-hidden="true"
+        class="h-72 animate-pulse motion-reduce:animate-none rounded-2xl bg-surface-muted"
+      ></div>
     </div>
 
-    <div
+    <SummaryErrorPanel
       v-else-if="error"
-      class="mt-6 rounded-xl border border-danger-border/70 bg-danger-soft/40 p-6"
-      role="alert"
-    >
-      <h3 class="font-semibold text-danger-fg-strong">No se pudieron cargar los campeones</h3>
-      <p class="mt-2 text-sm text-danger-fg">{{ error.message }}</p>
-      <button
-        type="button"
-        class="mt-4 rounded-lg bg-danger-solid px-4 py-2 text-sm font-semibold text-white transition hover:bg-danger-solid-hover focus:outline-none focus:ring-2 focus:ring-danger-fg"
-        @click="loadChampions"
-      >
-        Reintentar
-      </button>
-    </div>
+      class="mt-6"
+      title="No se pudieron cargar los campeones"
+      :message="error.message"
+      @retry="loadChampions"
+    />
 
-    <div
+    <SummaryEmptyPanel
       v-else-if="champions.length === 0"
-      class="mt-6 rounded-xl border border-line bg-card p-8 text-center"
-    >
-      <h3 class="font-semibold text-fg">No hay campeones para mostrar</h3>
-      <p class="mt-2 text-sm text-fg-muted">
-        Prueba con otra cuenta o con un mínimo menor de partidas.
-      </p>
-    </div>
+      class="mt-6"
+      title="No hay campeones para mostrar"
+      description="Prueba con otra cuenta o con un mínimo menor de partidas."
+    />
 
     <div
       v-else
-      class="mt-6 overflow-x-auto rounded-xl border border-line"
+      class="mt-6 max-w-full overflow-x-auto rounded-2xl bg-surface shadow-card"
     >
-      <table class="w-full min-w-5xl border-collapse bg-card text-left text-sm">
-        <thead class="bg-card/95 text-xs uppercase tracking-wide text-fg-muted">
+      <table class="w-full min-w-5xl border-collapse bg-surface text-left text-sm text-ink">
+        <thead class="bg-surface text-xs uppercase tracking-wide text-ink-muted">
           <tr>
             <th
               v-for="column in columns"
               :key="column.key"
               scope="col"
               :aria-sort="ariaSort(column.key)"
-              class="border-b border-line px-4 py-3 font-medium"
+              class="border-b border-divider px-4 font-medium"
             >
               <button
                 type="button"
-                class="flex w-full items-center gap-2 whitespace-nowrap text-left transition hover:text-fg focus:outline-none focus:text-accent"
+                class="flex min-h-11 w-full items-center gap-2 whitespace-nowrap text-left transition-colors hover:text-ink"
                 @click="sortBy(column.key)"
               >
                 {{ column.label }}
@@ -164,14 +158,14 @@ function ariaSort(column) {
             </th>
           </tr>
         </thead>
-        <tbody class="divide-y divide-line">
+        <tbody class="divide-y divide-divider">
           <tr
             v-for="champion in sortedChampions"
             :key="champion.champion"
-            class="hover:bg-card-raised/40"
+            class="hover:bg-surface-muted"
           >
             <td class="px-4 py-3">
-              <div class="flex items-center gap-3 font-medium text-fg">
+              <div class="flex items-center gap-3 font-medium text-ink">
                 <ChampionAvatar
                   :champion="champion.champion"
                   :version="dataDragonVersion"
@@ -179,12 +173,16 @@ function ariaSort(column) {
                 <span class="whitespace-nowrap">{{ champion.champion }}</span>
               </div>
             </td>
-            <td class="px-4 py-3 text-fg-soft">{{ formatMetric(champion.games) }}</td>
-            <td class="px-4 py-3 text-fg-soft">{{ formatMetric(champion.winrate, '%') }}</td>
-            <td class="px-4 py-3 text-fg-soft">{{ formatMetric(champion.kda) }}</td>
-            <td class="px-4 py-3 text-fg-soft">{{ formatMetric(champion.cs_per_min) }}</td>
-            <td class="px-4 py-3 text-fg-soft">{{ formatMetric(champion.damage_per_min) }}</td>
-            <td class="px-4 py-3 text-fg-soft">
+            <td class="px-4 py-3 text-ink">{{ formatMetric(champion.games) }}</td>
+            <td class="px-4 py-3 text-ink">
+              {{ formatMetric(champion.winrate, '%') }}
+            </td>
+            <td class="px-4 py-3 text-ink">{{ formatMetric(champion.kda) }}</td>
+            <td class="px-4 py-3 text-ink">{{ formatMetric(champion.cs_per_min) }}</td>
+            <td class="px-4 py-3 text-ink">
+              {{ formatMetric(champion.damage_per_min) }}
+            </td>
+            <td class="px-4 py-3 text-ink">
               {{ formatMetric(champion.kill_participation, '%') }}
             </td>
           </tr>
