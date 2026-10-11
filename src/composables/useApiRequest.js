@@ -1,0 +1,44 @@
+import { readonly, ref } from 'vue'
+
+export function useApiRequest(request, options = {}) {
+  const { initialData = null, errorMessage = 'No se pudo completar la solicitud.' } = options
+
+  const data = ref(initialData)
+  const isLoading = ref(false)
+  const error = ref(null)
+  let latestRequestId = 0
+
+  async function load() {
+    const requestId = ++latestRequestId
+
+    isLoading.value = true
+    error.value = null
+
+    try {
+      const result = await request()
+
+      if (requestId !== latestRequestId) {
+        return
+      }
+
+      data.value = result
+    } catch (requestError) {
+      if (requestId !== latestRequestId) {
+        return
+      }
+
+      error.value = requestError instanceof Error ? requestError : new Error(errorMessage)
+    } finally {
+      if (requestId === latestRequestId) {
+        isLoading.value = false
+      }
+    }
+  }
+
+  return {
+    data: readonly(data),
+    isLoading: readonly(isLoading),
+    error: readonly(error),
+    load,
+  }
+}
