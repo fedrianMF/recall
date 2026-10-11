@@ -42,3 +42,12 @@ npm run build
 ```sh
 npm run lint
 ```
+
+## Calidad y CI
+
+`npm run check` ejecuta lint, formato, pruebas y build en un solo comando.
+GitHub Actions ejecuta esas mismas comprobaciones en cada push a `main` y en cada pull request.
+Los pasos aparecen separados en CI para identificar rápidamente qué comprobación falló.
+`npm run lint` y `npm run format` corrigen archivos y están pensados para uso local.
+`npm run lint:check` y `npm run format:check` solo comprueban, sin modificar archivos.
+Dependabot revisa semanalmente las dependencias de npm y de GitHub Actions.
