@@ -26,7 +26,7 @@ const result = computed(() => {
   <section aria-labelledby="match-title">
     <RouterLink
       to="/matches"
-      class="text-sm font-medium text-accent hover:text-accent-hover"
+      class="inline-flex min-h-11 items-center text-sm font-medium text-sky-text hover:underline"
     >
       ← Volver al historial
     </RouterLink>
@@ -37,26 +37,29 @@ const result = computed(() => {
       role="status"
       aria-live="polite"
     >
-      <p class="text-fg-muted">Cargando partida…</p>
-      <div class="mt-4 h-80 animate-pulse rounded-xl border border-line bg-card"></div>
+      <p class="sr-only">Cargando partida…</p>
+      <div
+        aria-hidden="true"
+        class="h-80 animate-pulse motion-reduce:animate-none rounded-2xl bg-surface-muted"
+      ></div>
     </div>
 
     <div
       v-else-if="error?.status === 404"
-      class="mt-6 rounded-xl border border-line bg-card p-8 text-center"
+      class="mt-6 rounded-2xl bg-surface p-8 text-center shadow-card"
     >
       <h1
         id="match-title"
-        class="text-xl font-semibold text-fg"
+        class="font-display text-2xl font-bold text-ink"
       >
         Partida no encontrada
       </h1>
-      <p class="mt-2 text-sm text-fg-muted">
+      <p class="mt-2 text-sm text-ink-muted">
         La partida solicitada no existe o ya no está disponible.
       </p>
       <RouterLink
         to="/matches"
-        class="mt-5 inline-block rounded-lg bg-accent-solid px-4 py-2 text-sm font-semibold text-on-accent hover:bg-accent-hover"
+        class="mt-5 inline-flex min-h-11 items-center rounded-control bg-rail px-5 text-sm font-semibold text-on-dark transition-colors hover:bg-charcoal-hover"
       >
         Volver al historial
       </RouterLink>
@@ -64,19 +67,19 @@ const result = computed(() => {
 
     <div
       v-else-if="error"
-      class="mt-6 rounded-xl border border-danger-border/70 bg-danger-soft/40 p-6"
+      class="mt-6 rounded-2xl border border-danger-border bg-danger-soft p-6"
       role="alert"
     >
       <h1
         id="match-title"
-        class="font-semibold text-danger-fg-strong"
+        class="font-display text-2xl font-bold text-danger-fg-strong"
       >
         No se pudo cargar la partida
       </h1>
       <p class="mt-2 text-sm text-danger-fg">{{ error.message }}</p>
       <button
         type="button"
-        class="mt-4 rounded-lg bg-danger-solid px-4 py-2 text-sm font-semibold text-white transition hover:bg-danger-solid-hover focus:outline-none focus:ring-2 focus:ring-danger-fg"
+        class="mt-4 min-h-11 rounded-control bg-danger-solid px-5 text-sm font-semibold text-on-dark transition-colors hover:bg-danger-solid-hover"
         @click="loadMatch"
       >
         Reintentar
@@ -87,7 +90,7 @@ const result = computed(() => {
       v-else-if="match"
       class="mt-6 space-y-8"
     >
-      <header class="flex flex-wrap items-center gap-4 rounded-xl border border-line bg-card p-5">
+      <header class="flex flex-wrap items-center gap-4 rounded-2xl bg-surface p-5 shadow-card">
         <ChampionAvatar
           :champion="match.champion"
           :version="dataDragonVersion"
@@ -95,12 +98,12 @@ const result = computed(() => {
         <div>
           <h1
             id="match-title"
-            class="text-2xl font-semibold text-fg"
+            class="font-display text-2xl font-bold text-ink md:text-3xl"
           >
             {{ match.champion }}
           </h1>
-          <p class="text-sm text-fg-muted">{{ match.queue.name }} · {{ match.position }}</p>
-          <p class="mt-1 text-xs text-fg-subtle">
+          <p class="text-sm text-ink-muted">{{ match.queue.name }} · {{ match.position }}</p>
+          <p class="mt-1 text-xs text-ink-muted">
             {{ formatRelativeTime(match.started_at) }} ·
             {{ formatDuration(match.duration_seconds) }}
           </p>
@@ -109,10 +112,10 @@ const result = computed(() => {
           class="ml-auto rounded-full px-3 py-1 text-sm font-semibold"
           :class="
             match.remake
-              ? 'bg-card-raised text-fg-soft'
+              ? 'bg-surface-muted text-ink-muted'
               : match.win
-                ? 'bg-success-soft text-success-fg'
-                : 'bg-danger-soft text-danger-fg'
+                ? 'bg-win-soft text-win-text'
+                : 'bg-loss-soft text-loss-text'
           "
         >
           {{ result }}
@@ -122,7 +125,7 @@ const result = computed(() => {
       <section aria-labelledby="personal-metrics-title">
         <h3
           id="personal-metrics-title"
-          class="text-lg font-semibold text-fg"
+          class="font-display text-xl font-bold text-ink"
         >
           Tus métricas
         </h3>

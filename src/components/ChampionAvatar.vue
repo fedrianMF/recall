@@ -42,7 +42,7 @@ watch([() => props.champion, () => props.version], () => {
   />
   <span
     v-else
-    class="flex size-10 shrink-0 items-center justify-center rounded-lg bg-accent-soft font-semibold text-accent-soft-fg"
+    class="flex size-10 shrink-0 items-center justify-center rounded-lg bg-sky-soft font-semibold text-sky-text"
     aria-hidden="true"
   >
     {{ initial }}

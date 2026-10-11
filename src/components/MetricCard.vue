@@ -18,9 +18,9 @@ defineProps({
 </script>
 
 <template>
-  <article class="rounded-xl border border-line bg-card p-5">
-    <p class="text-sm font-medium text-fg-muted">{{ label }}</p>
-    <p class="mt-2 text-3xl font-semibold tracking-tight text-fg">
+  <article class="rounded-metric bg-surface p-5 shadow-card">
+    <p class="text-sm font-medium text-ink-muted">{{ label }}</p>
+    <p class="mt-2 font-display text-3xl font-bold tracking-tight text-ink tabular-nums">
       {{ formatMetric(value, suffix) }}
     </p>
   </article>
