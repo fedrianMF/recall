@@ -38,3 +38,8 @@ __screenshots__/
 
 # Vite
 *.timestamp-*-*.mjs
+
+# Environment files: only the example stays under version control
+.env
+.env.*
+!.env.example
