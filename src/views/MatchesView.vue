@@ -1,6 +1,8 @@
 <script setup>
 import { ref } from 'vue'
 import MatchRow from '../components/MatchRow.vue'
+import SummaryEmptyPanel from '../components/summary/SummaryEmptyPanel.vue'
+import SummaryErrorPanel from '../components/summary/SummaryErrorPanel.vue'
 import { useAccount } from '../composables/useAccount'
 import { useDataDragonVersion } from '../composables/useDataDragonVersion'
 import { useMatches } from '../composables/useMatches'
@@ -26,22 +28,22 @@ function nextPage() {
 
 <template>
   <section aria-labelledby="matches-title">
-    <div class="flex flex-wrap items-end justify-between gap-4">
-      <div>
+    <div class="flex flex-col items-stretch gap-4 sm:flex-row sm:items-end sm:justify-between">
+      <div class="min-w-0">
         <h1
           id="matches-title"
-          class="text-2xl font-semibold tracking-tight"
+          class="font-display text-3xl font-bold tracking-tight text-ink md:text-4xl"
         >
           Historial
         </h1>
-        <p class="mt-1 text-sm text-fg-muted">{{ meta.total }} partidas encontradas.</p>
+        <p class="mt-1 text-sm text-ink-muted">{{ meta.total }} partidas encontradas.</p>
       </div>
 
-      <label class="flex items-center gap-3 text-sm font-medium text-fg-soft">
+      <label class="flex items-center justify-between gap-3 text-sm font-medium text-ink-muted">
         <span>Cola</span>
         <select
           v-model="queue"
-          class="rounded-lg border border-line-strong bg-card px-3 py-2 text-fg outline-none transition focus:border-accent focus:ring-2 focus:ring-accent/20"
+          class="min-h-11 rounded-control border border-divider bg-surface px-3 text-ink"
         >
           <option value="">Todas</option>
           <option value="420">Solo/Dúo</option>
@@ -58,42 +60,36 @@ function nextPage() {
       role="status"
       aria-live="polite"
     >
-      <p class="text-fg-muted">Cargando historial…</p>
-      <div class="mt-4 space-y-3">
+      <p class="sr-only">Cargando historial…</p>
+      <div
+        aria-hidden="true"
+        class="space-y-3"
+      >
         <div
           v-for="index in 5"
           :key="index"
-          class="h-32 animate-pulse rounded-xl border border-line bg-card"
+          class="h-32 animate-pulse motion-reduce:animate-none rounded-2xl bg-surface-muted"
         ></div>
       </div>
     </div>
 
-    <div
+    <SummaryErrorPanel
       v-else-if="error"
-      class="mt-6 rounded-xl border border-danger-border/70 bg-danger-soft/40 p-6"
-      role="alert"
-    >
-      <h3 class="font-semibold text-danger-fg-strong">No se pudo cargar el historial</h3>
-      <p class="mt-2 text-sm text-danger-fg">{{ error.message }}</p>
-      <button
-        type="button"
-        class="mt-4 rounded-lg bg-danger-solid px-4 py-2 text-sm font-semibold text-white transition hover:bg-danger-solid-hover focus:outline-none focus:ring-2 focus:ring-danger-fg"
-        @click="loadMatches"
-      >
-        Reintentar
-      </button>
-    </div>
+      class="mt-6"
+      title="No se pudo cargar el historial"
+      :message="error.message"
+      @retry="loadMatches"
+    />
 
-    <div
+    <SummaryEmptyPanel
       v-else-if="matches.length === 0"
-      class="mt-6 rounded-xl border border-line bg-card p-8 text-center"
-    >
-      <h3 class="font-semibold text-fg">No hay partidas para mostrar</h3>
-      <p class="mt-2 text-sm text-fg-muted">Prueba con otra cuenta o cola.</p>
-    </div>
+      class="mt-6"
+      title="No hay partidas para mostrar"
+      description="Prueba con otra cuenta o cola."
+    />
 
     <template v-else>
-      <ul class="mt-6 overflow-hidden rounded-xl border border-line">
+      <ul class="mt-6 divide-y divide-divider overflow-hidden rounded-2xl bg-surface shadow-card">
         <MatchRow
           v-for="match in matches"
           :key="match.id"
@@ -104,26 +100,28 @@ function nextPage() {
 
       <nav
         aria-label="Paginación del historial"
-        class="mt-6 flex items-center justify-between gap-4"
+        class="mt-6 grid grid-cols-2 items-center gap-3 sm:grid-cols-[auto_1fr_auto] sm:gap-4"
       >
         <button
           type="button"
           :disabled="page <= 1"
-          class="rounded-lg border border-line-strong px-4 py-2 text-sm font-semibold text-fg transition hover:border-accent hover:text-accent-hover disabled:cursor-not-allowed disabled:opacity-40"
+          class="row-start-2 min-h-11 rounded-control border border-divider bg-surface px-4 text-sm font-semibold text-ink transition-colors hover:bg-surface-muted disabled:cursor-not-allowed disabled:opacity-50 sm:row-start-1"
           @click="previousPage"
         >
           Anterior
         </button>
 
-        <p class="text-sm text-fg-muted">
-          Página <span class="font-semibold text-fg">{{ meta.current_page }}</span> de
-          <span class="font-semibold text-fg">{{ meta.last_page }}</span>
+        <p
+          class="col-span-2 row-start-1 text-center text-sm text-ink-muted sm:col-span-1 sm:col-start-2"
+        >
+          Página <span class="font-semibold text-ink">{{ meta.current_page }}</span> de
+          <span class="font-semibold text-ink">{{ meta.last_page }}</span>
         </p>
 
         <button
           type="button"
           :disabled="page >= meta.last_page"
-          class="rounded-lg border border-line-strong px-4 py-2 text-sm font-semibold text-fg transition hover:border-accent hover:text-accent-hover disabled:cursor-not-allowed disabled:opacity-40"
+          class="row-start-2 min-h-11 rounded-control border border-divider bg-surface px-4 text-sm font-semibold text-ink transition-colors hover:bg-surface-muted disabled:cursor-not-allowed disabled:opacity-50 sm:row-start-1 sm:col-start-3"
           @click="nextPage"
         >
           Siguiente
