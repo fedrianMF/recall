@@ -5,7 +5,7 @@ const matchesMock = {
       platform: 'la1',
       queue: {
         id: 420,
-        name: 'Clasificatoria Solo/Dúo',
+        name: 'Ranked Solo/Dúo',
       },
       started_at: '2026-09-26T14:02:00Z',
       duration_seconds: 709,
@@ -31,7 +31,28 @@ const matchesMock = {
   },
   meta: {
     current_page: 1,
+    from: 1,
     last_page: 1,
+    links: [
+      {
+        url: null,
+        label: '&laquo; Previous',
+        active: false,
+      },
+      {
+        url: 'http://recall-api.aime.test/api/v1/matches?page=1',
+        label: '1',
+        active: true,
+      },
+      {
+        url: null,
+        label: 'Next &raquo;',
+        active: false,
+      },
+    ],
+    path: 'http://recall-api.aime.test/api/v1/matches',
+    per_page: 15,
+    to: 1,
     total: 1,
   },
 }

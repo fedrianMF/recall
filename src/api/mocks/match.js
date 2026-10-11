@@ -4,7 +4,7 @@ const matchMock = {
     platform: 'la1',
     queue: {
       id: 420,
-      name: 'Clasificatoria Solo/Dúo',
+      name: 'Ranked Solo/Dúo',
     },
     started_at: '2026-09-26T14:02:00Z',
     duration_seconds: 709,
