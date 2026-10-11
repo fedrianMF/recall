@@ -1,5 +1,5 @@
 <script setup>
-import { useId } from 'vue'
+import SummaryPanel from './SummaryPanel.vue'
 import WinrateRing from './WinrateRing.vue'
 
 defineProps({
@@ -16,22 +16,10 @@ defineProps({
     required: true,
   },
 })
-
-const titleId = useId()
 </script>
 
 <template>
-  <section
-    :aria-labelledby="titleId"
-    class="flex flex-col gap-4 rounded-2xl bg-surface p-6 text-ink shadow-card"
-  >
-    <h2
-      :id="titleId"
-      class="text-base font-semibold"
-    >
-      Winrate
-    </h2>
-
+  <SummaryPanel title="Winrate">
     <div class="flex flex-1 flex-col items-center gap-6 sm:flex-row sm:justify-between sm:gap-3">
       <div class="min-w-0 self-start sm:self-auto">
         <p
@@ -78,5 +66,5 @@ const titleId = useId()
         <span>Derrotas</span>
       </li>
     </ul>
-  </section>
+  </SummaryPanel>
 </template>

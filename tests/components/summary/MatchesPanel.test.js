@@ -9,7 +9,7 @@ describe('MatchesPanel', () => {
 
     const text = wrapper.text()
 
-    expect(text).toMatch(/Partidas\s+105/)
+    expect(text).toMatch(/Partidas\s*105/)
     expect(text).toMatch(/Victorias\s+55/)
     expect(text).toMatch(/Derrotas\s+50/)
   })
@@ -44,7 +44,7 @@ describe('MatchesPanel', () => {
   test('shows dashes when the numbers are missing', () => {
     const wrapper = mount(MatchesPanel)
 
-    expect(wrapper.text()).toMatch(/Partidas\s+—/)
+    expect(wrapper.text()).toMatch(/Partidas\s*—/)
     expect(wrapper.get('[role="img"]').attributes('aria-label')).toBe('— victorias de — partidas')
   })
 })

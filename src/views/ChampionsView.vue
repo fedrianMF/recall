@@ -75,12 +75,12 @@ function ariaSort(column) {
   <section aria-labelledby="champions-title">
     <div class="flex flex-wrap items-end justify-between gap-4">
       <div>
-        <h2
+        <h1
           id="champions-title"
           class="text-2xl font-semibold tracking-tight"
         >
           Campeones
-        </h2>
+        </h1>
         <p class="mt-1 text-sm text-fg-muted">Rendimiento agrupado por campeón.</p>
       </div>
 

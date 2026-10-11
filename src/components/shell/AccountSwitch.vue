@@ -1,4 +1,6 @@
 <script setup>
+import { accountOptions } from '../../utils/accounts'
+
 const props = defineProps({
   modelValue: {
     type: String,
@@ -7,11 +9,6 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['update:modelValue'])
-
-const accounts = [
-  { value: 'la1', label: 'LAN' },
-  { value: 'la2', label: 'LAS' },
-]
 
 function toggleAccount(value) {
   emit('update:modelValue', props.modelValue === value ? '' : value)
@@ -25,7 +22,7 @@ function toggleAccount(value) {
     class="flex gap-1 rounded-full bg-charcoal-deep p-1"
   >
     <button
-      v-for="account in accounts"
+      v-for="account in accountOptions"
       :key="account.value"
       type="button"
       :aria-pressed="modelValue === account.value"

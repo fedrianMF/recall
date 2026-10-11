@@ -28,12 +28,12 @@ function nextPage() {
   <section aria-labelledby="matches-title">
     <div class="flex flex-wrap items-end justify-between gap-4">
       <div>
-        <h2
+        <h1
           id="matches-title"
           class="text-2xl font-semibold tracking-tight"
         >
           Historial
-        </h2>
+        </h1>
         <p class="mt-1 text-sm text-fg-muted">{{ meta.total }} partidas encontradas.</p>
       </div>
 

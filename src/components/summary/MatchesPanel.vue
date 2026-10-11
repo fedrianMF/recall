@@ -1,7 +1,8 @@
 <script setup>
-import { computed, useId } from 'vue'
+import { computed } from 'vue'
 import { formatMetric } from '../../utils/formatMetric'
 import { getProgressPercent } from '../../utils/summaryFormat'
+import SummaryPanel from './SummaryPanel.vue'
 
 const props = defineProps({
   games: {
@@ -18,7 +19,6 @@ const props = defineProps({
   },
 })
 
-const titleId = useId()
 const winProgress = computed(() => getProgressPercent(props.wins, props.games))
 const hasGames = computed(() => Number.isFinite(props.games) && props.games > 0)
 const progressLabel = computed(
@@ -27,17 +27,7 @@ const progressLabel = computed(
 </script>
 
 <template>
-  <section
-    :aria-labelledby="titleId"
-    class="flex flex-col gap-4 rounded-2xl bg-surface p-6 text-ink shadow-card"
-  >
-    <h2
-      :id="titleId"
-      class="text-base font-semibold"
-    >
-      Partidas
-    </h2>
-
+  <SummaryPanel title="Partidas">
     <div class="flex items-end justify-between gap-5">
       <p class="font-display text-[48px] leading-none font-bold tracking-tight tabular-nums">
         {{ formatMetric(games) }}
@@ -87,5 +77,5 @@ const progressLabel = computed(
         class="flex-1 bg-surface-muted"
       ></span>
     </div>
-  </section>
+  </SummaryPanel>
 </template>

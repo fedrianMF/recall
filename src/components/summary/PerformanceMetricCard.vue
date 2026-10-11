@@ -2,6 +2,7 @@
 import { computed } from 'vue'
 import { getProgressPercent } from '../../utils/summaryFormat'
 import MetricIcon from './MetricIcon.vue'
+import ProgressBar from './ProgressBar.vue'
 
 const props = defineProps({
   label: {
@@ -72,16 +73,11 @@ const progressLabel = computed(() => `${props.label} ${props.value}`)
           v-if="hasProgress"
           class="mt-3"
         >
-          <div
-            class="h-1.5 rounded-full bg-sky-soft"
-            role="img"
-            :aria-label="progressLabel"
-          >
-            <div
-              class="h-1.5 rounded-full bg-sky"
-              :style="{ width: `${getProgressPercent(progress, 100)}%` }"
-            ></div>
-          </div>
+          <ProgressBar
+            :percent="getProgressPercent(progress, 100)"
+            :label="progressLabel"
+            size="sm"
+          />
         </dd>
       </div>
     </dl>

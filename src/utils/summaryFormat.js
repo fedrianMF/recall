@@ -1,7 +1,9 @@
-const PLATFORM_NAMES = {
-  la1: 'LAN',
-  la2: 'LAS',
-}
+import { accountOptions } from './accounts'
+
+// Builds { la1: 'LAN', la2: 'LAS' } from the single accounts list.
+const PLATFORM_NAMES = Object.fromEntries(
+  accountOptions.map((account) => [account.value, account.label]),
+)
 
 const QUEUE_NAMES = {
   RANKED_SOLO_5x5: 'Solo/Dúo',

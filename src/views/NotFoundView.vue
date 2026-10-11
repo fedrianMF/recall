@@ -11,12 +11,12 @@ import AppLogo from '../components/AppLogo.vue'
     <AppLogo class="size-16 text-fg" />
 
     <p class="mt-6 text-6xl font-bold tracking-tight text-fg">404</p>
-    <h2
+    <h1
       id="not-found-title"
       class="mt-2 text-2xl font-semibold tracking-tight"
     >
       Página no encontrada
-    </h2>
+    </h1>
     <p class="mt-2 text-fg-muted">La dirección que abriste no existe o fue movida.</p>
 
     <RouterLink

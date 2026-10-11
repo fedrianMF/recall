@@ -1,6 +1,7 @@
 <script setup>
 import { computed } from 'vue'
 import { useAccount } from '../../composables/useAccount'
+import { accountOptions } from '../../utils/accounts'
 
 const props = defineProps({
   tone: {
@@ -32,8 +33,13 @@ function handleAccountChange(event) {
       @change="handleAccountChange"
     >
       <option value="">Ambas</option>
-      <option value="la1">LAN</option>
-      <option value="la2">LAS</option>
+      <option
+        v-for="option in accountOptions"
+        :key="option.value"
+        :value="option.value"
+      >
+        {{ option.label }}
+      </option>
     </select>
   </label>
 </template>

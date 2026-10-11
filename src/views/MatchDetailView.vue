@@ -45,12 +45,12 @@ const result = computed(() => {
       v-else-if="error?.status === 404"
       class="mt-6 rounded-xl border border-line bg-card p-8 text-center"
     >
-      <h2
+      <h1
         id="match-title"
         class="text-xl font-semibold text-fg"
       >
         Partida no encontrada
-      </h2>
+      </h1>
       <p class="mt-2 text-sm text-fg-muted">
         La partida solicitada no existe o ya no está disponible.
       </p>
@@ -67,12 +67,12 @@ const result = computed(() => {
       class="mt-6 rounded-xl border border-danger-border/70 bg-danger-soft/40 p-6"
       role="alert"
     >
-      <h2
+      <h1
         id="match-title"
         class="font-semibold text-danger-fg-strong"
       >
         No se pudo cargar la partida
-      </h2>
+      </h1>
       <p class="mt-2 text-sm text-danger-fg">{{ error.message }}</p>
       <button
         type="button"
@@ -87,20 +87,18 @@ const result = computed(() => {
       v-else-if="match"
       class="mt-6 space-y-8"
     >
-      <header
-        class="flex flex-wrap items-center gap-4 rounded-xl border border-line bg-card p-5"
-      >
+      <header class="flex flex-wrap items-center gap-4 rounded-xl border border-line bg-card p-5">
         <ChampionAvatar
           :champion="match.champion"
           :version="dataDragonVersion"
         />
         <div>
-          <h2
+          <h1
             id="match-title"
             class="text-2xl font-semibold text-fg"
           >
             {{ match.champion }}
-          </h2>
+          </h1>
           <p class="text-sm text-fg-muted">{{ match.queue.name }} · {{ match.position }}</p>
           <p class="mt-1 text-xs text-fg-subtle">
             {{ formatRelativeTime(match.started_at) }} ·

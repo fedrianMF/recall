@@ -1,11 +1,7 @@
 <script setup>
 import { RouterLink } from 'vue-router'
 import NavIcon from './NavIcon.vue'
-import { navItems } from './navItems'
-
-function isNavItemActive(item, isActive, isExactActive) {
-  return item.to === '/' ? isExactActive : isActive
-}
+import { isNavItemActive, navItems } from './navItems'
 </script>
 
 <template>

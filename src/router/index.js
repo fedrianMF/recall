@@ -3,23 +3,21 @@ import ChampionsView from '../views/ChampionsView.vue'
 import MatchDetailView from '../views/MatchDetailView.vue'
 import MatchesView from '../views/MatchesView.vue'
 import NotFoundView from '../views/NotFoundView.vue'
-import SummaryView from '../views/SummaryView.vue'
 import NewHomeView from '@/views/NewHomeView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/new-home',
-      name: 'new-home',
-      component: NewHomeView,
-      meta: { layout: 'redesign', title: 'Nuevo inicio' },
-    },
-    {
       path: '/',
       name: 'summary',
-      component: SummaryView,
+      component: NewHomeView,
       meta: { title: 'Resumen' },
+    },
+    // Old address of the redesigned summary, kept so existing bookmarks still work.
+    {
+      path: '/new-home',
+      redirect: { name: 'summary' },
     },
     {
       path: '/champions',

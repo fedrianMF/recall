@@ -1,5 +1,5 @@
 <script setup>
-import { computed, useId } from 'vue'
+import { computed } from 'vue'
 import { formatMetric } from '../../utils/formatMetric'
 import {
   formatPlatform,
@@ -8,6 +8,8 @@ import {
   getProgressPercent,
   isApexTier,
 } from '../../utils/summaryFormat'
+import ProgressBar from './ProgressBar.vue'
+import SummaryPanel from './SummaryPanel.vue'
 
 // Riot ladders show at most 100 LP per division.
 const LP_TOTAL = 100
@@ -20,7 +22,6 @@ const props = defineProps({
   },
 })
 
-const titleId = useId()
 const tierName = computed(() => formatTier(props.rank?.tier, props.rank?.rank))
 // Apex LP can pass 100, so a "x / 100" label and bar would be wrong there.
 const isApex = computed(() => isApexTier(props.rank?.tier))
@@ -35,17 +36,7 @@ const details = computed(() => [
 </script>
 
 <template>
-  <section
-    :aria-labelledby="titleId"
-    class="flex flex-col gap-4 rounded-2xl bg-surface p-6 text-ink shadow-card"
-  >
-    <h2
-      :id="titleId"
-      class="text-base font-semibold"
-    >
-      Rango
-    </h2>
-
+  <SummaryPanel title="Rango">
     <template v-if="rank">
       <div class="flex items-center gap-4">
         <svg
@@ -82,17 +73,11 @@ const details = computed(() => [
               </span>
             </p>
           </div>
-          <div
+          <ProgressBar
             v-if="!isApex"
-            class="h-2 rounded-full bg-sky-soft"
-            role="img"
-            :aria-label="lpLabel"
-          >
-            <div
-              class="h-2 rounded-full bg-sky"
-              :style="{ width: `${lpProgress}%` }"
-            ></div>
-          </div>
+            :percent="lpProgress"
+            :label="lpLabel"
+          />
         </div>
       </div>
 
@@ -117,5 +102,5 @@ const details = computed(() => [
       <p class="font-display text-[28px] leading-tight font-bold tracking-tight">Sin rango</p>
       <p class="text-sm text-ink-muted">Aún no hay una liga clasificatoria registrada.</p>
     </div>
-  </section>
+  </SummaryPanel>
 </template>
