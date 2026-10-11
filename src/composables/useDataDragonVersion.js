@@ -1,4 +1,4 @@
-import { ref } from 'vue'
+import { readonly, ref } from 'vue'
 import { getDataDragonVersion } from '../api/recall'
 
 const version = ref(null)
@@ -23,5 +23,5 @@ async function loadVersion() {
 export function useDataDragonVersion() {
   loadVersion()
 
-  return { version }
+  return { version: readonly(version) }
 }

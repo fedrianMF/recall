@@ -27,7 +27,17 @@ export function useApiRequest(request, options = {}) {
         return
       }
 
-      error.value = requestError instanceof Error ? requestError : new Error(errorMessage)
+      if (requestError instanceof Error) {
+        const displayError = new Error(errorMessage, { cause: requestError })
+
+        if ('status' in requestError) {
+          displayError.status = requestError.status
+        }
+
+        error.value = displayError
+      } else {
+        error.value = new Error(errorMessage)
+      }
     } finally {
       if (requestId === latestRequestId) {
         isLoading.value = false
