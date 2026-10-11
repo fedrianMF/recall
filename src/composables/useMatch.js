@@ -1,39 +1,24 @@
-import { ref, watch } from 'vue'
+import { watch } from 'vue'
 import { getMatch } from '../api/recall'
+import { useApiRequest } from './useApiRequest'
 
 export function useMatch(id) {
-  const match = ref(null)
-  const isLoading = ref(false)
-  const error = ref(null)
-  let latestRequestId = 0
-
-  async function loadMatch() {
-    const requestId = ++latestRequestId
-
-    isLoading.value = true
-    error.value = null
-
-    try {
+  const {
+    data: match,
+    isLoading,
+    error,
+    load: loadMatch,
+  } = useApiRequest(
+    async () => {
       const response = await getMatch(id.value)
 
-      if (requestId !== latestRequestId) {
-        return
-      }
-
-      match.value = response.data
-    } catch (requestError) {
-      if (requestId !== latestRequestId) {
-        return
-      }
-
-      error.value =
-        requestError instanceof Error ? requestError : new Error('No se pudo cargar la partida.')
-    } finally {
-      if (requestId === latestRequestId) {
-        isLoading.value = false
-      }
-    }
-  }
+      return response.data
+    },
+    {
+      initialData: null,
+      errorMessage: 'No se pudo cargar la partida.',
+    },
+  )
 
   watch(id, loadMatch, { immediate: true })
 
