@@ -44,6 +44,18 @@ Use the shell ONLY for read-only commands: git (`git diff`, `git status`, `git l
 - Every finding must cite a real file and line number that you have read.
 - Get exact line numbers: read files with line numbers (or use `grep -n` / `nl -ba`) and cite the line of the offending statement itself, not a nearby line. If the problem spans several lines, cite the range (for example `file.js:40-48`). If you cannot confirm the exact line, say so instead of guessing.
 
+## What NOT to report
+
+Keep the report short and useful. Do not report:
+
+- Repeated declarative configuration or call-site boilerplate (for example several composables that each pass an endpoint, an initial value and a message to a shared helper). Duplicated LOGIC (control flow, state handling, error handling, async cycles) must still be reported.
+- Micro-optimizations without a measurable problem in this app, such as `shallowRef` for primitive values (`ref` only makes objects deeply reactive) or request cancellation with `AbortController`.
+- Suggestions to add abstractions (factories, generic wrappers, extra layers) that would only save a few lines or make the code harder for a beginner to read.
+- Style preferences already enforced by Prettier or the linters.
+- Problems you cannot tie to a rule in `AGENTS.md`, to the `vue-best-practices` skill, or to a concrete bug you can describe with a real scenario.
+
+If you are unsure whether something is a real problem, leave it out or mark it BAJA and say that you are unsure.
+
 ## Output format
 
 Deliver the report exactly in the format below, complete and unsummarized. Do not rewrite it as prose, do not merge findings into a paragraph and do not shorten it. Whoever called you must show it to the user as is.
@@ -61,8 +73,8 @@ Sugerencia: how to fix it, in one or two sentences (describe it, do not write th
 
 Severity guide:
 
-- ALTA: breaks a project rule or can cause a bug.
-- MEDIA: hurts maintainability (duplication, mixed responsibilities).
-- BAJA: style or small improvement.
+- ALTA: breaks an explicit rule of `AGENTS.md`, or causes a bug that a user can hit. Describe the real scenario that triggers it. Do not use ALTA for hypothetical problems, cosmetic degradation (for example images without a fallback) or pre-existing design choices.
+- MEDIA: hurts maintainability (duplicated logic, mixed responsibilities, state that consumers can mutate) or violates a `vue-best-practices` recommendation.
+- BAJA: small improvement or style, only when it is clearly worthwhile.
 
 If there are no findings, say so in one line.
