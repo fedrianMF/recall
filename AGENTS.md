@@ -9,6 +9,7 @@ Frontend en Vue 3 + Vite de Recall, un coach personal de League of Legends. Mues
 ## Stack
 
 - Vue 3 con Composition API y `<script setup>`, en **JavaScript** (no TypeScript): estoy aprendiendo JS.
+- Si una Skill o guía de buenas prácticas usa TypeScript (`lang="ts"`, tipos), aplica la misma práctica en JavaScript. Mis reglas del proyecto ganan sobre la Skill.
 - Vite, Vue Router y Tailwind CSS.
 - Node y npm corren directo en WSL, en `/home/fedrian/AiMe/recall` (no en Docker).
 - Desarrollo: `npm run dev` → `http://localhost:5173`.
