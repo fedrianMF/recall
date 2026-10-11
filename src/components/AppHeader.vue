@@ -5,7 +5,7 @@ import AppLogo from './AppLogo.vue'
 import ThemeSelector from './ThemeSelector.vue'
 import { useAccount } from '../composables/useAccount'
 
-const { account } = useAccount()
+const { account, setAccount } = useAccount()
 </script>
 
 <template>
@@ -46,7 +46,10 @@ const { account } = useAccount()
       </nav>
 
       <div class="ml-auto flex flex-wrap items-center gap-4">
-        <AccountSelector v-model="account" />
+        <AccountSelector
+          :model-value="account"
+          @update:model-value="setAccount"
+        />
         <ThemeSelector />
       </div>
     </div>

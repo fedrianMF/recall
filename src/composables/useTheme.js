@@ -1,4 +1,4 @@
-import { computed, ref, watch } from 'vue'
+import { computed, ref, watch, readonly } from 'vue'
 
 const STORAGE_KEY = 'recall-theme'
 const MODES = ['system', 'light', 'dark']
@@ -60,5 +60,5 @@ export function useTheme() {
     if (MODES.includes(value)) mode.value = value
   }
 
-  return { mode, resolvedTheme, setMode }
+  return { mode: readonly(mode), resolvedTheme, setMode }
 }
