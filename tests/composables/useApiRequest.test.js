@@ -2,17 +2,7 @@ import { describe, expect, test, vi } from 'vitest'
 
 import { useApiRequest } from '@/composables/useApiRequest'
 
-function createControlledPromise() {
-  let resolve
-  let reject
-
-  const promise = new Promise((resolvePromise, rejectPromise) => {
-    resolve = resolvePromise
-    reject = rejectPromise
-  })
-
-  return { promise, resolve, reject }
-}
+import { createControlledPromise } from '../helpers/controlledPromise'
 
 describe('useApiRequest', () => {
   test('starts with the default state', () => {
