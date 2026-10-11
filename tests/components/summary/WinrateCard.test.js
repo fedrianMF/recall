@@ -29,6 +29,15 @@ describe('WinrateCard', () => {
     expect(wrapper.text()).not.toContain('Por encima del 50%')
   })
 
+  test('describes the winrate as the share of games won', () => {
+    const wrapper = mount(WinrateCard, { props: { winrate: 52.4, wins: 55, losses: 50 } })
+
+    const text = wrapper.text()
+
+    expect(text).toContain('de las partidas ganadas')
+    expect(text).not.toContain('clasificatorias')
+  })
+
   test('shows the wins and losses legend', () => {
     const wrapper = mount(WinrateCard, { props: { winrate: 52.4, wins: 55, losses: 50 } })
 

@@ -10,6 +10,15 @@ const QUEUE_NAMES = {
 
 const APEX_TIERS = new Set(['MASTER', 'GRANDMASTER', 'CHALLENGER'])
 
+// Apex tiers have no divisions and their LP can go above 100.
+export function isApexTier(tier) {
+  if (typeof tier !== 'string') {
+    return false
+  }
+
+  return APEX_TIERS.has(tier.toUpperCase())
+}
+
 export function formatPlatform(platform) {
   if (platform === null || platform === undefined) {
     return '—'
@@ -34,7 +43,7 @@ export function formatTier(tier, division) {
   const normalizedKey = tier.toUpperCase()
   const normalizedTier = `${normalizedKey.charAt(0)}${normalizedKey.slice(1).toLowerCase()}`
 
-  if (APEX_TIERS.has(normalizedKey) || !division) {
+  if (isApexTier(tier) || !division) {
     return normalizedTier
   }
 

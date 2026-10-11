@@ -10,6 +10,12 @@ import ShellRail from './ShellRail.vue'
   <div
     class="flex min-h-screen flex-col bg-charcoal md:grid md:grid-cols-[72px_minmax(0,1fr)] md:bg-rail xl:grid-cols-[72px_280px_minmax(0,1fr)]"
   >
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:inline-flex focus:min-h-11 focus:items-center focus:rounded-control focus:bg-surface focus:px-4 focus:text-sm focus:font-semibold focus:text-ink"
+      >Saltar al contenido</a
+    >
+
     <ShellRail />
     <ShellAccountPanel />
 
@@ -32,10 +38,16 @@ import ShellRail from './ShellRail.vue'
     </header>
 
     <main
+      id="main"
+      tabindex="-1"
       class="min-w-0 flex-1 rounded-t-shell bg-sage px-5 pt-6 pb-[120px] md:rounded-t-none md:rounded-l-shell md:px-8 md:py-8 lg:px-10"
     >
       <div class="mb-8 hidden items-center justify-end md:flex xl:hidden">
-        <span class="mr-3 text-sm font-medium text-ink-muted">Cuenta</span>
+        <span
+          aria-hidden="true"
+          class="mr-3 text-sm font-medium text-ink-muted"
+          >Cuenta</span
+        >
         <AccountCompactSelect tone="light" />
       </div>
 

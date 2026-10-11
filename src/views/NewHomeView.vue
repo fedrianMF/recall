@@ -1,5 +1,5 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useAccount } from '../composables/useAccount'
 import { useSummary } from '../composables/useSummary'
 import AppShell from '../components/shell/AppShell.vue'
@@ -23,26 +23,49 @@ const mainRank = computed(() => summary.value?.ranks?.[0] ?? null)
 // A refresh keeps the old data visible and only changes the button.
 const isInitialLoading = computed(() => isLoading.value && !summary.value)
 const isEmpty = computed(() => summary.value?.games === 0)
+
+// A template ref: Vue fills it with the real <h1> element once it is rendered.
+const titleElement = ref(null)
+
+// The button stays focusable while loading (aria-disabled), so we ignore extra clicks here.
+function refresh() {
+  if (isLoading.value) {
+    return
+  }
+
+  loadSummary()
+}
+
+// The error panel disappears while retrying, so its button (and the focus) is lost.
+// We move the focus to the page title right away (before the panel is removed),
+// so keyboard users never lose their place while the request is running.
+function retry() {
+  titleElement.value?.focus()
+  loadSummary()
+}
 </script>
 
 <template>
   <AppShell>
     <div class="space-y-7">
       <div class="flex flex-wrap items-center justify-between gap-4">
-        <h1 class="font-display text-3xl font-bold tracking-tight text-ink md:text-4xl">
+        <h1
+          ref="titleElement"
+          tabindex="-1"
+          class="font-display text-3xl font-bold tracking-tight text-ink md:text-4xl"
+        >
           Resumen de rendimiento
         </h1>
 
         <button
           type="button"
-          class="inline-flex min-h-11 items-center gap-2.5 rounded-control bg-rail px-5 text-sm font-semibold text-on-dark transition-colors hover:bg-charcoal-hover disabled:cursor-not-allowed disabled:opacity-70"
-          :disabled="isLoading"
-          :aria-busy="isLoading"
-          @click="loadSummary"
+          class="inline-flex min-h-11 items-center gap-2.5 rounded-control bg-rail px-5 text-sm font-semibold text-on-dark transition-colors hover:bg-charcoal-hover aria-disabled:cursor-not-allowed aria-disabled:opacity-70"
+          :aria-disabled="isLoading"
+          @click="refresh"
         >
           <svg
             class="size-[18px]"
-            :class="{ 'animate-spin': isLoading }"
+            :class="{ 'animate-spin motion-reduce:animate-none': isLoading }"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -59,13 +82,20 @@ const isEmpty = computed(() => summary.value?.games === 0)
           </svg>
           {{ isLoading ? 'Actualizando…' : 'Actualizar' }}
         </button>
+
+        <p
+          class="sr-only"
+          role="status"
+        >
+          {{ isLoading ? 'Actualizando resumen…' : '' }}
+        </p>
       </div>
 
       <!-- Shown above the data when a refresh fails, so old numbers stay visible -->
       <SummaryErrorPanel
         v-if="error"
         :message="error.message"
-        @retry="loadSummary"
+        @retry="retry"
       />
 
       <SummarySkeleton v-if="isInitialLoading" />
@@ -87,6 +117,11 @@ const isEmpty = computed(() => summary.value?.games === 0)
           :games="summary.games"
           :wins="summary.wins"
           :losses="summary.losses"
+        />
+
+        <RankPanel
+          class="self-start lg:col-start-2 lg:row-start-2"
+          :rank="mainRank"
         />
 
         <section
@@ -133,11 +168,6 @@ const isEmpty = computed(() => summary.value?.games === 0)
             />
           </div>
         </section>
-
-        <RankPanel
-          class="self-start lg:col-start-2 lg:row-start-2"
-          :rank="mainRank"
-        />
       </div>
     </div>
   </AppShell>

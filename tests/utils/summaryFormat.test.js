@@ -6,7 +6,25 @@ import {
   formatTier,
   getProgressPercent,
   getWinrateLabel,
+  isApexTier,
 } from '@/utils/summaryFormat'
+
+describe('isApexTier', () => {
+  test.each(['MASTER', 'GRANDMASTER', 'CHALLENGER', 'master', 'grandmaster', 'challenger'])(
+    'returns true for %s',
+    (tier) => {
+      const result = isApexTier(tier)
+
+      expect(result).toBe(true)
+    },
+  )
+
+  test.each(['GOLD', '', null, undefined, 123])('returns false for %s', (tier) => {
+    const result = isApexTier(tier)
+
+    expect(result).toBe(false)
+  })
+})
 
 describe('formatPlatform', () => {
   test.each([

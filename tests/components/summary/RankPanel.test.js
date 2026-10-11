@@ -20,6 +20,8 @@ function getDetail(wrapper, term) {
   return termElement.element.nextElementSibling.textContent.trim()
 }
 
+const masterRank = { ...goldRank, tier: 'MASTER', rank: 'I', league_points: 312 }
+
 describe('RankPanel', () => {
   test('shows the tier and division of the rank', () => {
     const wrapper = mount(RankPanel, { props: { rank: goldRank } })
@@ -54,6 +56,28 @@ describe('RankPanel', () => {
 
     expect(getDetail(wrapper, 'Liga')).toBe('GOLD')
     expect(getDetail(wrapper, 'División')).toBe('II')
+  })
+
+  test('shows the league points of an apex tier without "/ 100"', () => {
+    const wrapper = mount(RankPanel, { props: { rank: masterRank } })
+
+    const text = wrapper.text()
+
+    expect(text).toMatch(/312\s*LP/)
+    expect(text).not.toContain('/ 100')
+  })
+
+  test('shows no progress bar for an apex tier', () => {
+    const wrapper = mount(RankPanel, { props: { rank: masterRank } })
+
+    expect(wrapper.find('[role="img"]').exists()).toBe(false)
+  })
+
+  test('keeps the progress bar and "/ 100 LP" for a non-apex tier', () => {
+    const wrapper = mount(RankPanel, { props: { rank: goldRank } })
+
+    expect(wrapper.find('[role="img"]').exists()).toBe(true)
+    expect(wrapper.text()).toContain('/ 100')
   })
 
   test('shows "Sin rango" when rank is null', () => {

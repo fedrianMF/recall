@@ -40,22 +40,26 @@ const progressLabel = computed(() => `${props.label} ${props.value}`)
 
 <template>
   <article class="rounded-metric bg-surface p-5 text-ink shadow-card md:min-h-39">
-    <dl class="flex h-full flex-col justify-between gap-4">
-      <dt class="flex items-center gap-2.5 text-sm font-semibold">
-        <span
-          class="flex size-9 shrink-0 items-center justify-center rounded-lg"
-          :class="chipClasses"
-        >
-          <MetricIcon
-            :name="icon"
-            class="size-[18px]"
-          />
-        </span>
-        {{ label }}
-      </dt>
+    <dl class="h-full">
+      <!-- One div groups the dt with its dd elements, which is valid inside a dl -->
+      <div class="flex h-full flex-col">
+        <dt class="mb-4 flex min-w-0 items-center gap-2.5 text-sm font-semibold">
+          <span
+            class="flex size-9 shrink-0 items-center justify-center rounded-lg"
+            :class="chipClasses"
+          >
+            <MetricIcon
+              :name="icon"
+              class="size-[18px]"
+            />
+          </span>
+          <span class="min-w-0 break-words">{{ label }}</span>
+        </dt>
 
-      <div>
-        <dd class="font-display text-[40px] leading-none font-bold tracking-tight tabular-nums">
+        <!-- mt-auto pushes the value (and what follows) to the bottom of the card -->
+        <dd
+          class="mt-auto font-display text-[32px] leading-none font-bold tracking-tight tabular-nums md:text-[40px]"
+        >
           {{ value }}
         </dd>
         <dd

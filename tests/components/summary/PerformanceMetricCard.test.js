@@ -45,4 +45,25 @@ describe('PerformanceMetricCard', () => {
 
     expect(wrapper.findAll('dd')).toHaveLength(1)
   })
+
+  test('wraps the dt in exactly one direct div child of the dl', () => {
+    const wrapper = mount(PerformanceMetricCard, { props: { label: 'KDA', value: '2.8' } })
+
+    const groups = Array.from(wrapper.get('dl').element.children)
+
+    expect(groups).toHaveLength(1)
+    expect(groups[0].tagName).toBe('DIV')
+    expect(groups[0].querySelector('dt')).not.toBeNull()
+  })
+
+  test('keeps every dd in the same group as the dt', () => {
+    const wrapper = mount(PerformanceMetricCard, {
+      props: { label: 'KDA', value: '2.8', caption: '(K + A) / muertes', progress: 50 },
+    })
+
+    const group = wrapper.get('dl').element.children[0]
+
+    expect(group.querySelectorAll('dd')).toHaveLength(3)
+    expect(wrapper.findAll('dd')).toHaveLength(3)
+  })
 })

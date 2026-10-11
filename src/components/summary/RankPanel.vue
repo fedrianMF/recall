@@ -6,6 +6,7 @@ import {
   formatQueueType,
   formatTier,
   getProgressPercent,
+  isApexTier,
 } from '../../utils/summaryFormat'
 
 // Riot ladders show at most 100 LP per division.
@@ -21,6 +22,8 @@ const props = defineProps({
 
 const titleId = useId()
 const tierName = computed(() => formatTier(props.rank?.tier, props.rank?.rank))
+// Apex LP can pass 100, so a "x / 100" label and bar would be wrong there.
+const isApex = computed(() => isApexTier(props.rank?.tier))
 const lpProgress = computed(() => getProgressPercent(props.rank?.league_points, LP_TOTAL))
 const lpLabel = computed(() => `${formatMetric(props.rank?.league_points)} de ${LP_TOTAL} LP`)
 const details = computed(() => [
@@ -67,16 +70,20 @@ const details = computed(() => [
         </svg>
 
         <div class="flex flex-1 flex-col gap-2">
-          <div class="flex items-baseline justify-between gap-3">
+          <div class="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
             <p class="font-display text-[28px] leading-tight font-bold tracking-tight">
               {{ tierName }}
             </p>
             <p class="text-[15px] font-semibold tabular-nums">
               {{ formatMetric(rank.league_points) }}
-              <span class="font-normal text-ink-muted">/ {{ LP_TOTAL }} LP</span>
+              <span class="font-normal text-ink-muted">
+                <template v-if="!isApex">/ {{ LP_TOTAL }}</template>
+                LP
+              </span>
             </p>
           </div>
           <div
+            v-if="!isApex"
             class="h-2 rounded-full bg-sky-soft"
             role="img"
             :aria-label="lpLabel"

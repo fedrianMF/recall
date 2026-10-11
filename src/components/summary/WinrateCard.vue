@@ -32,8 +32,8 @@ const titleId = useId()
       Winrate
     </h2>
 
-    <div class="flex flex-1 items-center justify-between gap-3">
-      <div class="min-w-0">
+    <div class="flex flex-1 flex-col items-center gap-6 sm:flex-row sm:justify-between sm:gap-3">
+      <div class="min-w-0 self-start sm:self-auto">
         <p
           v-if="winrate !== null"
           class="flex items-start font-display text-[76px] leading-none font-bold tracking-tight tabular-nums md:text-[116px]"
@@ -48,9 +48,7 @@ const titleId = useId()
           —
         </p>
 
-        <p class="mt-3 max-w-52 text-sm leading-relaxed text-ink-muted">
-          de las partidas clasificatorias ganadas en este periodo.
-        </p>
+        <p class="mt-3 max-w-52 text-sm leading-relaxed text-ink-muted">de las partidas ganadas.</p>
 
         <span
           v-if="winrate !== null && winrate > 50"
@@ -61,7 +59,7 @@ const titleId = useId()
         </span>
       </div>
 
-      <div class="w-2/5 max-w-[232px] shrink-0">
+      <div class="w-full max-w-[200px] shrink-0 sm:w-2/5 sm:max-w-[232px]">
         <WinrateRing
           :winrate="winrate"
           :wins="wins"
