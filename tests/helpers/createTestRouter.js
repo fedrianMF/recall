@@ -12,6 +12,7 @@ export async function createTestRouter() {
       { path: '/', component: Stub },
       { path: '/champions', component: Stub },
       { path: '/matches', component: Stub },
+      { path: '/matches/:id', name: 'match-detail', component: Stub },
     ],
   })
 
