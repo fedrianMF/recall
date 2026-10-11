@@ -1,6 +1,7 @@
 <script setup>
 import { computed } from 'vue'
 import { formatMetric } from '../utils/formatMetric'
+import { formatPlatform, formatQueueType } from '../utils/summaryFormat'
 
 const props = defineProps({
   rank: {
@@ -9,23 +10,9 @@ const props = defineProps({
   },
 })
 
-const platformName = computed(() => {
-  const platforms = {
-    la1: 'LAN',
-    la2: 'LAS',
-  }
+const platformName = computed(() => formatPlatform(props.rank.platform))
 
-  return platforms[props.rank.platform] ?? props.rank.platform
-})
-
-const queueName = computed(() => {
-  const queues = {
-    RANKED_SOLO_5x5: 'Solo/Dúo',
-    RANKED_FLEX_SR: 'Flexible',
-  }
-
-  return queues[props.rank.queue_type] ?? props.rank.queue_type
-})
+const queueName = computed(() => formatQueueType(props.rank.queue_type))
 </script>
 
 <template>
