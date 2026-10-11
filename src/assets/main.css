@@ -1,9 +1,27 @@
+@import '@fontsource-variable/bricolage-grotesque/opsz.css';
+@import '@fontsource-variable/geist/wght.css';
 @import 'tailwindcss';
 
 @theme {
+  --font-sans:
+    'Geist Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue',
+    'Noto Sans', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+    'Noto Color Emoji';
+  --font-display: 'Bricolage Grotesque Variable', sans-serif;
+
   --color-rail: #0b0c0b;
   --color-charcoal: #1c1e1d;
   --color-charcoal-raised: #262927;
+  --color-charcoal-deep: #111312;
+  --color-charcoal-hover: #2a2d2b;
+
+  --color-on-dark: #ffffff;
+  --color-on-dark-muted: #9aa198;
+  --color-on-dark-subtle: #c9cec7;
+  --color-rail-item: #1f2220;
+  --color-rail-item-hover: #2c302d;
+  --color-rail-icon: #a3aaa1;
+  --color-focus-on-dark: #8acff2;
 
   --color-sage: #dce5d9;
   --color-surface: #ffffff;
@@ -24,6 +42,18 @@
   --color-sky: #3a9bd1;
   --color-sky-soft: #e3eef4;
   --color-sky-text: #1f6f9c;
+
+  --color-gold: #a77b1e;
+  --color-gold-soft: #f4e7c4;
+  --color-gold-text: #6e4f0e;
+  --color-gold-on-dark: #e6c77e;
+
+  --radius-control: 10px;
+  --radius-metric: 14px;
+  --radius-shell: 20px;
+
+  --shadow-card: 0 1px 2px rgba(20, 30, 20, 0.06), 0 6px 18px rgba(20, 30, 20, 0.08);
+  --shadow-float: 0 12px 32px rgba(11, 12, 11, 0.28);
 }
 
 /*
@@ -119,6 +149,16 @@
 
   :root[data-theme='dark'] {
     color-scheme: dark;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-sky-text) !important;
+    outline-offset: 3px !important;
+  }
+
+  [data-focus-theme='dark']:focus-visible,
+  [data-focus-theme='dark'] :focus-visible {
+    outline-color: var(--color-focus-on-dark) !important;
   }
 
   body {
