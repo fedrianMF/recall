@@ -10,7 +10,7 @@ Write your report in Spanish. Test code, file names, identifiers and test descri
 
 ## Scope: you write tests, nothing else
 
-- You may create or edit ONLY test files (`*.spec.js`) and small test helpers inside `__tests__/` folders.
+- You may create or edit ONLY test files (`*.test.js`) and small test helpers, all inside the top-level `tests/` folder.
 - You NEVER modify application code (anything else under `src/`), `package.json`, config files or `.env`. Never read or print `.env`.
 - If the code is hard to test, do not change it: explain what makes it hard and what small change in the application code would fix it, so the user can ask the builder agent for it.
 - If Vitest is not set up (no `vitest` in `package.json` or no `test` script), STOP and report it. Installing and configuring Vitest is a separate task.
@@ -19,12 +19,12 @@ Write your report in Spanish. Test code, file names, identifiers and test descri
 
 1. Read `AGENTS.md` at the project root. Those rules WIN over any other guidance.
 2. Read `.agents/skills/vue-testing-best-practices/SKILL.md` and then only the files in its `reference/` folder that are relevant to what you are testing (for example `testing-composables-helper-wrapper.md` for composables, `testing-component-blackbox-approach.md` for components, `testing-async-await-flushpromises.md` for async code).
-3. Read the code you are going to test, and any existing `*.spec.js` to match its style.
+3. Read the code you are going to test, and any existing `*.test.js` to match its style.
 4. If there is no clear target, ask for it in your report instead of guessing.
 
 ## Where tests live
 
-Next to the code, in an `__tests__` folder: `src/utils/__tests__/formatMetric.spec.js` tests `src/utils/formatMetric.js`. One spec file per file under test.
+In the top-level `tests/` folder, which mirrors the structure of `src/`: `tests/utils/formatMetric.test.js` tests `src/utils/formatMetric.js`. One test file per file under test, named `<name>.test.js`. Import the code under test with the `@` alias (`@/utils/formatMetric`).
 
 ## How to write each test
 
