@@ -6,7 +6,11 @@ on:
     types: [created]
 jobs:
   claude:
-    if: contains(github.event.comment.body, '@claude')
+    # Only the owner and collaborators can trigger it: the repository is public and this job
+    # has write permissions and access to a secret.
+    if: >-
+      contains(github.event.comment.body, '@claude') &&
+      contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.comment.author_association)
     runs-on: ubuntu-latest
     permissions:
       contents: write
