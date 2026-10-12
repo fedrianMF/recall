@@ -152,13 +152,20 @@
   }
 
   :focus-visible {
-    outline: 2px solid var(--color-sky-text) !important;
-    outline-offset: 3px !important;
+    outline: 2px solid var(--color-sky-text);
+    outline-offset: 3px;
   }
 
   [data-focus-theme='dark']:focus-visible,
   [data-focus-theme='dark'] :focus-visible {
-    outline-color: var(--color-focus-on-dark) !important;
+    outline-color: var(--color-focus-on-dark);
+  }
+
+  /* Elements with tabindex="-1" (the <main>, headings and the detail <section>) only receive
+     focus from code, to keep the keyboard position after a page change or a retry.
+     They are not interactive, so a ring around a whole section would be noise. */
+  [tabindex='-1']:focus-visible {
+    outline: none;
   }
 
   body {

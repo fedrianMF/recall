@@ -62,10 +62,10 @@ const { setAccount } = useAccount()
 
 let wrapper
 
-async function mountView() {
+async function mountView(options = {}) {
   const router = await createTestRouter()
 
-  wrapper = mount(MatchesView, { global: { plugins: [router] } })
+  wrapper = mount(MatchesView, { global: { plugins: [router] }, ...options })
 
   return wrapper
 }
@@ -232,6 +232,40 @@ describe('MatchesView', () => {
   })
 
   describe('pagination', () => {
+    test('moves focus to the page title immediately when Siguiente is clicked', async () => {
+      const nextPageRequest = createControlledPromise()
+      getMatches.mockResolvedValueOnce(createResponse(1, 3))
+      getMatches.mockReturnValueOnce(nextPageRequest.promise)
+      await mountView({ attachTo: document.body })
+      await flushPromises()
+
+      await findButton('Siguiente').trigger('click')
+
+      const title = wrapper.get('#matches-title')
+      expect(title.attributes('tabindex')).toBe('-1')
+      expect(document.activeElement).toBe(title.element)
+    })
+
+    test('moves focus to the page title immediately when Anterior is clicked', async () => {
+      const previousPageRequest = createControlledPromise()
+      getMatches.mockResolvedValueOnce(createResponse(1, 3))
+      getMatches.mockResolvedValueOnce(createResponse(2, 3))
+      getMatches.mockReturnValueOnce(previousPageRequest.promise)
+      await mountView({ attachTo: document.body })
+      await flushPromises()
+      await findButton('Siguiente').trigger('click')
+      await flushPromises()
+      // The previous click left focus on the title: put it back on the button, where a real user is.
+      findButton('Anterior').element.focus()
+      expect(document.activeElement).toBe(findButton('Anterior').element)
+
+      await findButton('Anterior').trigger('click')
+
+      const title = wrapper.get('#matches-title')
+      expect(title.attributes('tabindex')).toBe('-1')
+      expect(document.activeElement).toBe(title.element)
+    })
+
     test('disables Anterior and enables Siguiente on the first page', async () => {
       mockPaginatedApi()
 
@@ -302,6 +336,22 @@ describe('MatchesView', () => {
       expect(getMatches).toHaveBeenCalledTimes(1)
       expect(getMatches).toHaveBeenCalledWith({ account: undefined, queue: '450', page: 1 })
       expect(wrapper.get('nav').text()).toContain('Página 1 de 3')
+    })
+  })
+
+  describe('retry focus', () => {
+    test('moves focus to the page title immediately when Reintentar is clicked', async () => {
+      const retryRequest = createControlledPromise()
+      getMatches.mockRejectedValueOnce(new Error('Server unavailable'))
+      getMatches.mockReturnValueOnce(retryRequest.promise)
+      await mountView({ attachTo: document.body })
+      await flushPromises()
+
+      await wrapper.get('[role="alert"] button').trigger('click')
+
+      const title = wrapper.get('#matches-title')
+      expect(title.attributes('tabindex')).toBe('-1')
+      expect(document.activeElement).toBe(title.element)
     })
   })
 

@@ -66,8 +66,8 @@ const { setAccount } = useAccount()
 
 let wrapper
 
-function mountView() {
-  wrapper = mount(ChampionsView)
+function mountView(options = {}) {
+  wrapper = mount(ChampionsView, options)
 
   return wrapper
 }
@@ -141,6 +141,22 @@ describe('ChampionsView', () => {
       expect(getChampions).toHaveBeenCalledTimes(2)
       expect(wrapper.find('[role="alert"]').exists()).toBe(false)
       expect(wrapper.find('table').exists()).toBe(true)
+    })
+  })
+
+  describe('retry focus', () => {
+    test('moves focus to the page title immediately when Reintentar is clicked', async () => {
+      const retryRequest = createControlledPromise()
+      getChampions.mockRejectedValueOnce(new Error('Server unavailable'))
+      getChampions.mockReturnValueOnce(retryRequest.promise)
+      mountView({ attachTo: document.body })
+      await flushPromises()
+
+      await wrapper.get('[role="alert"] button').trigger('click')
+
+      const title = wrapper.get('#champions-title')
+      expect(title.attributes('tabindex')).toBe('-1')
+      expect(document.activeElement).toBe(title.element)
     })
   })
 

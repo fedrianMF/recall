@@ -79,13 +79,14 @@ function createMatch(overrides = {}) {
 let wrapper
 let router
 
-async function mountView(path = '/matches/LA1_123') {
+async function mountView(path = '/matches/LA1_123', options = {}) {
   router = await createTestRouter()
   await router.push(path)
   await router.isReady()
 
   wrapper = mount(MatchDetailView, {
     global: { plugins: [router] },
+    ...options,
   })
 
   return wrapper
@@ -180,6 +181,72 @@ describe('MatchDetailView', () => {
     })
   })
 
+  describe('accessible section', () => {
+    test('provides an unlabelled focus target while the match is loading', async () => {
+      getMatch.mockReturnValue(createControlledPromise().promise)
+
+      await mountView()
+
+      expect(wrapper.attributes('tabindex')).toBe('-1')
+      expect(wrapper.attributes('aria-labelledby')).toBeUndefined()
+      expect(wrapper.find('#match-title').exists()).toBe(false)
+    })
+
+    test('provides a focus target labelled by the 404 heading', async () => {
+      const error = new Error('Match not found')
+      error.status = 404
+      getMatch.mockRejectedValue(error)
+
+      await mountView()
+      await flushPromises()
+
+      expect(wrapper.attributes('tabindex')).toBe('-1')
+      expect(wrapper.attributes('aria-labelledby')).toBe('match-title')
+      expect(wrapper.get('#match-title').text()).toBe('Partida no encontrada')
+    })
+
+    test('provides a focus target labelled by the error heading', async () => {
+      const error = new Error('Server unavailable')
+      error.status = 500
+      getMatch.mockRejectedValue(error)
+
+      await mountView()
+      await flushPromises()
+
+      expect(wrapper.attributes('tabindex')).toBe('-1')
+      expect(wrapper.attributes('aria-labelledby')).toBe('match-title')
+      expect(wrapper.get('#match-title').text()).toBe('No se pudo cargar la partida')
+    })
+
+    test('provides a focus target labelled by the champion heading', async () => {
+      getMatch.mockResolvedValue({ data: createMatch() })
+
+      await mountView()
+      await flushPromises()
+
+      expect(wrapper.attributes('tabindex')).toBe('-1')
+      expect(wrapper.attributes('aria-labelledby')).toBe('match-title')
+      expect(wrapper.get('#match-title').text()).toBe('Ahri')
+    })
+  })
+
+  describe('retry focus', () => {
+    test('moves focus to the view immediately when Reintentar is clicked', async () => {
+      const error = new Error('Server unavailable')
+      error.status = 500
+      const retryRequest = createControlledPromise()
+      getMatch.mockRejectedValueOnce(error)
+      getMatch.mockReturnValueOnce(retryRequest.promise)
+      await mountView('/matches/LA1_123', { attachTo: document.body })
+      await flushPromises()
+
+      await wrapper.get('[role="alert"] button').trigger('click')
+
+      expect(wrapper.attributes('tabindex')).toBe('-1')
+      expect(document.activeElement).toBe(wrapper.element)
+    })
+  })
+
   describe('match summary', () => {
     test('shows the champion, queue, position and formatted duration', async () => {
       getMatch.mockResolvedValue({ data: createMatch() })
@@ -240,13 +307,18 @@ describe('MatchDetailView', () => {
   })
 
   describe('teams', () => {
-    test('shows the blue and red team tables', async () => {
+    test('uses a continuous heading hierarchy for metrics and team tables', async () => {
       getMatch.mockResolvedValue({ data: createMatch() })
 
       await mountView()
       await flushPromises()
 
-      expect(wrapper.findAll('h3').map((heading) => heading.text())).toEqual([
+      const headings = wrapper.findAll('h1, h2')
+      expect(headings.map((heading) => Number(heading.element.tagName.slice(1)))).toEqual([
+        1, 2, 2, 2,
+      ])
+      expect(headings.map((heading) => heading.text())).toEqual([
+        'Ahri',
         'Tus métricas',
         'Equipo azul 18 asesinatos',
         'Equipo rojo 9 asesinatos',

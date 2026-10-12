@@ -52,13 +52,13 @@ describe('TeamTable', () => {
   ])('shows the expected team name for team id %s', (teamId, teamName) => {
     const wrapper = mountTable(createTeam({ team_id: teamId }))
 
-    expect(wrapper.get('h3').text()).toContain(teamName)
+    expect(wrapper.get('h2').text()).toContain(teamName)
   })
 
   test('shows the team kill count', () => {
     const wrapper = mountTable()
 
-    expect(wrapper.get('h3').text()).toContain('18 asesinatos')
+    expect(wrapper.get('h2').text()).toContain('18 asesinatos')
   })
 
   test.each([

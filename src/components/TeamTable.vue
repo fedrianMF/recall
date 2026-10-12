@@ -20,12 +20,12 @@ const teamName = computed(() => (props.team.team_id === 100 ? 'Equipo azul' : 'E
 <template>
   <section>
     <div class="flex flex-wrap items-center justify-between gap-3">
-      <h3 class="font-display text-lg font-bold text-ink">
+      <h2 class="font-display text-lg font-bold text-ink">
         {{ teamName }}
         <span class="ml-2 text-sm font-normal text-ink-muted">
           {{ formatMetric(team.kills) }} asesinatos
         </span>
-      </h3>
+      </h2>
       <span
         class="rounded-full px-3 py-1 text-xs font-semibold"
         :class="team.win ? 'bg-win-soft text-win-text' : 'bg-loss-soft text-loss-text'"

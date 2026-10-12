@@ -22,6 +22,7 @@ const { account } = useAccount()
 const minGames = ref(1)
 const sortKey = ref('games')
 const sortDirection = ref('desc')
+const titleElement = ref(null)
 const { version: dataDragonVersion } = useDataDragonVersion()
 const { champions, isLoading, error, loadChampions } = useChampions(account, minGames)
 
@@ -71,6 +72,12 @@ function ariaSort(column) {
 
   return sortDirection.value === 'asc' ? 'ascending' : 'descending'
 }
+
+function retry() {
+  // Focus before the error panel unmounts so the browser does not return focus to <body>.
+  titleElement.value?.focus()
+  loadChampions()
+}
 </script>
 
 <template>
@@ -78,7 +85,9 @@ function ariaSort(column) {
     <div class="flex flex-col items-stretch gap-4 sm:flex-row sm:items-end sm:justify-between">
       <div class="min-w-0">
         <h1
+          ref="titleElement"
           id="champions-title"
+          tabindex="-1"
           class="font-display text-3xl font-bold tracking-tight text-ink md:text-4xl"
         >
           Campeones
@@ -118,7 +127,7 @@ function ariaSort(column) {
       class="mt-6"
       title="No se pudieron cargar los campeones"
       :message="error.message"
-      @retry="loadChampions"
+      @retry="retry"
     />
 
     <SummaryEmptyPanel

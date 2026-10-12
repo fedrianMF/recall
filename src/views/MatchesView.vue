@@ -11,18 +11,29 @@ const { account } = useAccount()
 const { version: dataDragonVersion } = useDataDragonVersion()
 const queue = ref('')
 const page = ref(1)
+const titleElement = ref(null)
 const { matches, meta, isLoading, error, loadMatches } = useMatches(account, queue, page)
 
 function previousPage() {
   if (page.value > 1) {
     page.value -= 1
+    // Focus before the current content unmounts so the browser does not return focus to <body>.
+    titleElement.value?.focus()
   }
 }
 
 function nextPage() {
   if (page.value < meta.value.last_page) {
     page.value += 1
+    // Focus before the current content unmounts so the browser does not return focus to <body>.
+    titleElement.value?.focus()
   }
+}
+
+function retry() {
+  // Focus before the error panel unmounts so the browser does not return focus to <body>.
+  titleElement.value?.focus()
+  loadMatches()
 }
 </script>
 
@@ -31,7 +42,9 @@ function nextPage() {
     <div class="flex flex-col items-stretch gap-4 sm:flex-row sm:items-end sm:justify-between">
       <div class="min-w-0">
         <h1
+          ref="titleElement"
           id="matches-title"
+          tabindex="-1"
           class="font-display text-3xl font-bold tracking-tight text-ink md:text-4xl"
         >
           Historial
@@ -78,7 +91,7 @@ function nextPage() {
       class="mt-6"
       title="No se pudo cargar el historial"
       :message="error.message"
-      @retry="loadMatches"
+      @retry="retry"
     />
 
     <SummaryEmptyPanel

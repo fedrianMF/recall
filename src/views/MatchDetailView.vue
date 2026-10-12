@@ -1,5 +1,5 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
 import ChampionAvatar from '../components/ChampionAvatar.vue'
 import MetricCard from '../components/MetricCard.vue'
@@ -10,6 +10,7 @@ import { formatDuration, formatRelativeTime } from '../utils/formatMatch'
 
 const route = useRoute()
 const matchId = computed(() => String(route.params.id))
+const viewElement = ref(null)
 const { version: dataDragonVersion } = useDataDragonVersion()
 const { match, isLoading, error, loadMatch } = useMatch(matchId)
 
@@ -20,10 +21,20 @@ const result = computed(() => {
 
   return match.value?.win ? 'Victoria' : 'Derrota'
 })
+
+function retry() {
+  // Focus before the error panel unmounts so the browser does not return focus to <body>.
+  viewElement.value?.focus()
+  loadMatch()
+}
 </script>
 
 <template>
-  <section aria-labelledby="match-title">
+  <section
+    ref="viewElement"
+    tabindex="-1"
+    :aria-labelledby="isLoading ? undefined : 'match-title'"
+  >
     <RouterLink
       to="/matches"
       class="inline-flex min-h-11 items-center text-sm font-medium text-sky-text hover:underline"
@@ -80,7 +91,7 @@ const result = computed(() => {
       <button
         type="button"
         class="mt-4 min-h-11 rounded-control bg-danger-solid px-5 text-sm font-semibold text-on-dark transition-colors hover:bg-danger-solid-hover"
-        @click="loadMatch"
+        @click="retry"
       >
         Reintentar
       </button>
@@ -123,12 +134,12 @@ const result = computed(() => {
       </header>
 
       <section aria-labelledby="personal-metrics-title">
-        <h3
+        <h2
           id="personal-metrics-title"
           class="font-display text-xl font-bold text-ink"
         >
           Tus métricas
-        </h3>
+        </h2>
         <div class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           <MetricCard
             label="K / D / A"
