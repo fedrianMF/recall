@@ -51,3 +51,9 @@ Los pasos aparecen separados en CI para identificar rápidamente qué comprobaci
 `npm run lint` y `npm run format` corrigen archivos y están pensados para uso local.
 `npm run lint:check` y `npm run format:check` solo comprueban, sin modificar archivos.
 Dependabot revisa semanalmente las dependencias de npm y de GitHub Actions.
+
+La URL compartida por desarrollo y producción se configura como `VITE_API_URL` en `.env`.
+Los mocks locales se habilitan con `VITE_USE_MOCKS=true` en `.env.development`, que solo usa `npm run dev`.
+`npm run build` valida la configuración de producción y rechaza mocks o una URL ausente o inválida.
+La URL debe ser únicamente el origen, sin ruta, consulta ni fragmento.
+Un build de Docker necesita `--build-arg VITE_API_URL=https://api.example.com`; si falta, falla.
