@@ -1,6 +1,3 @@
-// The redesign is light only for now. A dark theme will need its own switch and an inline script in index.html.
-document.documentElement.dataset.theme = 'light'
-
 async function startApp() {
   try {
     await import('./config/env')

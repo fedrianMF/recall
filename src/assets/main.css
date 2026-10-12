@@ -43,6 +43,14 @@
   --color-sky-soft: #e3eef4;
   --color-sky-text: #1f6f9c;
 
+  /* Error panels. loss-* is for match results; these are for failures. */
+  --color-danger-soft: #fde4dc;
+  --color-danger-border: #edb6a6;
+  --color-danger-solid: #bc3519;
+  --color-danger-solid-hover: #a02a12;
+  --color-danger-fg: #a02a12;
+  --color-danger-fg-strong: #7a1f0d;
+
   --color-gold: #a77b1e;
   --color-gold-soft: #f4e7c4;
   --color-gold-text: #6e4f0e;
@@ -56,99 +64,9 @@
   --shadow-float: 0 12px 32px rgba(11, 12, 11, 0.28);
 }
 
-/*
- * Theme tokens: colors named by ROLE (page, card, fg...), not by hue.
- * The values below are the LIGHT theme. The dark theme overrides them further
- * down, so a class like `bg-card` or `text-fg` changes color by itself when
- * the theme changes. Use these in views and components instead of `slate-*`.
- * Light values come from docs/recall-diseno; dark values are the original look.
- */
-@theme {
-  /* Surfaces and lines */
-  --color-page: #dce5d9;
-  --color-card: #ffffff;
-  --color-card-raised: #eef3ed;
-  --color-line: #d2dccf;
-  --color-line-strong: #7c8b78;
-
-  /* Text */
-  --color-fg: #151915;
-  --color-fg-soft: #2f382d;
-  --color-fg-muted: #56604f;
-  --color-fg-subtle: #5b6554;
-
-  /* Accent (links, focus, active navigation) */
-  --color-accent: #1c6893;
-  --color-accent-hover: #16506f;
-  --color-accent-solid: #1c6893;
-  --color-on-accent: #ffffff;
-  --color-accent-soft: #e3eef4;
-  --color-accent-soft-fg: #1c6893;
-  --color-accent-chip: #c9e0ee;
-  --color-accent-chip-fg: #144f72;
-
-  /* Danger: errors and defeats */
-  --color-danger-soft: #fde4dc;
-  --color-danger-border: #edb6a6;
-  --color-danger-solid: #bc3519;
-  --color-danger-solid-hover: #a02a12;
-  --color-danger: #a02a12;
-  --color-danger-fg: #a02a12;
-  --color-danger-fg-strong: #7a1f0d;
-
-  /* Success: victories */
-  --color-success-soft: #dcefe2;
-  --color-success-solid: #2b874c;
-  --color-success: #1b5c33;
-  --color-success-fg: #1b5c33;
-}
-
-/* Dark theme: the app's original palette (Tailwind slate / cyan / rose / emerald) */
-:root[data-theme='dark'] {
-  --color-page: var(--color-slate-950);
-  --color-card: var(--color-slate-900);
-  --color-card-raised: var(--color-slate-800);
-  --color-line: var(--color-slate-800);
-  --color-line-strong: var(--color-slate-700);
-
-  --color-fg: var(--color-slate-100);
-  --color-fg-soft: var(--color-slate-300);
-  --color-fg-muted: var(--color-slate-400);
-  --color-fg-subtle: var(--color-slate-500);
-
-  --color-accent: var(--color-cyan-400);
-  --color-accent-hover: var(--color-cyan-300);
-  --color-accent-solid: var(--color-cyan-500);
-  --color-on-accent: var(--color-slate-950);
-  --color-accent-soft: var(--color-cyan-950);
-  --color-accent-soft-fg: var(--color-cyan-300);
-  --color-accent-chip: var(--color-cyan-900);
-  --color-accent-chip-fg: var(--color-cyan-200);
-
-  --color-danger-soft: var(--color-rose-950);
-  --color-danger-border: var(--color-rose-900);
-  --color-danger-solid: var(--color-rose-500);
-  --color-danger-solid-hover: var(--color-rose-400);
-  --color-danger: var(--color-rose-400);
-  --color-danger-fg: var(--color-rose-300);
-  --color-danger-fg-strong: var(--color-rose-200);
-
-  --color-success-soft: var(--color-emerald-950);
-  --color-success-solid: var(--color-emerald-500);
-  --color-success: var(--color-emerald-400);
-  --color-success-fg: var(--color-emerald-300);
-}
-
-/* Makes `dark:` utilities follow our theme switch instead of the OS setting */
-@custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
-
 @layer base {
   :root {
     color-scheme: light;
-  }
-
-  :root[data-theme='dark'] {
-    color-scheme: dark;
   }
 
   :focus-visible {
@@ -172,8 +90,8 @@
     margin: 0;
     min-width: 320px;
     min-height: 100vh;
-    background-color: var(--color-page);
-    color: var(--color-fg);
+    background-color: var(--color-sage);
+    color: var(--color-ink);
     font-family: var(--font-sans);
   }
 
