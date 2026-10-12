@@ -45,10 +45,20 @@ export function useApiRequest(request, options = {}) {
     }
   }
 
+  // Back to the initial state. Bumping the id invalidates any request still in flight,
+  // so its late response cannot write anything.
+  function reset() {
+    latestRequestId++
+    data.value = initialData
+    error.value = null
+    isLoading.value = false
+  }
+
   return {
     data: readonly(data),
     isLoading: readonly(isLoading),
     error: readonly(error),
     load,
+    reset,
   }
 }

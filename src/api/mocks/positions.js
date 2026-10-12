@@ -1,0 +1,56 @@
+const positionsMock = {
+  data: [
+    {
+      position: 'TOP',
+      games: 18,
+      wins: 10,
+      winrate: 55.6,
+      kda: 2.4,
+      cs_per_min: 6.8,
+      damage_per_min: 512.3,
+      kill_participation: 43.7,
+    },
+    {
+      position: 'JUNGLE',
+      games: 26,
+      wins: 15,
+      winrate: 57.7,
+      kda: 3.2,
+      cs_per_min: 5.9,
+      damage_per_min: 476.8,
+      kill_participation: 61.4,
+    },
+    {
+      position: 'MIDDLE',
+      games: 34,
+      wins: 18,
+      winrate: 52.9,
+      kda: 2.9,
+      cs_per_min: 7.1,
+      damage_per_min: 623.5,
+      kill_participation: 54.2,
+    },
+    {
+      position: 'BOTTOM',
+      games: 14,
+      wins: 6,
+      winrate: 42.9,
+      kda: 2.1,
+      cs_per_min: 7.6,
+      damage_per_min: 589.7,
+      kill_participation: 49.8,
+    },
+    {
+      position: 'UTILITY',
+      games: 8,
+      wins: 5,
+      winrate: 62.5,
+      kda: 3.8,
+      cs_per_min: 1.2,
+      damage_per_min: 268.4,
+      kill_participation: null,
+    },
+  ],
+}
+
+export default positionsMock

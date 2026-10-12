@@ -1,9 +1,13 @@
 <script setup>
 import { computed, ref } from 'vue'
 import { useAccount } from '../composables/useAccount'
+import { usePositions } from '../composables/usePositions'
+import { useRankHistory } from '../composables/useRankHistory'
 import { useSummary } from '../composables/useSummary'
 import MatchesPanel from '../components/summary/MatchesPanel.vue'
 import PerformanceMetricCard from '../components/summary/PerformanceMetricCard.vue'
+import PositionsPanel from '../components/summary/PositionsPanel.vue'
+import RankHistoryPanel from '../components/summary/RankHistoryPanel.vue'
 import RankPanel from '../components/summary/RankPanel.vue'
 import SummaryEmptyPanel from '../components/summary/SummaryEmptyPanel.vue'
 import SummaryErrorPanel from '../components/summary/SummaryErrorPanel.vue'
@@ -13,6 +17,22 @@ import { formatMetric } from '../utils/formatMetric'
 
 const { account } = useAccount()
 const { summary, isLoading, error, loadSummary } = useSummary(account)
+const {
+  positions,
+  isLoading: isLoadingPositions,
+  error: positionsError,
+  loadPositions,
+} = usePositions(account)
+
+// The view decides which queue the rank history shows.
+const rankQueue = ref('RANKED_SOLO_5x5')
+const {
+  history,
+  isLoading: isLoadingHistory,
+  error: historyError,
+  hasAccount,
+  loadHistory,
+} = useRankHistory(account, rankQueue)
 
 // Backend gap: when an account has several queues, we will let the user choose.
 // For now we show the first one.
@@ -21,18 +41,27 @@ const mainRank = computed(() => summary.value?.ranks?.[0] ?? null)
 // Only the very first load (no data yet) replaces the page with the skeleton.
 // A refresh keeps the old data visible and only changes the button.
 const isInitialLoading = computed(() => isLoading.value && !summary.value)
+// Any of the three requests keeps the refresh button busy.
+const isRefreshing = computed(
+  () => isLoading.value || isLoadingPositions.value || isLoadingHistory.value,
+)
 const isEmpty = computed(() => summary.value?.games === 0)
 
 // A template ref: Vue fills it with the real <h1> element once it is rendered.
 const titleElement = ref(null)
+// Refs to the two panel components: panel.value.$el is the root <section> element.
+const positionsPanel = ref(null)
+const historyPanel = ref(null)
 
 // The button stays focusable while loading (aria-disabled), so we ignore extra clicks here.
 function refresh() {
-  if (isLoading.value) {
+  if (isRefreshing.value) {
     return
   }
 
   loadSummary()
+  loadPositions()
+  loadHistory()
 }
 
 // The error panel disappears while retrying, so its button (and the focus) is lost.
@@ -41,6 +70,18 @@ function refresh() {
 function retry() {
   titleElement.value?.focus()
   loadSummary()
+}
+
+// Move the focus BEFORE requesting: the error panel (and its button) is unmounted,
+// and the browser would otherwise send the focus back to the <body>.
+function retryPositions() {
+  positionsPanel.value?.$el?.focus()
+  loadPositions()
+}
+
+function retryHistory() {
+  historyPanel.value?.$el?.focus()
+  loadHistory()
 }
 </script>
 
@@ -58,12 +99,12 @@ function retry() {
       <button
         type="button"
         class="inline-flex min-h-11 items-center gap-2.5 rounded-control bg-rail px-5 text-sm font-semibold text-on-dark transition-colors hover:bg-charcoal-hover aria-disabled:cursor-not-allowed aria-disabled:opacity-70"
-        :aria-disabled="isLoading"
+        :aria-disabled="isRefreshing"
         @click="refresh"
       >
         <svg
           class="size-[18px]"
-          :class="{ 'animate-spin motion-reduce:animate-none': isLoading }"
+          :class="{ 'animate-spin motion-reduce:animate-none': isRefreshing }"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -78,14 +119,14 @@ function retry() {
           <path d="M4 13a8 8 0 0 0 14.3 4.3L20 15.5" />
           <path d="M20 20v-4.5h-4.5" />
         </svg>
-        {{ isLoading ? 'Actualizando…' : 'Actualizar' }}
+        {{ isRefreshing ? 'Actualizando…' : 'Actualizar' }}
       </button>
 
       <p
         class="sr-only"
         role="status"
       >
-        {{ isLoading ? 'Actualizando resumen…' : '' }}
+        {{ isRefreshing ? 'Actualizando resumen…' : '' }}
       </p>
     </div>
 
@@ -166,6 +207,25 @@ function retry() {
           />
         </div>
       </section>
+
+      <div class="grid gap-4 lg:col-span-2 lg:row-start-4 lg:grid-cols-2">
+        <PositionsPanel
+          ref="positionsPanel"
+          :positions="positions"
+          :is-loading="isLoadingPositions"
+          :error="positionsError"
+          @retry="retryPositions"
+        />
+        <RankHistoryPanel
+          ref="historyPanel"
+          :history="history"
+          :has-account="hasAccount"
+          :queue-type="rankQueue"
+          :is-loading="isLoadingHistory"
+          :error="historyError"
+          @retry="retryHistory"
+        />
+      </div>
     </div>
   </div>
 </template>

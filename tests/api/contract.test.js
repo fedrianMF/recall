@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 
 import Ajv2020 from 'ajv/dist/2020.js'
-import { describe, expect, test } from 'vitest'
+import { describe, expect, test, vi } from 'vitest'
 
 import championsMock from '@/api/mocks/champions'
 import matchMock from '@/api/mocks/match'
@@ -99,6 +99,40 @@ describe('API mock contracts', () => {
 
     // Act
     const isValid = validator(matchMock)
+    const validationErrors = formatValidationErrors(validator.errors)
+
+    // Assert
+    expect(
+      isValid,
+      `Mock does not match the GET ${endpoint} response contract:\n${validationErrors}`,
+    ).toBe(true)
+  })
+
+  test('positions mock matches the GET /positions contract', async () => {
+    // Arrange
+    const endpoint = '/positions'
+    const validator = getResponseValidator(endpoint)
+    const { default: positionsMock } = await vi.importActual('@/api/mocks/positions')
+
+    // Act
+    const isValid = validator(positionsMock)
+    const validationErrors = formatValidationErrors(validator.errors)
+
+    // Assert
+    expect(
+      isValid,
+      `Mock does not match the GET ${endpoint} response contract:\n${validationErrors}`,
+    ).toBe(true)
+  })
+
+  test('rank history mock matches the GET /ranks/history contract', async () => {
+    // Arrange
+    const endpoint = '/ranks/history'
+    const validator = getResponseValidator(endpoint)
+    const { default: rankHistoryMock } = await vi.importActual('@/api/mocks/rankHistory')
+
+    // Act
+    const isValid = validator(rankHistoryMock)
     const validationErrors = formatValidationErrors(validator.errors)
 
     // Assert

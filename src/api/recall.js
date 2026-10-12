@@ -1,6 +1,8 @@
 import championsMock from './mocks/champions'
 import matchMock from './mocks/match'
 import matchesMock from './mocks/matches'
+import positionsMock from './mocks/positions'
+import rankHistoryMock from './mocks/rankHistory'
 import summaryMock from './mocks/summary'
 import { apiUrl, useMocks } from '../config/env'
 
@@ -72,6 +74,26 @@ export async function getChampions({ account, minGames } = {}) {
   return fetchJson(url, 'Could not load champions')
 }
 
+export async function getPositions({ account, minGames } = {}) {
+  validateAccount(account)
+
+  if (useMocks) {
+    return positionsMock
+  }
+
+  const url = new URL('/api/v1/positions', apiUrl)
+
+  if (account) {
+    url.searchParams.set('account', account)
+  }
+
+  if (minGames !== undefined) {
+    url.searchParams.set('min_games', minGames)
+  }
+
+  return fetchJson(url, 'Could not load positions')
+}
+
 export async function getMatches({ account, queue, page } = {}) {
   validateAccount(account)
 
@@ -111,6 +133,27 @@ export async function getMatch(id) {
   const url = new URL(`/api/v1/matches/${encodedId}`, apiUrl)
 
   return fetchJson(url, 'Could not load the match')
+}
+
+export async function getRankHistory({ account, queueType } = {}) {
+  if (!account) {
+    throw new Error('Account is required to load the rank history')
+  }
+
+  validateAccount(account)
+
+  if (useMocks) {
+    return rankHistoryMock
+  }
+
+  const url = new URL('/api/v1/ranks/history', apiUrl)
+  url.searchParams.set('account', account)
+
+  if (queueType) {
+    url.searchParams.set('queue_type', queueType)
+  }
+
+  return fetchJson(url, 'Could not load the rank history')
 }
 
 export async function getDataDragonVersion() {

@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest'
 
-import { formatDuration, formatRelativeTime } from '@/utils/formatMatch'
+import { formatDuration, formatRelativeTime, formatShortDate } from '@/utils/formatMatch'
 
 describe('formatDuration', () => {
   test('returns a dash when the duration is null', () => {
@@ -115,6 +115,40 @@ describe('formatRelativeTime', () => {
     const expected = 'dentro de 3 días'
 
     const result = formatRelativeTime(dateString, now)
+
+    expect(result).toBe(expected)
+  })
+})
+
+describe('formatShortDate', () => {
+  test.each([
+    ['2026-01-01T00:00:00Z', '1 ene'],
+    ['2026-01-11T00:00:00Z', '11 ene'],
+    ['2026-03-05T12:00:00Z', '5 mar'],
+    ['2026-12-25T12:00:00Z', '25 dic'],
+  ])('formats %s as "%s" (day and short Spanish month)', (dateString, expected) => {
+    const result = formatShortDate(dateString)
+
+    expect(result).toBe(expected)
+  })
+
+  test('uses the UTC day, not the local one, near midnight', () => {
+    const dateString = '2026-01-01T00:00:00Z'
+    const expected = '1 ene'
+
+    const result = formatShortDate(dateString)
+
+    expect(result).toBe(expected)
+  })
+
+  test.each([
+    ['an invalid string', 'not-a-date'],
+    ['null', null],
+    ['undefined', undefined],
+  ])('returns a dash for %s', (_label, dateString) => {
+    const expected = '—'
+
+    const result = formatShortDate(dateString)
 
     expect(result).toBe(expected)
   })

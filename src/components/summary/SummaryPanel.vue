@@ -9,10 +9,14 @@ defineProps({
 })
 
 const titleId = useId()
+
+// Template note: the root <section> has tabindex="-1" so it is a non-interactive focus
+// target for when a panel unmounts its retry button; the global focus ring is not drawn on it.
 </script>
 
 <template>
   <section
+    tabindex="-1"
     :aria-labelledby="titleId"
     class="flex flex-col gap-4 rounded-2xl bg-surface p-6 text-ink shadow-card"
   >
