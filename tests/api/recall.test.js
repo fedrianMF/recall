@@ -381,4 +381,216 @@ describe('recall API', () => {
       expect(fetchMock).toHaveBeenCalledTimes(1)
     })
   })
+
+  describe('getPositions', () => {
+    test('returns the positions mock by reference without fetching', async () => {
+      const fetchMock = stubSuccessfulFetch()
+      const api = await loadApi({ useMocks: 'true' })
+      const { default: positionsMock } = await vi.importActual('@/api/mocks/positions')
+
+      const result = await api.getPositions()
+
+      expect(result).toBe(positionsMock)
+      expect(fetchMock).not.toHaveBeenCalled()
+    })
+
+    test.each(['true', 'false'])(
+      'rejects an invalid account when mock mode is %s',
+      async (useMocks) => {
+        stubSuccessfulFetch()
+        const api = await loadApi({ useMocks })
+
+        const request = api.getPositions({ account: 'xx' })
+
+        await expect(request).rejects.toThrow('Invalid account: xx')
+      },
+    )
+
+    test.each([
+      ['true', 'la1'],
+      ['true', 'la2'],
+      ['true', undefined],
+      ['true', ''],
+      ['false', 'la1'],
+      ['false', 'la2'],
+      ['false', undefined],
+      ['false', ''],
+    ])('accepts a valid account when mock mode is %s: %j', async (useMocks, account) => {
+      stubSuccessfulFetch()
+      const api = await loadApi({ useMocks })
+
+      const request = api.getPositions({ account })
+
+      await expect(request).resolves.toBeDefined()
+    })
+
+    test('builds the URL without filters', async () => {
+      const fetchMock = stubSuccessfulFetch()
+      const api = await loadApi()
+
+      await api.getPositions()
+
+      expect(String(fetchMock.mock.calls[0][0])).toBe('http://api.test/api/v1/positions')
+    })
+
+    test('builds the URL with all filters', async () => {
+      const fetchMock = stubSuccessfulFetch()
+      const api = await loadApi()
+
+      await api.getPositions({ account: 'la2', minGames: 5 })
+
+      expect(String(fetchMock.mock.calls[0][0])).toBe(
+        'http://api.test/api/v1/positions?account=la2&min_games=5',
+      )
+    })
+
+    test('includes a zero minimum games value', async () => {
+      const fetchMock = stubSuccessfulFetch()
+      const api = await loadApi()
+
+      await api.getPositions({ minGames: 0 })
+
+      expect(String(fetchMock.mock.calls[0][0])).toBe(
+        'http://api.test/api/v1/positions?min_games=0',
+      )
+    })
+
+    test('sends the JSON Accept header', async () => {
+      const fetchMock = stubSuccessfulFetch()
+      const api = await loadApi()
+
+      await api.getPositions()
+
+      expect(fetchMock.mock.calls[0][1]).toEqual({
+        headers: { Accept: 'application/json' },
+      })
+    })
+
+    test('returns exactly the parsed JSON response', async () => {
+      const responseBody = { data: [{ position: 'MIDDLE' }], meta: { source: 'test' } }
+      stubSuccessfulFetch(responseBody)
+      const api = await loadApi()
+
+      const result = await api.getPositions()
+
+      expect(result).toBe(responseBody)
+    })
+  })
+
+  describe('getRankHistory', () => {
+    test('returns the rank history mock by reference without fetching', async () => {
+      const fetchMock = stubSuccessfulFetch()
+      const api = await loadApi({ useMocks: 'true' })
+      const { default: rankHistoryMock } = await vi.importActual('@/api/mocks/rankHistory')
+
+      const result = await api.getRankHistory({ account: 'la1' })
+
+      expect(result).toBe(rankHistoryMock)
+      expect(fetchMock).not.toHaveBeenCalled()
+    })
+
+    test.each([
+      ['true', undefined],
+      ['true', ''],
+      ['true', null],
+      ['false', undefined],
+      ['false', ''],
+      ['false', null],
+    ])('requires an account when mock mode is %s and account is %j', async (useMocks, account) => {
+      const fetchMock = stubSuccessfulFetch()
+      const api = await loadApi({ useMocks })
+
+      const request = api.getRankHistory({ account })
+
+      await expect(request).rejects.toThrow('Account is required to load the rank history')
+      expect(fetchMock).not.toHaveBeenCalled()
+    })
+
+    test.each(['true', 'false'])(
+      'rejects an invalid account when mock mode is %s',
+      async (useMocks) => {
+        const fetchMock = stubSuccessfulFetch()
+        const api = await loadApi({ useMocks })
+
+        const request = api.getRankHistory({ account: 'xx' })
+
+        await expect(request).rejects.toThrow('Invalid account: xx')
+        expect(fetchMock).not.toHaveBeenCalled()
+      },
+    )
+
+    test('builds the URL with the required account', async () => {
+      const fetchMock = stubSuccessfulFetch()
+      const api = await loadApi()
+
+      await api.getRankHistory({ account: 'la1' })
+
+      expect(String(fetchMock.mock.calls[0][0])).toBe(
+        'http://api.test/api/v1/ranks/history?account=la1',
+      )
+    })
+
+    test('builds the URL with a queue type', async () => {
+      const fetchMock = stubSuccessfulFetch()
+      const api = await loadApi()
+
+      await api.getRankHistory({ account: 'la1', queueType: 'RANKED_SOLO_5x5' })
+
+      expect(String(fetchMock.mock.calls[0][0])).toBe(
+        'http://api.test/api/v1/ranks/history?account=la1&queue_type=RANKED_SOLO_5x5',
+      )
+    })
+
+    test('omits an empty queue type', async () => {
+      const fetchMock = stubSuccessfulFetch()
+      const api = await loadApi()
+
+      await api.getRankHistory({ account: 'la1', queueType: '' })
+
+      expect(String(fetchMock.mock.calls[0][0])).toBe(
+        'http://api.test/api/v1/ranks/history?account=la1',
+      )
+    })
+
+    test('sends the JSON Accept header', async () => {
+      const fetchMock = stubSuccessfulFetch()
+      const api = await loadApi()
+
+      await api.getRankHistory({ account: 'la1' })
+
+      expect(fetchMock.mock.calls[0][1]).toEqual({
+        headers: { Accept: 'application/json' },
+      })
+    })
+
+    test('returns exactly the parsed JSON response', async () => {
+      const responseBody = {
+        data: [{ taken_at: '2026-01-01T00:00:00Z', tier: 'GOLD' }],
+        meta: { source: 'test' },
+      }
+      stubSuccessfulFetch(responseBody)
+      const api = await loadApi()
+
+      const result = await api.getRankHistory({ account: 'la1' })
+
+      expect(result).toBe(responseBody)
+    })
+
+    test.each([
+      ['positions', 'Could not load positions (500)', (api) => api.getPositions()],
+      [
+        'rank history',
+        'Could not load the rank history (500)',
+        (api) => api.getRankHistory({ account: 'la1' }),
+      ],
+    ])('throws the endpoint ApiError for %s', async (_endpoint, message, request) => {
+      const fetchMock = vi.fn().mockResolvedValue(createResponse({}, { ok: false, status: 500 }))
+      vi.stubGlobal('fetch', fetchMock)
+      const api = await loadApi()
+
+      const result = request(api)
+
+      await expect(result).rejects.toMatchObject({ name: 'ApiError', status: 500, message })
+    })
+  })
 })
