@@ -30,4 +30,31 @@ describe('SummaryErrorPanel', () => {
 
     expect(wrapper.emitted('retry')).toBeUndefined()
   })
+
+  test('shows the title as a level 2 heading by default', () => {
+    const wrapper = mount(SummaryErrorPanel, {
+      props: { title: 'Título del error', message: 'Algo falló.' },
+    })
+
+    expect(wrapper.get('h2').text()).toBe('Título del error')
+    expect(wrapper.find('h3').exists()).toBe(false)
+  })
+
+  test('shows the title as a level 3 heading when headingLevel is 3', () => {
+    const wrapper = mount(SummaryErrorPanel, {
+      props: { title: 'Título del error', message: 'Algo falló.', headingLevel: 3 },
+    })
+
+    expect(wrapper.get('h3').text()).toBe('Título del error')
+    expect(wrapper.find('h2').exists()).toBe(false)
+  })
+
+  test('keeps the alert role and the retry button with a level 3 heading', () => {
+    const wrapper = mount(SummaryErrorPanel, {
+      props: { message: 'Algo falló.', headingLevel: 3 },
+    })
+
+    expect(wrapper.find('[role="alert"]').exists()).toBe(true)
+    expect(wrapper.get('button').text()).toBe('Reintentar')
+  })
 })

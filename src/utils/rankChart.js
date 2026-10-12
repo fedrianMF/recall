@@ -48,6 +48,10 @@ function prepareHistory(history) {
   return { measurements, first, last }
 }
 
+export function hasEnoughMeasurements(history) {
+  return prepareHistory(history) !== null
+}
+
 export function getRankChart(history, options = {}) {
   const prepared = prepareHistory(history)
 
@@ -104,7 +108,7 @@ export function getRankChart(history, options = {}) {
   }
 }
 
-function describeMeasurement(measurement) {
+export function describeMeasurement(measurement) {
   return `${formatTier(measurement.tier, measurement.rank)} ${measurement.league_points} LP`
 }
 
@@ -118,7 +122,12 @@ export function getRankHistoryLabel(history) {
   const { first, last } = prepared
   const delta = last.ladderPoints - first.ladderPoints
   const days = Math.round((last.time - first.time) / MS_PER_DAY)
-  const daysLabel = days === 1 ? 'día' : 'días'
+  let durationLabel = `${days} días`
+  if (days === 0) {
+    durationLabel = 'menos de un día'
+  } else if (days === 1) {
+    durationLabel = '1 día'
+  }
 
   let changeLabel = 'Sin cambios.'
   if (delta > 0) {
@@ -129,6 +138,6 @@ export function getRankHistoryLabel(history) {
 
   return (
     `Evolución del rango: de ${describeMeasurement(first.measurement)} ` +
-    `a ${describeMeasurement(last.measurement)} en ${days} ${daysLabel}. ${changeLabel}`
+    `a ${describeMeasurement(last.measurement)} en ${durationLabel}. ${changeLabel}`
   )
 }

@@ -1,7 +1,7 @@
 import { describe, expect, test } from 'vitest'
 
 import rankHistoryMock from '@/api/mocks/rankHistory'
-import { getRankChart, getRankHistoryLabel } from '@/utils/rankChart'
+import { getRankChart, getRankHistoryLabel, hasEnoughMeasurements } from '@/utils/rankChart'
 
 function measurement(takenAt, tier, rank, leaguePoints) {
   return {
@@ -327,5 +327,85 @@ describe('getRankChart rounding', () => {
     expect(chart.points[1].x).toBe(136.67)
     expect(chart.points[1].y).toBe(142)
     expect(chart.path).toBe('M10 160 L136.67 142 L390 40')
+  })
+})
+
+describe('getRankHistoryLabel for short periods', () => {
+  test('says "en menos de un día" when the measurements are 6 hours apart', () => {
+    const history = [
+      measurement('2026-01-01T06:00:00Z', 'GOLD', 'IV', 0),
+      measurement('2026-01-01T12:00:00Z', 'GOLD', 'IV', 12),
+    ]
+    const expected =
+      'Evolución del rango: de Gold IV 0 LP a Gold IV 12 LP en menos de un día. Subió 12 LP.'
+
+    const result = getRankHistoryLabel(history)
+
+    expect(result).toBe(expected)
+  })
+
+  test('still says "en 1 día" when the measurements are exactly one day apart', () => {
+    const history = [
+      measurement('2026-01-01T12:00:00Z', 'GOLD', 'IV', 0),
+      measurement('2026-01-02T12:00:00Z', 'GOLD', 'IV', 12),
+    ]
+    const expected = 'Evolución del rango: de Gold IV 0 LP a Gold IV 12 LP en 1 día. Subió 12 LP.'
+
+    const result = getRankHistoryLabel(history)
+
+    expect(result).toBe(expected)
+  })
+})
+
+describe('hasEnoughMeasurements', () => {
+  test('returns true with two valid measurements on different dates', () => {
+    const history = [
+      measurement('2026-01-01T00:00:00Z', 'SILVER', 'II', 50),
+      measurement('2026-01-02T00:00:00Z', 'SILVER', 'II', 70),
+    ]
+
+    const result = hasEnoughMeasurements(history)
+
+    expect(result).toBe(true)
+  })
+
+  test.each([
+    ['an empty list', []],
+    ['null', null],
+    ['undefined', undefined],
+  ])('returns false for %s', (_name, history) => {
+    const result = hasEnoughMeasurements(history)
+
+    expect(result).toBe(false)
+  })
+
+  test('returns false with a single measurement', () => {
+    const history = [measurement('2026-01-01T00:00:00Z', 'SILVER', 'II', 50)]
+
+    const result = hasEnoughMeasurements(history)
+
+    expect(result).toBe(false)
+  })
+
+  test('returns false with an unknown tier plus one valid measurement', () => {
+    const history = [
+      measurement('2026-01-01T00:00:00Z', 'UNKNOWN_TIER', 'II', 50),
+      measurement('2026-01-02T00:00:00Z', 'SILVER', 'II', 70),
+    ]
+
+    const result = hasEnoughMeasurements(history)
+
+    expect(result).toBe(false)
+  })
+
+  test('returns false with two measurements on the same date', () => {
+    const history = [
+      measurement('2026-01-01T00:00:00Z', 'SILVER', 'II', 50),
+      measurement('2026-01-01T00:00:00Z', 'SILVER', 'II', 70),
+    ]
+
+    const result = hasEnoughMeasurements(history)
+
+    expect(result).toBe(false)
   })
 })

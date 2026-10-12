@@ -165,4 +165,120 @@ describe('useApiRequest', () => {
       warnSpy.mockRestore()
     }
   })
+
+  describe('reset', () => {
+    test('restores the initial data after data was loaded', async () => {
+      const request = vi.fn().mockResolvedValue('loaded result')
+      const { data, load, reset } = useApiRequest(request, { initialData: [] })
+      await load()
+
+      reset()
+
+      expect(data.value).toEqual([])
+    })
+
+    test('clears a previous error', async () => {
+      const request = vi.fn().mockRejectedValue(new Error('Request failed'))
+      const { error, load, reset } = useApiRequest(request)
+      await load()
+
+      reset()
+
+      expect(error.value).toBe(null)
+    })
+
+    test('stops loading when a request is pending', () => {
+      const request = vi.fn(() => createControlledPromise().promise)
+      const { isLoading, load, reset } = useApiRequest(request)
+      load()
+
+      reset()
+
+      expect(isLoading.value).toBe(false)
+    })
+
+    test('ignores the data of a pending request that succeeds after the reset', async () => {
+      const pendingRequest = createControlledPromise()
+      const request = vi.fn(() => pendingRequest.promise)
+      const { data, isLoading, error, load, reset } = useApiRequest(request, {
+        initialData: 'initial',
+      })
+      const loadPromise = load()
+      reset()
+
+      pendingRequest.resolve('late result')
+      await loadPromise
+
+      expect(data.value).toBe('initial')
+      expect(isLoading.value).toBe(false)
+      expect(error.value).toBe(null)
+    })
+
+    test('ignores the error of a pending request that fails after the reset', async () => {
+      const pendingRequest = createControlledPromise()
+      const request = vi.fn(() => pendingRequest.promise)
+      const { data, isLoading, error, load, reset } = useApiRequest(request, {
+        initialData: 'initial',
+      })
+      const loadPromise = load()
+      reset()
+
+      pendingRequest.reject(new Error('Late failure'))
+      await loadPromise
+
+      expect(data.value).toBe('initial')
+      expect(isLoading.value).toBe(false)
+      expect(error.value).toBe(null)
+    })
+
+    test('loads new data normally after a reset', async () => {
+      const request = vi
+        .fn()
+        .mockResolvedValueOnce('first result')
+        .mockResolvedValueOnce('new result')
+      const { data, isLoading, load, reset } = useApiRequest(request)
+      await load()
+      reset()
+
+      await load()
+
+      expect(data.value).toBe('new result')
+      expect(isLoading.value).toBe(false)
+    })
+
+    test('keeps the new request alive when an old request answers after reset and a new load', async () => {
+      const oldRequest = createControlledPromise()
+      const newRequest = createControlledPromise()
+      const request = vi
+        .fn()
+        .mockReturnValueOnce(oldRequest.promise)
+        .mockReturnValueOnce(newRequest.promise)
+      const { data, isLoading, load, reset } = useApiRequest(request)
+      const oldLoadPromise = load()
+      reset()
+      const newLoadPromise = load()
+
+      oldRequest.resolve('old result')
+      await oldLoadPromise
+
+      expect(data.value).toBe(null)
+      expect(isLoading.value).toBe(true)
+
+      newRequest.resolve('new result')
+      await newLoadPromise
+
+      expect(data.value).toBe('new result')
+    })
+
+    test('does not fail when nothing was loaded', () => {
+      const request = vi.fn()
+      const { data, isLoading, error, reset } = useApiRequest(request, { initialData: 'initial' })
+
+      reset()
+
+      expect(data.value).toBe('initial')
+      expect(isLoading.value).toBe(false)
+      expect(error.value).toBe(null)
+    })
+  })
 })

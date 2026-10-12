@@ -1,4 +1,10 @@
 const relativeTimeFormatter = new Intl.RelativeTimeFormat('es', { numeric: 'auto' })
+// UTC keeps the calendar day the API sent, whatever the browser time zone is.
+const shortDateFormatter = new Intl.DateTimeFormat('es', {
+  day: 'numeric',
+  month: 'short',
+  timeZone: 'UTC',
+})
 
 export function formatDuration(durationSeconds) {
   if (durationSeconds === null || durationSeconds === undefined) {
@@ -38,4 +44,15 @@ export function formatRelativeTime(dateString, now = new Date()) {
   const signedValue = differenceInSeconds < 0 ? -value : value
 
   return relativeTimeFormatter.format(signedValue, unit.name)
+}
+
+export function formatShortDate(dateString) {
+  const date = new Date(dateString)
+
+  // new Date(null) is 1970 and new Date(undefined) is invalid: null needs its own check.
+  if (dateString === null || Number.isNaN(date.getTime())) {
+    return '—'
+  }
+
+  return shortDateFormatter.format(date)
 }

@@ -1,8 +1,8 @@
 <script setup>
 import { computed } from 'vue'
 import { formatMetric } from '../../utils/formatMetric'
-import { getProgressPercent } from '../../utils/summaryFormat'
 import SummaryPanel from './SummaryPanel.vue'
+import WinLossBar from './WinLossBar.vue'
 
 const props = defineProps({
   games: {
@@ -19,8 +19,6 @@ const props = defineProps({
   },
 })
 
-const winProgress = computed(() => getProgressPercent(props.wins, props.games))
-const hasGames = computed(() => Number.isFinite(props.games) && props.games > 0)
 const progressLabel = computed(
   () => `${formatMetric(props.wins)} victorias de ${formatMetric(props.games)} partidas`,
 )
@@ -55,27 +53,11 @@ const progressLabel = computed(
       </div>
     </div>
 
-    <div
-      class="flex h-3 overflow-hidden rounded-full"
-      role="img"
-      :aria-label="progressLabel"
-    >
-      <template v-if="hasGames">
-        <span
-          aria-hidden="true"
-          class="bg-win"
-          :style="{ width: `${winProgress}%` }"
-        ></span>
-        <span
-          aria-hidden="true"
-          class="flex-1 bg-loss"
-        ></span>
-      </template>
-      <span
-        v-else
-        aria-hidden="true"
-        class="flex-1 bg-surface-muted"
-      ></span>
-    </div>
+    <WinLossBar
+      :wins="wins"
+      :total="games"
+      :label="progressLabel"
+      size="md"
+    />
   </SummaryPanel>
 </template>
