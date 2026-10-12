@@ -2,9 +2,8 @@ import championsMock from './mocks/champions'
 import matchMock from './mocks/match'
 import matchesMock from './mocks/matches'
 import summaryMock from './mocks/summary'
+import { apiUrl, useMocks } from '../config/env'
 
-const apiUrl = import.meta.env.VITE_API_URL
-const useMocks = import.meta.env.VITE_USE_MOCKS === 'true'
 const validAccounts = ['la1', 'la2']
 const dataDragonVersionsUrl = 'https://ddragon.leagueoflegends.com/api/versions.json'
 let dataDragonVersionRequest = null
