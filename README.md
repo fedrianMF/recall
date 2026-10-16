@@ -47,7 +47,7 @@ Todas comparten un marco común (riel de navegación, selector de cuenta y área
 
 ## Inicio rápido
 
-Requisitos: **Node.js** `^22.18` o `>=24.12` y **npm**.
+Requisitos: **Node.js** `^22.22.2`, `^24.15` o `>=26` y **npm**.
 
 ```sh
 git clone https://github.com/fedrianMF/recall.git
