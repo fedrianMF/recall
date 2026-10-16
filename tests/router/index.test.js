@@ -2,6 +2,12 @@ import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest'
 
 import router from '@/router'
 
+// The router imports the views, and the views import the API layer, which reads
+// VITE_API_URL when loaded. CI has no `.env`, so we replace that layer with an
+// empty one: these tests only care about routes, never about API calls.
+// vi.mock is hoisted: Vitest moves it above the imports, so the real file never loads.
+vi.mock('@/api/recall', () => ({}))
+
 // This uses the real router from `src/router/index.js` (not a copy of its routes),
 // so the test breaks if someone changes or deletes the real wildcard route.
 // The router keeps its state between tests, so each test starts from the summary.
