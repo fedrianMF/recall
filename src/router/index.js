@@ -44,10 +44,12 @@ const router = createRouter({
       meta: { title: 'Página no encontrada' },
     },
     // Must stay last: `:pathMatch(.*)*` matches any path no route above claimed,
-    // and sends it to the 404 page.
+    // and sends it to the 404 page. It redirects by path, not by name: a redirect by
+    // name carries over the `pathMatch` param, which `/404` does not declare, and
+    // Vue Router warns about it.
     {
       path: '/:pathMatch(.*)*',
-      redirect: { name: 'not-found' },
+      redirect: '/404',
     },
   ],
 })
