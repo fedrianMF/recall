@@ -38,6 +38,10 @@ jobs:
           VITE_API_URL: https://api.invalid
           VITE_USE_MOCKS: 'false'
 
+  # Informational on purpose: it never blocks a PR and it is not a required check of
+  # `main`. A vulnerability in a dependency would otherwise block PRs that did not
+  # cause it. Instead, the result goes to the job summary and a warning annotation.
+  # Dependabot also reports vulnerable dependencies every Monday.
   audit:
     runs-on: ubuntu-latest
     timeout-minutes: 10
@@ -52,5 +56,20 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Audit production dependencies
-        run: npm audit --omit=dev --audit-level=high
+        # continue-on-error keeps the job green even when this step fails.
         continue-on-error: true
+        run: |
+          status=0
+          npm audit --omit=dev --audit-level=high > audit.txt 2>&1 || status=$?
+          cat audit.txt
+          {
+            echo '## npm audit (production dependencies)'
+            echo
+            echo '```text'
+            cat audit.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          if [ "$status" -ne 0 ]; then
+            echo "::warning title=npm audit::npm audit reported high-severity vulnerabilities, or could not run. See the job summary."
+          fi
+          exit "$status"
