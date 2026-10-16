@@ -671,17 +671,7 @@
                         "type": "object",
                         "properties": {
                             "id": {
-                                "anyOf": [
-                                    {
-                                        "type": "integer"
-                                    },
-                                    {
-                                        "$ref": "#/components/schemas/Queue"
-                                    },
-                                    {
-                                        "type": "null"
-                                    }
-                                ]
+                                "type": "integer"
                             },
                             "name": {
                                 "type": "string",
@@ -706,7 +696,8 @@
                         ]
                     },
                     "started_at": {
-                        "type": "string"
+                        "type": "string",
+                        "format": "date-time"
                     },
                     "duration_seconds": {
                         "type": "integer"
@@ -893,17 +884,7 @@
                         "type": "object",
                         "properties": {
                             "id": {
-                                "anyOf": [
-                                    {
-                                        "type": "integer"
-                                    },
-                                    {
-                                        "$ref": "#/components/schemas/Queue"
-                                    },
-                                    {
-                                        "type": "null"
-                                    }
-                                ]
+                                "type": "integer"
                             },
                             "name": {
                                 "type": "string",
@@ -928,7 +909,8 @@
                         ]
                     },
                     "started_at": {
-                        "type": "string"
+                        "type": "string",
+                        "format": "date-time"
                     },
                     "duration_seconds": {
                         "type": "integer"
@@ -1014,7 +996,8 @@
                 "type": "object",
                 "properties": {
                     "taken_at": {
-                        "type": "string"
+                        "type": "string",
+                        "format": "date-time"
                     },
                     "tier": {
                         "type": "string"
