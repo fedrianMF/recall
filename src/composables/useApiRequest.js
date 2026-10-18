@@ -34,6 +34,14 @@ export function useApiRequest(request, options = {}) {
           displayError.status = requestError.status
         }
 
+        if ('code' in requestError) {
+          displayError.code = requestError.code
+        }
+
+        if ('errors' in requestError) {
+          displayError.errors = requestError.errors
+        }
+
         error.value = displayError
       } else {
         error.value = new Error(errorMessage)

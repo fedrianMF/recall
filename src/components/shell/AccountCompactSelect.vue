@@ -1,7 +1,8 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, watch } from 'vue'
 import { useAccount } from '../../composables/useAccount'
-import { accountOptions } from '../../utils/accounts'
+import { platformOptions } from '../../utils/accounts'
+import { useAccounts } from '../../composables/useAccounts'
 
 const props = defineProps({
   tone: {
@@ -12,6 +13,11 @@ const props = defineProps({
 })
 
 const { account, setAccount } = useAccount()
+const { accounts } = useAccounts()
+const availableOptions = computed(() => platformOptions(accounts.value))
+watch(availableOptions, (options) => {
+  if (account.value && !options.some((option) => option.value === account.value)) setAccount('')
+})
 
 const focusTheme = computed(() => (props.tone === 'dark' ? 'dark' : undefined))
 
@@ -34,7 +40,7 @@ function handleAccountChange(event) {
     >
       <option value="">Ambas</option>
       <option
-        v-for="option in accountOptions"
+        v-for="option in availableOptions"
         :key="option.value"
         :value="option.value"
       >
