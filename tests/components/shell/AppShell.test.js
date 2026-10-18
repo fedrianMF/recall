@@ -1,5 +1,19 @@
 import { mount } from '@vue/test-utils'
-import { describe, expect, test } from 'vitest'
+import { describe, expect, test, vi } from 'vitest'
+
+// The shell mounts the session controls and the sync button, which import the API layer.
+// That layer reads VITE_API_URL on load, and CI has no .env, so the tests use a fake one.
+vi.mock('@/api/recall', () => ({
+  getAccounts: vi.fn(),
+  getLatestSync: vi.fn(),
+  getMe: vi.fn(),
+  login: vi.fn(),
+  logout: vi.fn(),
+  register: vi.fn(),
+  resendVerificationEmail: vi.fn(),
+  setUnauthorizedHandler: vi.fn(),
+  startSync: vi.fn(),
+}))
 
 import AppShell from '@/components/shell/AppShell.vue'
 
