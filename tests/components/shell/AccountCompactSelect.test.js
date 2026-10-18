@@ -1,9 +1,14 @@
 import { mount } from '@vue/test-utils'
 import { nextTick } from 'vue'
-import { beforeEach, describe, expect, test } from 'vitest'
+import { beforeEach, describe, expect, test, vi } from 'vitest'
+import { ref } from 'vue'
 
 import AccountCompactSelect from '@/components/shell/AccountCompactSelect.vue'
 import { useAccount } from '@/composables/useAccount'
+
+vi.mock('@/composables/useAccounts', () => ({
+  useAccounts: () => ({ accounts: ref([{ platform: 'la1' }, { platform: 'la2' }]) }),
+}))
 
 const { account, setAccount } = useAccount()
 

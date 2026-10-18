@@ -4,6 +4,9 @@ import AccountCompactSelect from './AccountCompactSelect.vue'
 import ShellAccountPanel from './ShellAccountPanel.vue'
 import ShellMobileNav from './ShellMobileNav.vue'
 import ShellRail from './ShellRail.vue'
+import SessionControls from './SessionControls.vue'
+import EmailVerificationBanner from './EmailVerificationBanner.vue'
+import SyncButton from './SyncButton.vue'
 </script>
 
 <template>
@@ -35,6 +38,8 @@ import ShellRail from './ShellRail.vue'
         tone="dark"
         class="ml-auto"
       />
+      <SessionControls />
+      <SyncButton />
     </header>
 
     <main
@@ -49,8 +54,11 @@ import ShellRail from './ShellRail.vue'
           >Cuenta</span
         >
         <AccountCompactSelect tone="light" />
+        <SessionControls />
+        <SyncButton />
       </div>
 
+      <EmailVerificationBanner />
       <slot />
     </main>
 

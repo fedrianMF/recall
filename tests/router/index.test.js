@@ -6,13 +6,22 @@ import router from '@/router'
 // VITE_API_URL when loaded. CI has no `.env`, so we replace that layer with an
 // empty one: these tests only care about routes, never about API calls.
 // vi.mock is hoisted: Vitest moves it above the imports, so the real file never loads.
-vi.mock('@/api/recall', () => ({}))
+vi.mock('@/api/recall', () => ({
+  getMe: vi.fn().mockResolvedValue({
+    data: { id: 1, name: 'Test User', email: 'user@example.test', email_verified: true },
+  }),
+  setUnauthorizedHandler: vi.fn(),
+}))
 
 // This uses the real router from `src/router/index.js` (not a copy of its routes),
 // so the test breaks if someone changes or deletes the real wildcard route.
 // The router keeps its state between tests, so each test starts from the summary.
 describe('router', () => {
   beforeEach(async () => {
+    localStorage.setItem(
+      'recall.session',
+      JSON.stringify({ token: 'fake-token', expiresAt: '2099-01-01T00:00:00.000Z' }),
+    )
     await router.replace('/')
   })
 
